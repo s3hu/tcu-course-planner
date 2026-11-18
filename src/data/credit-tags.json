@@ -1,0 +1,97 @@
+{
+  "basic": {
+    "label": "基礎科目",
+    "kind": "group",
+    "color": "#687a3e"
+  },
+  "foreign_language": {
+    "label": "外国語科目",
+    "kind": "category",
+    "color": "#3154b8"
+  },
+  "physical_education": {
+    "label": "体育科目",
+    "kind": "category",
+    "color": "#4c7852"
+  },
+  "liberal_arts": {
+    "label": "教養科目",
+    "kind": "category",
+    "color": "#9a702c"
+  },
+  "professional_foundation": {
+    "label": "専門基礎科目",
+    "kind": "group",
+    "color": "#3a746b"
+  },
+  "professional": {
+    "label": "専門科目",
+    "kind": "group",
+    "color": "#79619b"
+  },
+  "free_electives": {
+    "label": "自由選択",
+    "kind": "category",
+    "color": "#7c7464"
+  },
+  "required": {
+    "label": "必修",
+    "kind": "requirement",
+    "color": "#3154b8"
+  },
+  "elective_required": {
+    "label": "選択必修",
+    "kind": "requirement",
+    "color": "#8b6b35"
+  },
+  "elective_required_1": {
+    "label": "選択必修 △1",
+    "kind": "requirement",
+    "color": "#8b6b35"
+  },
+  "elective_required_2": {
+    "label": "選択必修 △2",
+    "kind": "requirement",
+    "color": "#8b6b35"
+  },
+  "elective": {
+    "label": "選択",
+    "kind": "requirement",
+    "color": "#7b856a"
+  },
+  "DS": {
+    "label": "DS対象",
+    "kind": "program",
+    "color": "#547b8c"
+  },
+  "MS": {
+    "label": "MS対象",
+    "kind": "program",
+    "color": "#547b8c"
+  },
+  "conditional": {
+    "label": "算入条件あり",
+    "kind": "status",
+    "color": "#a17b35"
+  },
+  "credit_conflict": {
+    "label": "単位数を確認",
+    "kind": "status",
+    "color": "#a17b35"
+  },
+  "unverified": {
+    "label": "算入区分は要確認",
+    "kind": "status",
+    "color": "#a17b35"
+  },
+  "not_counted": {
+    "label": "卒業単位に算入しない",
+    "kind": "status",
+    "color": "#7d8176"
+  },
+  "pbl": {
+    "label": "PBL科目",
+    "kind": "group",
+    "color": "#99704a"
+  }
+}

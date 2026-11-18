@@ -1,0 +1,4 @@
+import {ArrowUpRight} from "lucide-react";
+export default function SiteFooter({onStart,onHelp,compact=false}:{onStart?:()=>void;onHelp?:()=>void;compact?:boolean}){
+ return <footer className={"editorial-footer "+(compact?"compact-footer":"")}><div className="footer-top"><div><span className="micro-label">A PLAN FOR WHAT'S NEXT.</span><p>次の学期に、<br/>新しい可能性を。</p></div>{onStart?<button className="footer-start" onClick={onStart}>時間割をつくる<ArrowUpRight size={23}/></button>:onHelp?<button className="footer-start" onClick={onHelp}>使い方とご案内<ArrowUpRight size={23}/></button>:null}</div><div className="footer-wordmark" aria-hidden="true">NEXT SEMESTER<span>↗</span></div><div className="footer-bottom"><span>履修ノート © 2026</span><p>東京都市大学向けの非公式サービス<br/>正式な履修登録・最終確認は大学のシステムで行ってください。</p><span>DESIGNED FOR YOUR NEXT.</span></div></footer>;
+}
