@@ -2,6 +2,7 @@ import reviewed from "@/data/reviewed-assessments.json";
 import { CATEGORIES, courseById, offerings, offeringById, requirement, DAYS, rules, type Offering, type PlannerState } from "./data";
 import { aggregate, applicable, evaluate, inTarget, overlaps, registrationLoad, currentAcademicYear, isCurrentRequired, priorityFor, goalMeasures } from "./rules";
 
+import { matchesCreditTags } from "./credit-tags";
 import {selectRequiredSeeds,type RequiredGroup} from "./required-solver";
 
 export type CampusChoice = "yokohama-plus-ondemand" | "yokohama" | "setagaya-ondemand" | "setagaya" | "all";
@@ -29,7 +30,9 @@ export function matchesCampus(o: Offering, choice: CampusChoice = "yokohama-plus
   return yokohama || (setagaya && delivery(o) === "on-demand");
 }
 export function matchesPreferences(o: Offering, state: PlannerState) {
-  return matchesCampus(o, state.preferences.campus) && (!state.preferences.reportOnly || requirement.mandatoryIds.includes(o.courseId) || reportOnly(o));
+  return matchesCampus(o, state.preferences.campus) &&
+    (!state.preferences.reportOnly || requiredIds.has(o.courseId) || reportOnly(o)) &&
+    matchesCreditTags(courseById.get(o.courseId)!, state.preferences.creditTagIds);
 }
 
 export type DraftOptions = {targetCredits:number;preserveExisting:boolean};
@@ -104,7 +107,8 @@ export function generateSchedules(state:PlannerState,options:DraftOptions):Sched
    return fail([mandatory.exhausted?"必修の組み合わせ探索が上限に達しました。固定条件を減らして再試行してください。":"今期の必修を同時に含められません。時間重複・固定予定・目標単位数を確認してください。",...conflicts],audit);
  }
  // Optional courses are filled only after complete current-year mandatory seeds have been found.
- const initial=offerings.filter(o=>!requiredIds.has(o.courseId)&&!lockedCourses.has(o.courseId)&&inTarget(o,state.profile)&&!autoExclusions(o,fixedState).length);
+ const initial=offerings.filter(o=>!requiredIds.has(o.courseId)&&!lockedCourses.has(o.courseId)&&inTarget(o,state.profile)
+   &&matchesCreditTags(courseById.get(o.courseId)!,state.preferences.creditTagIds)&&!autoExclusions(o,fixedState).length);
  const cache=new Map<string,ReturnType<typeof aggregate>>();
  const summaryFor=(ids:string[])=>{
    const selectedIds=[...new Set([...state.completed,...ids.map(id=>offeringById.get(id)!.courseId)])].sort(),key=selectedIds.join("|");
@@ -170,6 +174,7 @@ export function generateSchedules(state:PlannerState,options:DraftOptions):Sched
    "参考案の有限探索です。全組み合わせの網羅や、卒業・履修許可の判定ではありません。",
    ...(!state.completed.length?["修得科目が未入力です。過年度の必修も未修得として扱っています。修得済みを登録して作り直してください。"]:[]),
    ...(mandatory.exhausted?["再履修必修の探索が上限に達したため、その最大充足数は確定していません。"]:[]),
+   ...(state.preferences.creditTagIds.length?["単位の区分は新しく追加する選択科目に適用します。必修と固定済みの予定は区分にかかわらず対象に含めます。"]:[]),
    ...(state.preferences.reportOnly?["レポート100%条件は選択科目だけに適用します。必修をこの条件で除外しません。"]:[]),
  ];
  if(!drafts.size)messages.push(state.preferences.campus==="setagaya-ondemand"?"確認済みの世田谷オンデマンド開講データがありません。":"この条件で作成できる時間割がありません。");

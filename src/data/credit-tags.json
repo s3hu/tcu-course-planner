@@ -44,6 +44,11 @@
     "kind": "requirement",
     "color": "#3154b8"
   },
+  "foreign_language_required": {
+    "label": "外国語（必修）",
+    "kind": "requirement",
+    "color": "#3154b8"
+  },
   "elective_required": {
     "label": "選択必修",
     "kind": "requirement",
