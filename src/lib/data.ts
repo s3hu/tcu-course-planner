@@ -1,7 +1,7 @@
 import catalog from "@/data/catalog.json";
 import {deriveCreditTags,type CreditTagId} from "./credit-tags";
 
-export type Category = "foreign_language" | "physical_education" | "liberal_arts" | "professional_foundation" | "professional" | "free_electives" | "not_counted" | "pbl";
+export type Category = "foreign_language" | "physical_education" | "liberal_arts" | "professional_foundation" | "professional" | "free_electives" | "not_counted" | "pbl" | "professional_applied";
 export type SourceRef = { source_id?: string; source_url?: string; pdf_page?: number; printed_page?: number; retrieved_at?: string };
 type RawCourse = { course_id: string; course_number?: string; title: string; credits: number; category?: string; category_path_raw?: string[]; allocation_by_year_raw?: Record<string, string>; allocation_by_semester_hours_raw?: Record<string,string>; required_type?: string; elective_group?: string|null; notes?: string; source: SourceRef; credit_family?: string; program_tags?: string[]; department?: string; graduation_credit_eligible?: boolean };
 type Meeting = { weekday: string | null; period: number | null; quarters: number[] | null; schedule_type: string; room_raw?: string | null; class_label?: string | null; assigned_year_raw?: string; campus_code?: string; eligible_enrollment_years?: { from: number; through: number }; source?: SourceRef };
@@ -22,6 +22,7 @@ export const CATEGORIES: Record<Category, { label: string; short: string; color:
   physical_education: { label: "体育科目", short: "体育", color: "#4c7852" },
   liberal_arts: { label: "教養科目", short: "教養", color: "#9a702c" },
   professional_foundation: { label: "専門基礎科目", short: "専門基礎", color: "#3a746b" },
+  professional_applied: { label: "専門応用科目", short: "専門応用", color: "#865d88" },
   professional: { label: "専門科目", short: "専門", color: "#79619b" },
   free_electives: { label: "自由選択", short: "自由選択", color: "#7c7464" },
   pbl: { label: "PBL科目", short: "PBL", color: "#99704a" },

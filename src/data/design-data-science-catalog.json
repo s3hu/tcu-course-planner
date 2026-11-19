@@ -1,0 +1,969 @@
+[
+  {
+    "year": 2023,
+    "source": {
+      "source_id": "dds-2023",
+      "uploaded_filename": "dds-2023.pdf",
+      "sha256": "28b8df14faee8d1263ddf6e4450d7abb0c4fdf5f4cf9642a78d3f532ff1ebe27",
+      "page_count": 120,
+      "filename_year_mismatch": false
+    },
+    "rules": {
+      "minimum_total_credits": 124,
+      "category_minimum_credits": {
+        "liberal_arts": 12,
+        "foreign_language": 14,
+        "professional_foundation": 50,
+        "professional_applied": 40,
+        "free_electives": 8
+      },
+      "foreign_language_required_skill_credits": 6,
+      "foreign_language_other_minimum_credits": 0,
+      "data_science_minimum_credits": 0,
+      "data_science_plus_mathematics_minimum_credits": 4,
+      "professional_elective_required_groups": [],
+      "graduation_credit_family_caps": {
+        "教養特別講義": 2,
+        "特別講義": 2
+      },
+      "registration_cap": {
+        "default_credits_per_semester": 20,
+        "relaxed_credits_per_semester": 24,
+        "f_GPA_threshold": 4.0,
+        "threshold_operator": ">=",
+        "source": {
+          "pdf_page": 57
+        },
+        "current_applicability_not_verified_against_later_notices": true
+      },
+      "progression": {
+        "year_3_minimum_countable_credits": 50,
+        "year_3_minimum_enrolled_months_excluding_leave": 24,
+        "graduation_research_1_minimum_countable_credits": 110,
+        "graduation_research_1_minimum_enrolled_months_excluding_leave": 42,
+        "graduation_research_1_prerequisites": [],
+        "case_research_2_prerequisites": [],
+        "graduation_research_2_prerequisites": [],
+        "sources": [
+          {
+            "pdf_page": 64
+          }
+        ],
+        "graduation_research_1_title": "キャップストーンプロジェクト"
+      },
+      "source": {
+        "pdf_page": 58
+      },
+      "degree_detail_source": {
+        "pdf_page": 76
+      },
+      "elective_required_categories": [
+        {
+          "category": "liberal_arts",
+          "group": "△",
+          "minimum_credits": 6
+        },
+        {
+          "category": "foreign_language",
+          "group": "△",
+          "minimum_credits": 4
+        },
+        {
+          "category": "professional_foundation",
+          "group": "△",
+          "minimum_credits": 20
+        },
+        {
+          "category": "professional_applied",
+          "group": "△",
+          "minimum_credits": 2
+        }
+      ],
+      "study_abroad": {
+        "policy": "faculty_guidance",
+        "description": "学部紹介では学生全員が海外へ留学すると案内しています。TAPの認定表では Improving English 6単位などを科目名のまま教養科目として認定します。個別の認定と卒業要件への算入は大学に確認してください。",
+        "sources": [
+          {
+            "pdf_page": 54
+          },
+          {
+            "pdf_page": 58
+          },
+          {
+            "pdf_page": 76
+          },
+          {
+            "pdf_page": 68
+          }
+        ]
+      }
+    },
+    "issues": [
+      {
+        "code": "individual_recognition",
+        "sources": [
+          {
+            "pdf_page": 64
+          },
+          {
+            "pdf_page": 68
+          }
+        ],
+        "detail": "個人の在学・休学期間、履修許可、単位互換・留学による単位認定、後日の訂正は未確認。"
+      },
+      {
+        "code": "study_abroad_status",
+        "sources": [
+          {
+            "pdf_page": 54
+          },
+          {
+            "pdf_page": 58
+          },
+          {
+            "pdf_page": 68
+          },
+          {
+            "pdf_page": 76
+          }
+        ],
+        "detail": "学部紹介に全員留学の方針があるが、卒業要件表に留学の独立した要件は記載されていない。2023年度版のTAP認定表は教養科目としての認定を記載しており、後年版の English III-A・III-B への読み替えは確認できない。個別の認定・例外・代替は未確認。"
+      }
+    ],
+    "courses": [
+      {"course_id":"dds-2023:common:LA-113:1","title":"倫理学(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-113","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-114:2","title":"倫理学(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-114","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-115:3","title":"倫理学(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-115","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-116:4","title":"倫理学(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-116","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-118:5","title":"視覚芸術史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-118","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-119:6","title":"視覚芸術史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-119","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-211:7","title":"デザイン概論(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-211","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-212:8","title":"デザイン概論(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-212","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-11A:9","title":"日本史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11A","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-11B:10","title":"日本史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11B","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-11C:11","title":"西洋史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11C","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-11D:12","title":"西洋史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11D","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-125:13","title":"社会学入門(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-125","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-126:14","title":"社会学入門(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-126","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-321:15","title":"日本経済論(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-321","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2023:common:LA-322:16","title":"日本経済論(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-322","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2023:common:LA-12M:17","title":"西洋経済史","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-12M","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-221:18","title":"日本の政治(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-221","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-222:19","title":"日本の政治(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-222","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-12J:20","title":"日本国憲法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12J","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-12K:21","title":"法学","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12K","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-12L:22","title":"民法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12L","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-13C:23","title":"心理学入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13C","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-13D:24","title":"社会とジェンダー(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13D","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-13E:25","title":"社会とジェンダー(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13E","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-13F:26","title":"日本文化の伝承(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13F","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-13G:27","title":"日本文化の伝承(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13G","notes":"SC開講","scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-135:28","title":"スポーツ・健康論","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-135","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-145:29","title":"データサイエンスリテラシー(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-145","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-241:30","title":"データサイエンスリテラシー(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-241","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-14C:31","title":"環境問題と社会","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14C","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-14B:32","title":"情報編集入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14B","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-351:33","title":"Japan Studies","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-351","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-352:34","title":"Global Studies(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-352","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-353:35","title":"Global Studies(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-353","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-354:36","title":"Global Studies(3)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-354","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-355:37","title":"Global Studies(4)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-355","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-356:38","title":"Intercultural Understanding(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-356","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-357:39","title":"Intercultural Understanding(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-357","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2023:common:LA-955:40","title":"教養特別講義","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-955","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-951:41","title":"ボランティア(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-951","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-952:42","title":"ボランティア(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-952","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-931:43","title":"インターンシップ(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-931","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:LA-932:44","title":"インターンシップ(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-932","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-111:45","title":"English I-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-111","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-112:46","title":"English I-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-112","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-113:47","title":"English II-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-113","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-114:48","title":"English II-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-114","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-115:49","title":"English III-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-115","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-116:50","title":"English III-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-116","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-211:51","title":"Reading Comprehension","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-211","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-212:52","title":"Debate & Discussion","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-212","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-213:53","title":"Presentation Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-213","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-214:54","title":"English Test Preparation","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-214","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-215:55","title":"Writing Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-215","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-311:56","title":"Academic Reading","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-311","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-312:57","title":"Academic Discussion","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-312","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-313:58","title":"Academic Presentation","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-313","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-314:59","title":"English Test Preparation for Academic Purposes","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-314","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:common:FL-315:60","title":"Academic Research & Writing","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-315","notes":null,"scope":"common","source":{"source_id":"dds-2023","pdf_page":77},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-111:1","title":"データサイエンス概論","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":["DS"],"course_number":"DD-111","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-112:2","title":"コンピュータ基礎演習","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-112","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-113:3","title":"プログラミング基礎演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-113","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-114:4","title":"データサイエンス数学","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-114","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-211:5","title":"統計学基礎","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-211","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-212:6","title":"統計データ解析演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-212","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-115:7","title":"情報学理論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-115","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-116:8","title":"アルゴリズムとデータ構造","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-116","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-213:9","title":"機械学習論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-213","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-214:10","title":"データマイニング","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-214","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-215:11","title":"データベース","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-215","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-117:12","title":"データ社会論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-117","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-118:13","title":"量的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-118","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-119:14","title":"質的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-119","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-216:15","title":"経営分析論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-216","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-217:16","title":"業務プロセス分析","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-217","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-121:17","title":"ユーザーエクスペリエンスデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-121","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-221:18","title":"デザインプレゼンテーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-221","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-222:19","title":"デザインプロトタイピング(1)","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-222","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-223:20","title":"ウェブプログラミング","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-223","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-224:21","title":"情報デザイン","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-224","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-321:22","title":"デザインリサーチ","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-321","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-131:23","title":"ソーシャルシステムデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-131","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-231:24","title":"金融・市場システム論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-231","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-232:25","title":"サービスイノベーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-232","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-233:26","title":"経営戦略概論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-233","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-234:27","title":"総合的品質管理","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-234","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-235:28","title":"オペレーションマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-235","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-331:29","title":"プロジェクトマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-331","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-191:30","title":"SD PBL(1)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-191","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-291:31","title":"SD PBL(2)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-291","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-391:32","title":"SD PBL(3)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-391","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-218:33","title":"プログラミング応用演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-218","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-219:34","title":"機械学習演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-219","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-311:35","title":"ビッグデータ解析演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-311","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-312:36","title":"ベイズ統計学","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-312","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-313:37","title":"ニューラルネットワーク","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-313","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-314:38","title":"画像・音声処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-314","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-315:39","title":"自然言語処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-315","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-316:40","title":"ウェブデータ処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-316","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-317:41","title":"企業経営分析ケーススタディ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-317","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-322:42","title":"デザインプロトタイピング(2)","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-322","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-323:43","title":"ブランドコンセプトデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-323","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-324:44","title":"インタフェースデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-324","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-325:45","title":"感性デザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-325","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-326:46","title":"デザインプロダクション演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-326","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-327:47","title":"インタラクションデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-327","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-332:48","title":"ビヘイビアル・ファイナンス","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-332","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-333:49","title":"リスク&クライシスマネジメント","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-333","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-334:50","title":"未来創造デザインプロジェクト","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-334","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-335:51","title":"サービスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-335","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-336:52","title":"サプライチェーンデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-336","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-337:53","title":"ビジネスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-337","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-991:54","title":"特別講義","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-991","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-992:55","title":"海外インターンシップ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-992","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2023:design_data_science:DD-993:56","title":"COOPプログラム","credits":4,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-993","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,null,"4",null]},
+      {"course_id":"dds-2023:design_data_science:DD-491:57","title":"キャップストーンプロジェクト","credits":4,"category":"professional_applied","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-491","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2023","pdf_page":78},"allocation_cells_raw":[null,null,null,null,null,null,"(4)","4"]}
+    ]
+  },
+  {
+    "year": 2024,
+    "source": {
+      "source_id": "dds-2024",
+      "uploaded_filename": "dds-2024.pdf",
+      "sha256": "414121be19257a4c8b37ebefe8a7960e3ad8e9c2ac892f248c4761d7d3b03375",
+      "page_count": 103,
+      "filename_year_mismatch": false
+    },
+    "rules": {
+      "minimum_total_credits": 124,
+      "category_minimum_credits": {
+        "liberal_arts": 12,
+        "foreign_language": 14,
+        "professional_foundation": 50,
+        "professional_applied": 40,
+        "free_electives": 8
+      },
+      "foreign_language_required_skill_credits": 6,
+      "foreign_language_other_minimum_credits": 0,
+      "data_science_minimum_credits": 0,
+      "data_science_plus_mathematics_minimum_credits": 4,
+      "professional_elective_required_groups": [],
+      "graduation_credit_family_caps": {
+        "教養特別講義": 2,
+        "特別講義": 2
+      },
+      "registration_cap": {
+        "default_credits_per_semester": 20,
+        "relaxed_credits_per_semester": 24,
+        "f_GPA_threshold": 4.0,
+        "threshold_operator": ">=",
+        "source": {
+          "pdf_page": 56
+        },
+        "current_applicability_not_verified_against_later_notices": true
+      },
+      "progression": {
+        "year_3_minimum_countable_credits": 50,
+        "year_3_minimum_enrolled_months_excluding_leave": 24,
+        "graduation_research_1_minimum_countable_credits": 110,
+        "graduation_research_1_minimum_enrolled_months_excluding_leave": 42,
+        "graduation_research_1_prerequisites": [],
+        "case_research_2_prerequisites": [],
+        "graduation_research_2_prerequisites": [],
+        "sources": [
+          {
+            "pdf_page": 63
+          },
+          {
+            "pdf_page": 64
+          }
+        ],
+        "graduation_research_1_title": "キャップストーンプロジェクト"
+      },
+      "source": {
+        "pdf_page": 57
+      },
+      "degree_detail_source": {
+        "pdf_page": 74
+      },
+      "elective_required_categories": [
+        {
+          "category": "liberal_arts",
+          "group": "△",
+          "minimum_credits": 6
+        },
+        {
+          "category": "foreign_language",
+          "group": "△",
+          "minimum_credits": 4
+        },
+        {
+          "category": "professional_foundation",
+          "group": "△",
+          "minimum_credits": 20
+        },
+        {
+          "category": "professional_applied",
+          "group": "△",
+          "minimum_credits": 2
+        }
+      ],
+      "study_abroad": {
+        "policy": "required_in_principle",
+        "description": "卒業までに大学が定める留学をすることが原則です。TAPでは Improving English のうち2単位を English III-A・III-B に読み替え、参加者は同科目を履修しません。大学で認定された科目を修得済みとして入力してください。その他の認定や例外の適用は大学に確認してください。",
+        "sources": [
+          {
+            "pdf_page": 57
+          },
+          {
+            "pdf_page": 67
+          }
+        ]
+      }
+    },
+    "issues": [
+      {
+        "code": "individual_recognition",
+        "sources": [
+          {
+            "pdf_page": 64
+          },
+          {
+            "pdf_page": 67
+          }
+        ],
+        "detail": "個人の在学・休学期間、履修許可、単位互換・留学による単位認定、後日の訂正は未確認。"
+      }
+    ],
+    "courses": [
+      {"course_id":"dds-2024:common:LA-113:1","title":"倫理学(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-113","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-114:2","title":"倫理学(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-114","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-115:3","title":"倫理学(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-115","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-116:4","title":"倫理学(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-116","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-118:5","title":"視覚芸術史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-118","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-119:6","title":"視覚芸術史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-119","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-211:7","title":"デザイン概論(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-211","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-212:8","title":"デザイン概論(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-212","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-11A:9","title":"日本史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11A","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-11B:10","title":"日本史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11B","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-11C:11","title":"西洋史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11C","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-11D:12","title":"西洋史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11D","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-125:13","title":"社会学入門(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-125","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-126:14","title":"社会学入門(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-126","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-321:15","title":"日本経済論(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-321","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2024:common:LA-322:16","title":"日本経済論(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-322","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2024:common:LA-12M:17","title":"西洋経済史","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-12M","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-221:18","title":"日本の政治(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-221","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-222:19","title":"日本の政治(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-222","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-12J:20","title":"日本国憲法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12J","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-12K:21","title":"法学","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12K","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-12L:22","title":"民法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12L","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-13C:23","title":"心理学入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13C","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-13D:24","title":"社会とジェンダー(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13D","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-13E:25","title":"社会とジェンダー(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13E","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-13F:26","title":"日本文化の伝承(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13F","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-13G:27","title":"日本文化の伝承(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13G","notes":"SC開講","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-135:28","title":"スポーツ・健康論","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-135","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-145:29","title":"データサイエンスリテラシー(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-145","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-241:30","title":"データサイエンスリテラシー(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-241","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-14C:31","title":"環境問題と社会","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14C","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-14B:32","title":"情報編集入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14B","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-351:33","title":"Japan Studies","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-351","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-352:34","title":"Global Studies(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-352","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-353:35","title":"Global Studies(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-353","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-354:36","title":"Global Studies(3)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-354","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-355:37","title":"Global Studies(4)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-355","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-356:38","title":"Intercultural Understanding(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-356","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-357:39","title":"Intercultural Understanding(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-357","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2024:common:LA-955:40","title":"教養特別講義","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-955","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-951:41","title":"ボランティア(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-951","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-952:42","title":"ボランティア(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-952","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-931:43","title":"インターンシップ(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-931","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:LA-932:44","title":"インターンシップ(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-932","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-111:45","title":"English I-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-111","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-112:46","title":"English I-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-112","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-113:47","title":"English II-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-113","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-114:48","title":"English II-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-114","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-115:49","title":"English III-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-115","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 67ページ）。","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-116:50","title":"English III-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-116","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 67ページ）。","scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-211:51","title":"Reading Comprehension","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-211","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-212:52","title":"Debate & Discussion","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-212","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-213:53","title":"Presentation Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-213","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-214:54","title":"English Test Preparation","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-214","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-215:55","title":"Writing Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-215","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-311:56","title":"Academic Reading","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-311","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-312:57","title":"Academic Discussion","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-312","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-313:58","title":"Academic Presentation","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-313","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-314:59","title":"English Test Preparation for Academic Purposes","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-314","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:common:FL-315:60","title":"Academic Research & Writing","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-315","notes":null,"scope":"common","source":{"source_id":"dds-2024","pdf_page":76},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-111:1","title":"データサイエンス概論","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":["DS"],"course_number":"DD-111","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-112:2","title":"コンピュータ基礎演習","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-112","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-113:3","title":"プログラミング基礎演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-113","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-114:4","title":"データサイエンス数学","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-114","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-211:5","title":"統計学基礎","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-211","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-212:6","title":"統計データ解析演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-212","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-115:7","title":"情報学理論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-115","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-116:8","title":"アルゴリズムとデータ構造","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-116","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-213:9","title":"機械学習論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-213","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-214:10","title":"データマイニング","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-214","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-215:11","title":"データベース","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-215","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-117:12","title":"データ社会論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-117","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-118:13","title":"量的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-118","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-119:14","title":"質的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-119","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-216:15","title":"経営分析論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-216","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-217:16","title":"業務プロセス分析","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-217","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-121:17","title":"ユーザーエクスペリエンスデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-121","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-221:18","title":"デザインプレゼンテーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-221","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-222:19","title":"デザインプロトタイピング(1)","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-222","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-223:20","title":"ウェブプログラミング","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-223","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-224:21","title":"情報デザイン","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-224","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-321:22","title":"デザインリサーチ","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-321","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-131:23","title":"ソーシャルシステムデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-131","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-231:24","title":"金融・市場システム論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-231","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-232:25","title":"サービスイノベーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-232","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-233:26","title":"経営戦略概論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-233","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-234:27","title":"総合的品質管理","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-234","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-235:28","title":"オペレーションマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-235","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-331:29","title":"プロジェクトマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-331","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-191:30","title":"SD PBL(1)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-191","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-291:31","title":"SD PBL(2)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-291","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-391:32","title":"SD PBL(3)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-391","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-218:33","title":"プログラミング応用演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-218","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-219:34","title":"機械学習演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-219","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-311:35","title":"ビッグデータ解析演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-311","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-312:36","title":"ベイズ統計学","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-312","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-313:37","title":"ニューラルネットワーク","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-313","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-314:38","title":"画像・音声処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-314","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-315:39","title":"自然言語処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-315","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-316:40","title":"ウェブデータ処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-316","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-317:41","title":"企業経営分析ケーススタディ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-317","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-322:42","title":"デザインプロトタイピング(2)","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-322","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-323:43","title":"ブランドコンセプトデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-323","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-324:44","title":"インタフェースデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-324","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-325:45","title":"感性デザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-325","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-326:46","title":"デザインプロダクション演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-326","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-327:47","title":"インタラクションデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-327","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-332:48","title":"ビヘイビアル・ファイナンス","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-332","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-333:49","title":"リスク&クライシスマネジメント","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-333","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-334:50","title":"未来創造デザインプロジェクト","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-334","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-335:51","title":"サービスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-335","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-336:52","title":"サプライチェーンデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-336","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-337:53","title":"ビジネスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-337","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-991:54","title":"特別講義","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-991","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-992:55","title":"海外インターンシップ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-992","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2024:design_data_science:DD-993:56","title":"COOPプログラム","credits":4,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-993","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,"4",null]},
+      {"course_id":"dds-2024:design_data_science:DD-491:57","title":"キャップストーンプロジェクト","credits":4,"category":"professional_applied","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-491","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2024","pdf_page":77},"allocation_cells_raw":[null,null,null,null,null,null,"(4)","4"]}
+    ]
+  },
+  {
+    "year": 2025,
+    "source": {
+      "source_id": "dds-2025",
+      "uploaded_filename": "dds-2025.pdf",
+      "sha256": "478c0f2e8b4ce6d5b644cffbe73e23e28728de6d0b6205caae6e4685a8bef48a",
+      "page_count": 111,
+      "filename_year_mismatch": false
+    },
+    "rules": {
+      "minimum_total_credits": 124,
+      "category_minimum_credits": {
+        "liberal_arts": 12,
+        "foreign_language": 14,
+        "professional_foundation": 50,
+        "professional_applied": 40,
+        "free_electives": 8
+      },
+      "foreign_language_required_skill_credits": 6,
+      "foreign_language_other_minimum_credits": 0,
+      "data_science_minimum_credits": 0,
+      "data_science_plus_mathematics_minimum_credits": 4,
+      "professional_elective_required_groups": [],
+      "graduation_credit_family_caps": {
+        "教養特別講義": 2,
+        "特別講義": 2
+      },
+      "registration_cap": {
+        "default_credits_per_semester": 24,
+        "relaxed_credits_per_semester": 28,
+        "f_GPA_threshold": 4.0,
+        "threshold_operator": ">=",
+        "source": {
+          "pdf_page": 57
+        },
+        "current_applicability_not_verified_against_later_notices": true
+      },
+      "progression": {
+        "year_3_minimum_countable_credits": 50,
+        "year_3_minimum_enrolled_months_excluding_leave": 24,
+        "graduation_research_1_minimum_countable_credits": 110,
+        "graduation_research_1_minimum_enrolled_months_excluding_leave": 42,
+        "graduation_research_1_prerequisites": [],
+        "case_research_2_prerequisites": [],
+        "graduation_research_2_prerequisites": [],
+        "sources": [
+          {
+            "pdf_page": 65
+          }
+        ],
+        "graduation_research_1_title": "キャップストーンプロジェクト"
+      },
+      "source": {
+        "pdf_page": 58
+      },
+      "degree_detail_source": {
+        "pdf_page": 77
+      },
+      "elective_required_categories": [
+        {
+          "category": "liberal_arts",
+          "group": "△",
+          "minimum_credits": 6
+        },
+        {
+          "category": "foreign_language",
+          "group": "△",
+          "minimum_credits": 4
+        },
+        {
+          "category": "professional_foundation",
+          "group": "△",
+          "minimum_credits": 20
+        },
+        {
+          "category": "professional_applied",
+          "group": "△",
+          "minimum_credits": 2
+        }
+      ],
+      "study_abroad": {
+        "policy": "required_in_principle",
+        "description": "卒業までに大学が定める留学をすることが原則です。TAPでは Improving English のうち2単位を English III-A・III-B に読み替え、参加者は同科目を履修しません。大学で認定された科目を修得済みとして入力してください。その他の認定や例外の適用は大学に確認してください。",
+        "sources": [
+          {
+            "pdf_page": 58
+          },
+          {
+            "pdf_page": 70
+          }
+        ]
+      }
+    },
+    "issues": [
+      {
+        "code": "individual_recognition",
+        "sources": [
+          {
+            "pdf_page": 65
+          },
+          {
+            "pdf_page": 70
+          }
+        ],
+        "detail": "個人の在学・休学期間、履修許可、単位互換・留学による単位認定、後日の訂正は未確認。"
+      }
+    ],
+    "courses": [
+      {"course_id":"dds-2025:common:LA-113:1","title":"倫理学(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-113","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-114:2","title":"倫理学(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-114","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-115:3","title":"倫理学(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-115","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-116:4","title":"倫理学(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-116","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-118:5","title":"視覚芸術史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-118","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-119:6","title":"視覚芸術史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-119","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-211:7","title":"デザイン概論(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-211","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-212:8","title":"デザイン概論(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-212","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-11A:9","title":"日本史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11A","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-11B:10","title":"日本史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11B","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-11C:11","title":"西洋史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11C","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-11D:12","title":"西洋史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11D","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-125:13","title":"社会学入門(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-125","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-126:14","title":"社会学入門(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-126","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-321:15","title":"日本経済論(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-321","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2025:common:LA-322:16","title":"日本経済論(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-322","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2025:common:LA-12M:17","title":"西洋経済史","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-12M","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-221:18","title":"日本の政治(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-221","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-222:19","title":"日本の政治(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-222","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-12J:20","title":"日本国憲法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12J","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-12K:21","title":"法学","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12K","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-12L:22","title":"民法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12L","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-13C:23","title":"心理学入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13C","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-13D:24","title":"社会とジェンダー(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13D","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-13E:25","title":"社会とジェンダー(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13E","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-13F:26","title":"日本文化の伝承(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13F","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-13G:27","title":"日本文化の伝承(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13G","notes":"ＳＣ開講","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-135:28","title":"スポーツ・健康論","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-135","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-145:29","title":"データサイエンスリテラシー(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-145","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-241:30","title":"データサイエンスリテラシー(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-241","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-14C:31","title":"環境問題と社会","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14C","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-14B:32","title":"情報編集入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14B","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-351:33","title":"Japan Studies","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-351","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-352:34","title":"Global Studies(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-352","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-353:35","title":"Global Studies(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-353","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-354:36","title":"Global Studies(3)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-354","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-355:37","title":"Global Studies(4)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-355","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-356:38","title":"Intercultural Understanding(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-356","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-357:39","title":"Intercultural Understanding(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-357","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2025:common:LA-955:40","title":"教養特別講義","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-955","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-951:41","title":"ボランティア(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-951","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-952:42","title":"ボランティア(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-952","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-931:43","title":"インターンシップ(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-931","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:LA-932:44","title":"インターンシップ(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-932","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-111:45","title":"English I-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-111","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-112:46","title":"English I-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-112","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-113:47","title":"English II-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-113","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-114:48","title":"English II-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-114","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-115:49","title":"English III-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-115","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 70ページ）。","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-116:50","title":"English III-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-116","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 70ページ）。","scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-211:51","title":"Reading Comprehension","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-211","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-212:52","title":"Debate & Discussion","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-212","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-213:53","title":"Presentation Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-213","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-214:54","title":"English Test Preparation","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-214","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-215:55","title":"Writing Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-215","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-311:56","title":"Academic Reading","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-311","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-312:57","title":"Academic Discussion","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-312","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-313:58","title":"Academic Presentation","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-313","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-314:59","title":"English Test Preparation for Academic Purposes","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-314","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:common:FL-315:60","title":"Academic Research & Writing","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-315","notes":null,"scope":"common","source":{"source_id":"dds-2025","pdf_page":79},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-111:1","title":"データサイエンス概論","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":["DS"],"course_number":"DD-111","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-112:2","title":"コンピュータ基礎演習","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-112","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-113:3","title":"プログラミング基礎演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-113","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-114:4","title":"データサイエンス数学","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-114","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-211:5","title":"統計学基礎","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-211","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-212:6","title":"統計データ解析演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-212","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-115:7","title":"情報学理論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-115","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-116:8","title":"アルゴリズムとデータ構造","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-116","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-213:9","title":"機械学習論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-213","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-214:10","title":"データマイニング","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-214","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-215:11","title":"データベース","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-215","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-117:12","title":"データ社会論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-117","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-118:13","title":"量的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-118","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-119:14","title":"質的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-119","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-216:15","title":"経営分析論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-216","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-217:16","title":"業務プロセス分析","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-217","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-121:17","title":"ユーザーエクスペリエンスデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-121","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-221:18","title":"デザインプレゼンテーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-221","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-222:19","title":"デザインプロトタイピング(1)","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-222","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-223:20","title":"ウェブプログラミング","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-223","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-224:21","title":"情報デザイン","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-224","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-321:22","title":"デザインリサーチ","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-321","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-131:23","title":"ソーシャルシステムデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-131","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-231:24","title":"金融・市場システム論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-231","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-232:25","title":"サービスイノベーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-232","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-233:26","title":"経営戦略概論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-233","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-234:27","title":"総合的品質管理","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-234","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-235:28","title":"オペレーションマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-235","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-331:29","title":"プロジェクトマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-331","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-191:30","title":"SD PBL(1)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-191","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-291:31","title":"SD PBL(2)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-291","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-391:32","title":"SD PBL(3)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-391","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-218:33","title":"プログラミング応用演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-218","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-219:34","title":"機械学習演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-219","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-311:35","title":"ビッグデータ解析演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-311","notes":"９","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-312:36","title":"ベイズ統計学","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-312","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-313:37","title":"ニューラルネットワーク","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-313","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-314:38","title":"画像・音声処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-314","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-315:39","title":"自然言語処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-315","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-316:40","title":"ウェブデータ処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-316","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-317:41","title":"企業経営分析ケーススタディ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-317","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-322:42","title":"デザインプロトタイピング(2)","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-322","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-323:43","title":"ブランドコンセプトデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-323","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-324:44","title":"インタフェースデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-324","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-325:45","title":"感性デザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-325","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-326:46","title":"デザインプロダクション演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-326","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-327:47","title":"インタラクションデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-327","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-332:48","title":"ビヘイビアル・ファイナンス","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-332","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-333:49","title":"リスク&クライシスマネジメント","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-333","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-334:50","title":"未来創造デザインプロジェクト","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-334","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-335:51","title":"サービスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-335","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-336:52","title":"サプライチェーンデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-336","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-337:53","title":"ビジネスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-337","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-991:54","title":"特別講義","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-991","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-992:55","title":"海外インターンシップ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-992","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:DD-993:56","title":"COOPプログラム","credits":4,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-993","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,"4",null]},
+      {"course_id":"dds-2025:design_data_science:DD-491:57","title":"キャップストーンプロジェクト","credits":4,"category":"professional_applied","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-491","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,"(4)","4"]},
+      {"course_id":"dds-2025:design_data_science:HP-101:1","title":"ことづくり(1)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-101","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-201:2","title":"ことづくり(2)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-201","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-202:3","title":"ことづくり(3)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-202","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,"1",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-301:4","title":"ことづくり(4)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-301","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-302:5","title":"ことづくり(5)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-302","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"1",null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-901:6","title":"ひらめきづくり(1)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-901","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-902:7","title":"ひらめきづくり(2)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-902","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-903:8","title":"ひらめきづくり(3)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-903","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-904:9","title":"ひらめきづくり(4)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-904","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,"1",null,null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-905:10","title":"ひらめきづくり(5)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-905","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-906:11","title":"Next PBL(1)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-906","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"1",null,null]},
+      {"course_id":"dds-2025:design_data_science:HP-907:12","title":"Next PBL(2)","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-907","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2025","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,null,null,"1"]}
+    ]
+  },
+  {
+    "year": 2026,
+    "source": {
+      "source_id": "dds-2026",
+      "uploaded_filename": "dds-2026.pdf",
+      "sha256": "7a6da9cdcf984327ceb05447a0945dacab61c8c6245078cbc90b42289b69cacb",
+      "page_count": 108,
+      "filename_year_mismatch": false
+    },
+    "rules": {
+      "minimum_total_credits": 124,
+      "category_minimum_credits": {
+        "liberal_arts": 12,
+        "foreign_language": 14,
+        "professional_foundation": 50,
+        "professional_applied": 40,
+        "free_electives": 8
+      },
+      "foreign_language_required_skill_credits": 6,
+      "foreign_language_other_minimum_credits": 0,
+      "data_science_minimum_credits": 0,
+      "data_science_plus_mathematics_minimum_credits": 4,
+      "professional_elective_required_groups": [],
+      "graduation_credit_family_caps": {
+        "教養特別講義": 2,
+        "特別講義": 2
+      },
+      "registration_cap": {
+        "default_credits_per_semester": 24,
+        "relaxed_credits_per_semester": 28,
+        "f_GPA_threshold": 4.0,
+        "threshold_operator": ">=",
+        "source": {
+          "pdf_page": 58
+        },
+        "current_applicability_not_verified_against_later_notices": true
+      },
+      "progression": {
+        "year_3_minimum_countable_credits": 50,
+        "year_3_minimum_enrolled_months_excluding_leave": 24,
+        "graduation_research_1_minimum_countable_credits": 110,
+        "graduation_research_1_minimum_enrolled_months_excluding_leave": 42,
+        "graduation_research_1_prerequisites": [],
+        "case_research_2_prerequisites": [],
+        "graduation_research_2_prerequisites": [],
+        "sources": [
+          {
+            "pdf_page": 67
+          }
+        ],
+        "graduation_research_1_title": "キャップストーンプロジェクト"
+      },
+      "source": {
+        "pdf_page": 59
+      },
+      "degree_detail_source": {
+        "pdf_page": 78
+      },
+      "elective_required_categories": [
+        {
+          "category": "liberal_arts",
+          "group": "△",
+          "minimum_credits": 6
+        },
+        {
+          "category": "foreign_language",
+          "group": "△",
+          "minimum_credits": 4
+        },
+        {
+          "category": "professional_foundation",
+          "group": "△",
+          "minimum_credits": 20
+        },
+        {
+          "category": "professional_applied",
+          "group": "△",
+          "minimum_credits": 2
+        }
+      ],
+      "study_abroad": {
+        "policy": "required_in_principle",
+        "description": "卒業までに大学が定める留学をすることが原則です。TAPでは Improving English のうち2単位を English III-A・III-B に読み替え、参加者は同科目を履修しません。大学で認定された科目を修得済みとして入力してください。その他の認定や例外の適用は大学に確認してください。",
+        "sources": [
+          {
+            "pdf_page": 59
+          },
+          {
+            "pdf_page": 71
+          }
+        ]
+      }
+    },
+    "issues": [
+      {
+        "code": "individual_recognition",
+        "sources": [
+          {
+            "pdf_page": 67
+          },
+          {
+            "pdf_page": 71
+          }
+        ],
+        "detail": "個人の在学・休学期間、履修許可、単位互換・留学による単位認定、後日の訂正は未確認。"
+      },
+      {
+        "code": "same_title",
+        "sources": [
+          {
+            "pdf_page": 81
+          },
+          {
+            "pdf_page": 82
+          }
+        ],
+        "detail": "DD-321 と HP-201 のデザインリサーチが同名・同単位。HP-201 は卒業要件非加算。同名照合では曖昧なため対象外。"
+      }
+    ],
+    "courses": [
+      {"course_id":"dds-2026:common:LA-113:1","title":"倫理学(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-113","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-114:2","title":"倫理学(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-114","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-115:3","title":"倫理学(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-115","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-116:4","title":"倫理学(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-116","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-118:5","title":"視覚芸術史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-118","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-119:6","title":"視覚芸術史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-119","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-211:7","title":"デザイン概論(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-211","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-212:8","title":"デザイン概論(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-212","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-11A:9","title":"日本史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11A","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-11B:10","title":"日本史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11B","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-11C:11","title":"西洋史(1)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11C","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-11D:12","title":"西洋史(2)","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-11D","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-125:13","title":"社会学入門(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-125","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-126:14","title":"社会学入門(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-126","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-321:15","title":"日本経済論(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-321","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2026:common:LA-322:16","title":"日本経済論(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-322","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2026:common:LA-12M:17","title":"西洋経済史","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-12M","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-221:18","title":"日本の政治(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-221","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-222:19","title":"日本の政治(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-222","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-12J:20","title":"日本国憲法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12J","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-12K:21","title":"法学","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12K","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-12L:22","title":"民法","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-12L","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-13C:23","title":"心理学入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13C","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-13D:24","title":"社会とジェンダー(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13D","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-13E:25","title":"社会とジェンダー(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-13E","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-13F:26","title":"日本文化の伝承(a)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13F","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-13G:27","title":"日本文化の伝承(b)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["G"],"course_number":"LA-13G","notes":"SC開講","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-135:28","title":"スポーツ・健康論","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-135","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-145:29","title":"データサイエンスリテラシー(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-145","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-241:30","title":"データサイエンスリテラシー(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":["DS"],"course_number":"LA-241","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-14C:31","title":"環境問題と社会","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14C","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-14B:32","title":"情報編集入門","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-14B","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-351:33","title":"Japan Studies","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-351","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-352:34","title":"Global Studies(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-352","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-353:35","title":"Global Studies(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-353","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-354:36","title":"Global Studies(3)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-354","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-355:37","title":"Global Studies(4)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-355","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-356:38","title":"Intercultural Understanding(1)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-356","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-357:39","title":"Intercultural Understanding(2)","credits":2,"category":"liberal_arts","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"LA-357","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,"(2)","(2)","2",null,null,null]},
+      {"course_id":"dds-2026:common:LA-955:40","title":"教養特別講義","credits":2,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-955","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2","(2)",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-951:41","title":"ボランティア(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-951","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-952:42","title":"ボランティア(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-952","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-931:43","title":"インターンシップ(1)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-931","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:LA-932:44","title":"インターンシップ(2)","credits":1,"category":"liberal_arts","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"LA-932","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-111:45","title":"English I-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-111","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-112:46","title":"English I-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-112","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-113:47","title":"English II-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-113","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-114:48","title":"English II-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-114","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-115:49","title":"English III-A","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-115","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 71ページ）。","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-116:50","title":"English III-B","credits":1,"category":"foreign_language","required_type":"required","elective_group":null,"program_tags":[],"course_number":"FL-116","notes":"TAP参加者は履修せず、認定された Improving English を読み替えます（PDF 71ページ）。","scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","2",null,null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-211:51","title":"Reading Comprehension","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-211","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-212:52","title":"Debate & Discussion","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-212","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-213:53","title":"Presentation Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-213","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-214:54","title":"English Test Preparation","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-214","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-215:55","title":"Writing Strategies","credits":2,"category":"foreign_language","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"FL-215","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":[null,"(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-311:56","title":"Academic Reading","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-311","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-312:57","title":"Academic Discussion","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-312","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-313:58","title":"Academic Presentation","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-313","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-314:59","title":"English Test Preparation for Academic Purposes","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-314","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:common:FL-315:60","title":"Academic Research & Writing","credits":2,"category":"foreign_language","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"FL-315","notes":null,"scope":"common","source":{"source_id":"dds-2026","pdf_page":80},"allocation_cells_raw":["(2)","(2)","(2)","2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-111:1","title":"データサイエンス概論","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":["DS"],"course_number":"DD-111","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-112:2","title":"コンピュータ基礎演習","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-112","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-113:3","title":"プログラミング基礎演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-113","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-114:4","title":"データサイエンス数学","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-114","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-211:5","title":"統計学基礎","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-211","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-212:6","title":"統計データ解析演習","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":["MS"],"course_number":"DD-212","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-115:7","title":"情報学理論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-115","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-116:8","title":"アルゴリズムとデータ構造","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-116","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-213:9","title":"機械学習論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-213","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-214:10","title":"データマイニング","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-214","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-215:11","title":"データベース","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-215","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-117:12","title":"データ社会論","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-117","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-118:13","title":"量的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-118","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-119:14","title":"質的ユーザー調査","credits":2,"category":"professional_foundation","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-119","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-216:15","title":"経営分析論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-216","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-217:16","title":"業務プロセス分析","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-217","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-121:17","title":"ユーザーエクスペリエンスデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-121","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-221:18","title":"デザインプレゼンテーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-221","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-222:19","title":"デザインプロトタイピング(1)","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-222","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-223:20","title":"ウェブプログラミング","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-223","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-224:21","title":"情報デザイン","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-224","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-321:22","title":"デザインリサーチ","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-321","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-131:23","title":"ソーシャルシステムデザイン入門","credits":2,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-131","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-231:24","title":"金融・市場システム論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-231","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-232:25","title":"サービスイノベーション","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-232","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-233:26","title":"経営戦略概論","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-233","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-234:27","title":"総合的品質管理","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-234","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-235:28","title":"オペレーションマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-235","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-331:29","title":"プロジェクトマネジメント","credits":2,"category":"professional_foundation","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-331","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-191:30","title":"SD PBL(1)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-191","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["1",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-291:31","title":"SD PBL(2)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-291","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-391:32","title":"SD PBL(3)","credits":1,"category":"professional_foundation","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-391","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-218:33","title":"プログラミング応用演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-218","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,"2",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-219:34","title":"機械学習演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-219","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,"2",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-311:35","title":"ビッグデータ解析演習","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-311","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-312:36","title":"ベイズ統計学","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-312","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-313:37","title":"ニューラルネットワーク","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-313","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-314:38","title":"画像・音声処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-314","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-315:39","title":"自然言語処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-315","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-316:40","title":"ウェブデータ処理","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-316","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-317:41","title":"企業経営分析ケーススタディ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-317","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-322:42","title":"デザインプロトタイピング(2)","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-322","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-323:43","title":"ブランドコンセプトデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-323","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-324:44","title":"インタフェースデザイン","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-324","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-325:45","title":"感性デザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-325","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-326:46","title":"デザインプロダクション演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-326","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-327:47","title":"インタラクションデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-327","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-332:48","title":"ビヘイビアル・ファイナンス","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-332","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-333:49","title":"リスク&クライシスマネジメント","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-333","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-334:50","title":"未来創造デザインプロジェクト","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-334","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-335:51","title":"サービスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-335","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,"2",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-336:52","title":"サプライチェーンデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-336","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-337:53","title":"ビジネスシステムデザイン演習","credits":2,"category":"professional_applied","required_type":"elective_required","elective_group":"△","program_tags":[],"course_number":"DD-337","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-991:54","title":"特別講義","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-991","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":["(2)","2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-992:55","title":"海外インターンシップ","credits":2,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-992","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:DD-993:56","title":"COOPプログラム","credits":4,"category":"professional_applied","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"DD-993","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,null,"4",null]},
+      {"course_id":"dds-2026:design_data_science:DD-491:57","title":"キャップストーンプロジェクト","credits":4,"category":"professional_applied","required_type":"required","elective_group":null,"program_tags":[],"course_number":"DD-491","notes":null,"scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":81},"allocation_cells_raw":[null,null,null,null,null,null,"(4)","4"]},
+      {"course_id":"dds-2026:design_data_science:HP-101:1","title":"ことづくり","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-101","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,"1",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-201:2","title":"デザインリサーチ","credits":2,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-201","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,"2",null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-301:3","title":"サステナビリティ","credits":2,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-301","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,null,null,null,null,"2",null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-901:4","title":"デザインシンキング","credits":2,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-901","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":["2",null,null,null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-902:5","title":"アイデアソン演習","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-902","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,null,"1",null,null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-903:6","title":"ハッカソン演習","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-903","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,null,null,"1",null,null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-904:7","title":"ビジネスコンテスト演習","credits":1,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-904","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,null,null,null,"1",null,null,null]},
+      {"course_id":"dds-2026:design_data_science:HP-905:8","title":"フィールドリサーチ","credits":2,"category":"not_counted","required_type":"elective","elective_group":null,"program_tags":[],"course_number":"HP-905","notes":"卒業要件非加算、ＳＣ開講","scope":"design_data_science","source":{"source_id":"dds-2026","pdf_page":82},"allocation_cells_raw":[null,null,"2",null,null,null,null,"1"]}
+    ]
+  }
+]
