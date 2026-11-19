@@ -24,6 +24,11 @@
     "kind": "group",
     "color": "#3a746b"
   },
+  "professional_applied": {
+    "label": "専門応用科目",
+    "kind": "group",
+    "color": "#865d88"
+  },
   "professional": {
     "label": "専門科目",
     "kind": "group",
