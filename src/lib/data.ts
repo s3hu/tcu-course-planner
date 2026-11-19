@@ -12,7 +12,7 @@ export type Slot = { day: number; period: number; quarters: number[] };
 export type Course = { id: string; code: string; name: string; credits: number; category: Category; creditTagIds:CreditTagId[]; year: number | null; topics: string[]; description: string; prerequisiteIds: string[]; creditFamily: string | null; creditStatus: "countable" | "conditional" | "conflict" | "excluded"; notes: string; source: SourceRef; requiredType: string; programTags: string[]; department: string | null; allocationSlots?: {year:number;term:"前期"|"後期";primary:boolean}[] };
 export type Offering = { id: string; courseId: string; lectureCode: string; name: string; academicYear: number; credits: number; term: "前期" | "後期"; termLabel: string; quarters: number[]; slots: Slot[]; meetings: Meeting[]; campus: string; room: string; teacher: string; assessment: null; assessmentText: string; sourceId: string; syllabus: Syllabus; route: CreditRoute; registrationNote: string | null; creditProcedure: unknown };
 export type Profile = { admissionYear: number; faculty: string; department: string; academicYear: number; term: "前期" | "後期" };
-export type Preferences = { avoidDays: number[]; dayMode: "strict" | "soft"; assessment: "any" | "report" | "exam"; interests: string[]; avoidPeriods: number[]; campus?: import("./scheduling").CampusChoice; reportOnly?: boolean };
+export type Preferences = { avoidDays: number[]; dayMode: "strict" | "soft"; assessment: "any" | "report" | "exam"; interests: string[]; avoidPeriods: number[]; creditTagIds: string[]; campus?: import("./scheduling").CampusChoice; reportOnly?: boolean };
 export type PlannerState = { version: 2; datasetId: string; profile: Profile; completed: string[]; planned: string[]; preferences: Preferences };
 export const DATASET_ID = "tcu-sm-2025-v2";
 export const DAYS = ["月", "火", "水", "木", "金", "土"];
@@ -71,7 +71,7 @@ export const offerings: Offering[] = rawOfferings.map(o => {
   };
 });
 export const offeringById = new Map(offerings.map(o => [o.id, o]));
-export const DEFAULT_STATE: PlannerState = { version: 2, datasetId: DATASET_ID, profile: { admissionYear: 2025, faculty: scope.faculty, department: scope.department, academicYear: 2026, term: "後期" }, completed: [], planned: [], preferences: { avoidDays: [], dayMode: "soft", assessment: "any", interests: [], avoidPeriods: [], campus: "yokohama-plus-ondemand", reportOnly: false } };
+export const DEFAULT_STATE: PlannerState = { version: 2, datasetId: DATASET_ID, profile: { admissionYear: 2025, faculty: scope.faculty, department: scope.department, academicYear: 2026, term: "後期" }, completed: [], planned: [], preferences: { avoidDays: [], dayMode: "soft", assessment: "any", interests: [], avoidPeriods: [], creditTagIds: [], campus: "yokohama-plus-ondemand", reportOnly: false } };
 export const Q_LABELS = ["", "前期前半", "前期後半", "後期前半", "後期後半"];
 export function officialUrl(value?: string | null) { try { const u = new URL(value ?? ""); return u.protocol === "https:" && (u.hostname === "tcu.ac.jp" || u.hostname.endsWith(".tcu.ac.jp")) ? u.href : null; } catch { return null; } }
 export function sourceLabel(s: SourceRef) { return (s.source_id === "handbook_2025" ? "2025年度 学修要覧" : s.source_id === "uploaded_timetable" ? "2026年度 時間表" : s.source_id ?? "シラバス") + (s.pdf_page ? " PDF " + s.pdf_page + "ページ" : "") + (s.printed_page ? "（冊子 " + s.printed_page + "ページ）" : ""); }
