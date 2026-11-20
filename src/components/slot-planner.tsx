@@ -6,9 +6,10 @@ import {ArrowRight,CalendarDays,Check,ChevronRight,MapPin,Plus,SlidersHorizontal
 import {CATEGORIES,DAYS,Q_LABELS,courseById,requirement,offerings,type PlannerState} from "@/lib/data";
 import {registrationLoad,inTarget} from "@/lib/rules";
 import {auditRequired,matchesPreferences} from "@/lib/scheduling";
+import {targetQuarters} from "@/lib/term-halves";
 import {buildSlotIndex,candidatesAt,slotId,type SlotKey} from "@/lib/slots";
 export function SlotPlanner({state,onSlot,onPreferences}:{state:PlannerState;onSlot:(slot:SlotKey)=>void;onPreferences:()=>void}){
- const [choice,setChoice]=useState(0),[day,setDay]=useState(0);const quarters=state.profile.term==="前期"?[1,2]:[3,4],quarter=quarters.includes(choice)?choice:quarters[0];
+ const [choice,setChoice]=useState(0),[day,setDay]=useState(0);const quarters=state.profile.term==="前期"?[1,2]:[3,4],quarter=quarters.includes(choice)?choice:targetQuarters(state.profile.term,state.preferences.halves)[0];
  const index=useMemo(()=>buildSlotIndex(state,quarter),[state,quarter]);
  const current=auditRequired(state).filter(a=>a.current&&a.status!=="completed");
  const requiredMissing=current.filter(a=>a.status!=="scheduled");

@@ -3,12 +3,13 @@ import {useState} from "react";
 import {ArrowRight,CalendarDays,Check,MapPin,Settings2,Sparkles} from "lucide-react";
 import {CATEGORIES,DAYS,Q_LABELS,courseById,offeringById,type PlannerState,type Preferences} from "@/lib/data";
 import {aggregate,currentAcademicYear} from "@/lib/rules";
+import {targetQuarters} from "@/lib/term-halves";
 import RequiredCheck from "./required-check";
 import {CAMPUS_CHOICES,auditRequired,generateSchedules,type CampusChoice,type ScheduleDraft} from "@/lib/scheduling";
 export default function ScheduleBuilder({state,onPreferences,onApply,onCompleted,onDetail}:{state:PlannerState;onPreferences:(p:Preferences)=>void;onApply:(ids:string[])=>void;onCompleted:()=>void;onDetail:(id:string)=>void}){
  const [target,setTarget]=useState(20),[fixed,setFixed]=useState(true),[drafts,setDrafts]=useState<ScheduleDraft[]>([]),[messages,setMessages]=useState<string[]>([]),[generated,setGenerated]=useState(""),[applied,setApplied]=useState("");
  const [historyConfirmed,setHistoryConfirmed]=useState(""); const historyKey=JSON.stringify([state.profile,state.completed]); const historyReady=state.completed.length>0||historyConfirmed===historyKey;
- const [previewQuarter,setPreviewQuarter]=useState(0);const quarters=state.profile.term==="前期"?[1,2]:[3,4];const quarter=quarters.includes(previewQuarter)?previewQuarter:quarters[0];
+ const [previewQuarter,setPreviewQuarter]=useState(0);const quarters=state.profile.term==="前期"?[1,2]:[3,4];const quarter=quarters.includes(previewQuarter)?previewQuarter:targetQuarters(state.profile.term,state.preferences.halves)[0];
  const signature=JSON.stringify([state,target,fixed]),stale=generated!==signature;
  const requiredFocus=auditRequired(state,fixed?state.planned:[]).filter(a=>a.current&&a.status!=="completed");
  const shortages=aggregate(state.completed).breakdown.filter(b=>b.remaining>0);
