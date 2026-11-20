@@ -31,6 +31,13 @@ const departmentScopes = {
  [ENVIRONMENTAL_MANAGEMENT]: "environmental_management",
  [DESIGN_DATA_SCIENCE]: "design_data_science",
 } as const;
+const facultySlugs = {
+ [MEDIA_FACULTY]: "media",
+ [ENVIRONMENT_FACULTY]: "environment",
+ [DESIGN_FACULTY]: "design",
+} as const;
+type HandbookDatasetId = `tcu-handbook-${number}-${typeof facultySlugs[HandbookFaculty]}-${typeof departmentScopes[HandbookDepartment]}-v1`;
+const LEGACY_HANDBOOK_DATASET_ID = "tcu-handbooks-v1";
 type CatalogScope = "common" | typeof departmentScopes[HandbookDepartment];
 export function handbookDepartments(faculty: string): readonly HandbookDepartment[] {
  const knownFaculty = HANDBOOK_FACULTIES.find(name => name === faculty);
@@ -100,6 +107,12 @@ const curricula = [...handbooks, ...informationSystemsHandbooks, ...environmentH
 export const SUPPORTED_YEARS=[2022,2023,2024,2025,2026];
 export const getHandbook = (year: number, department: string = SOCIAL_MEDIA, faculty: string = MEDIA_FACULTY) =>
  curricula.find(h => h.year === year && h.department === department && h.faculty === faculty);
+export function handbookDatasetId({admissionYear, faculty, department}: Pick<Profile, "admissionYear" | "faculty" | "department">): HandbookDatasetId | null {
+ if (typeof faculty !== "string" || typeof department !== "string") return null;
+ const handbook = getHandbook(admissionYear, department, faculty);
+ if (!handbook) return null;
+ return `tcu-handbook-${handbook.year}-${facultySlugs[handbook.faculty]}-${departmentScopes[handbook.department]}-v1`;
+}
 export function supportsHandbookProfile(p: Profile) {
  return !!getHandbook(p.admissionYear, p.department, p.faculty);
 }
@@ -207,14 +220,16 @@ export function handbookCandidates(h:Handbook,profile:Profile,quarter:number,day
  if(!(profile.term==="前期"?[1,2]:[3,4]).includes(quarter))return [];
  return handbookOfferings(h.year,h.department,h.faculty).filter(o=>o.academicYear===profile.academicYear&&o.slots.some(s=>s.day===day&&s.period===period&&s.quarters.includes(quarter))&&(planned.includes(o.id)||(matchesTermHalves(o,profile.term,halves)&&matchesCampus(o,campus)))).map(o=>({offering:o,course:h.courses.find(c=>c.id===o.courseId)!,selected:planned.includes(o.id),issues:handbookOfferingIssues(h,o,profile,completed,planned)})).sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(a.issues.length>0)-Number(b.issues.length>0)||Number(b.course.requiredType==="required")-Number(a.course.requiredType==="required")||a.course.name.localeCompare(b.course.name,"ja"));
 }
-export type HandbookState={version:1;datasetId:"tcu-handbooks-v1";profile:Profile;completed:string[];planned:string[];campus:CampusChoice;creditTagIds?:string[];halves?:TermHalf[]};
+export type HandbookState={version:1;datasetId:HandbookDatasetId;profile:Profile;completed:string[];planned:string[];campus:CampusChoice;creditTagIds?:string[];halves?:TermHalf[]};
 export function sanitizeHandbookState(value:unknown):HandbookState|null{
- if(!value||typeof value!=="object")return null;const s=value as Partial<HandbookState>;
- if(s.version!==1||s.datasetId!=="tcu-handbooks-v1"||!s.profile||!supportsHandbookProfile(s.profile)||s.profile.academicYear!==2026||!["前期","後期"].includes(s.profile.term)||!Array.isArray(s.completed)||!Array.isArray(s.planned)||!s.completed.every(x=>typeof x==="string")||!s.planned.every(x=>typeof x==="string")||!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(s.campus??""))return null;
+ if(!value||typeof value!=="object")return null;const s=value as Partial<Omit<HandbookState, "datasetId">> & {datasetId?: unknown};
+ if(s.version!==1||!s.profile||s.profile.academicYear!==2026||!["前期","後期"].includes(s.profile.term)||!Array.isArray(s.completed)||!Array.isArray(s.planned)||!s.completed.every(x=>typeof x==="string")||!s.planned.every(x=>typeof x==="string")||!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(s.campus??""))return null;
+ const datasetId = handbookDatasetId(s.profile);
+ if (!datasetId || (s.datasetId !== datasetId && s.datasetId !== LEGACY_HANDBOOK_DATASET_ID)) return null;
  const h=getHandbook(s.profile.admissionYear,s.profile.department,s.profile.faculty)!;const courseIds=new Set(h.courses.map(c=>c.id)),offeringIds=new Set(handbookOfferings(h.year,h.department,h.faculty).map(o=>o.id));
  // Reject cross-curriculum data, rather than silently counting a different year's records.
  if(s.completed.some(id=>!courseIds.has(id))||s.planned.some(id=>!offeringIds.has(id)))return null;
- return {version:1,datasetId:"tcu-handbooks-v1",profile:s.profile,completed:[...new Set(s.completed)],planned:[...new Set(s.planned)],campus:s.campus!,
+ return {version:1,datasetId,profile:s.profile,completed:[...new Set(s.completed)],planned:[...new Set(s.planned)],campus:s.campus!,
   ...(s.halves===undefined?{}:{halves:sanitizeTermHalves(s.halves)}),
   ...(s.creditTagIds===undefined?{}:{creditTagIds:sanitizeCreditFilterIds(s.creditTagIds,h.courses)})};
 }

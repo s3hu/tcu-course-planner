@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {DEFAULT_STATE,courseById,offeringById} from "../src/lib/data";
+import {DATASET_ID,DEFAULT_STATE,courseById,offeringById} from "../src/lib/data";
 import {overlaps} from "../src/lib/rules";
 import {CREDIT_TAGS} from "../src/lib/credit-tags";
-import {DESIGN_DATA_SCIENCE,DESIGN_FACULTY,ENVIRONMENTAL_CREATION,ENVIRONMENTAL_MANAGEMENT,ENVIRONMENT_FACULTY,HANDBOOK_FACULTIES,INFORMATION_SYSTEMS,MEDIA_FACULTY,handbookDepartments,aggregateHandbook,getHandbook,handbooks,handbookOfferings,handbookOfferingIssues,handbookCandidates,sanitizeHandbookState,supportsHandbookProfile,normalizeCourseTitle,handbookReplacement,type HandbookState} from "../src/lib/handbooks";
+import {DESIGN_DATA_SCIENCE,DESIGN_FACULTY,ENVIRONMENTAL_CREATION,ENVIRONMENTAL_MANAGEMENT,ENVIRONMENT_FACULTY,HANDBOOK_FACULTIES,INFORMATION_SYSTEMS,MEDIA_FACULTY,SUPPORTED_YEARS,handbookDatasetId,handbookDepartments,aggregateHandbook,getHandbook,handbooks,handbookOfferings,handbookOfferingIssues,handbookCandidates,sanitizeHandbookState,supportsHandbookProfile,normalizeCourseTitle,handbookReplacement,type HandbookState} from "../src/lib/handbooks";
 const profile=(year:number)=>({...DEFAULT_STATE.profile,admissionYear:year});
 test("four handbook curricula keep own and common subjects isolated by entry year",()=>{assert.deepEqual(handbooks.map(h=>[h.year,h.courses.length]),[[2022,252],[2023,255],[2024,258],[2026,265]]);for(const h of handbooks){assert.equal(new Set(h.courses.map(c=>c.id)).size,h.courses.length);assert.ok(h.courses.every(c=>c.curriculumYear===h.year&&["common","social_media"].includes(c.catalogScope)&&c.creditTagIds.every(id=>!!CREDIT_TAGS[id])));assert.equal(supportsHandbookProfile(profile(h.year)),true);}assert.equal(supportsHandbookProfile({...profile(2022),department:INFORMATION_SYSTEMS}),false);assert.equal(getHandbook(2027),undefined);});
 test("2022 PBL credits stay separate while 2024 PBL belongs to foundation",()=>{for(const year of [2022,2024]){const h=getHandbook(year)!,pbl=h.courses.filter(c=>/^SD PBL\([123]\)$/.test(c.name));assert.equal(pbl.length,3);const a=aggregateHandbook(h,pbl.map(c=>c.id));assert.equal(a.total,3);if(year===2022){assert.ok(pbl.every(c=>c.category==="pbl"));assert.equal(a.breakdown.find(b=>b.id==="pbl")?.earned,3);assert.equal(a.breakdown.find(b=>b.id==="professional_foundation")?.required,30);}else{assert.ok(pbl.every(c=>c.category==="professional_foundation"));assert.equal(a.breakdown.find(b=>b.id==="professional_foundation")?.earned,3);assert.equal(a.breakdown.find(b=>b.id==="professional_foundation")?.required,33);}}});
@@ -11,7 +11,7 @@ test("family caps follow the entry handbook and excess never leaks to free elect
 test("duplicate and foreign-curriculum completions cannot inflate the total",()=>{const a=getHandbook(2024)!,b=getHandbook(2026)!;const c=a.courses.find(c=>c.credits===.5)!;assert.equal(aggregateHandbook(a,[c.id,c.id,b.courses[0].id]).total,.5);assert.equal(aggregateHandbook(b,[c.id]).total,0);const all=aggregateHandbook(a,a.courses.filter(c=>c.category==="foreign_language").map(c=>c.id));assert.ok(all.surplus>0);assert.equal(all.total,a.courses.filter(c=>c.category==="foreign_language").reduce((n,c)=>n+c.credits,0));});
 test("cross-year opening references require an explicit cohort range and unique title+credits",()=>{for(const h of handbooks){const os=handbookOfferings(h.year);assert.ok(os.length>0);for(const o of os){const source=offeringById.get(o.sourceOfferingId)!,c=h.courses.find(c=>c.id===o.courseId)!;assert.ok(source.meetings.every(m=>!!m.eligible_enrollment_years&&h.year>=m.eligible_enrollment_years.from&&h.year<=m.eligible_enrollment_years.through));assert.equal(c.credits,o.credits);assert.equal(normalizeCourseTitle(c.name),normalizeCourseTitle(source.name));assert.equal(o.syllabusReferenceYear,2025);assert.equal(o.catalogYear,h.year);}}});
 test("quarter filtering and other-meeting clashes remain effective for added curricula",()=>{const h=getHandbook(2024)!,p=profile(2024),os=handbookOfferings(2024).filter(o=>o.quarters.includes(3));const pair=os.flatMap(a=>os.filter(b=>b.id!==a.id&&b.courseId!==a.courseId&&overlaps(a,b)).map(b=>[a,b])).find(([a,b])=>!handbookOfferingIssues(h,a,p,[],[]).length&&!handbookOfferingIssues(h,b,p,[],[]).length);assert.ok(pair);const [a,b]=pair;assert.ok(handbookOfferingIssues(h,b,p,[],[a.id]).some(x=>x.includes("時間が重なる")));const m=a.slots.find(s=>s.quarters.includes(3))!;assert.ok(handbookCandidates(h,p,3,m.day,m.period,[],[],"all").some(r=>r.offering.id===a.id));assert.equal(handbookCandidates(h,p,1,m.day,m.period,[],[],"all").length,0);assert.ok(handbookOfferingIssues(h,a,p,[a.courseId],[]).some(x=>x.includes("修得済み")));});
-test("imports validate dataset, curriculum, year and identities",()=>{const h=getHandbook(2026)!;const s:HandbookState={version:1,datasetId:"tcu-handbooks-v1",profile:profile(2026),completed:[h.courses[0].id,h.courses[0].id],planned:[],campus:"yokohama"};assert.equal(sanitizeHandbookState(s)?.completed.length,1);assert.equal(sanitizeHandbookState({...s,completed:[getHandbook(2024)!.courses[0].id]}),null);assert.equal(sanitizeHandbookState({...s,profile:profile(2025)}),null);assert.equal(sanitizeHandbookState({...s,profile:{...s.profile,academicYear:2027}}),null);assert.equal(sanitizeHandbookState({...s,planned:["unknown"]}),null);});
+test("imports validate dataset, curriculum, year and identities",()=>{const h=getHandbook(2026)!;const s:HandbookState={version:1,datasetId:handbookDatasetId(profile(2026))!,profile:profile(2026),completed:[h.courses[0].id,h.courses[0].id],planned:[],campus:"yokohama"};assert.equal(sanitizeHandbookState(s)?.completed.length,1);assert.equal(sanitizeHandbookState({...s,completed:[getHandbook(2024)!.courses[0].id]}),null);assert.equal(sanitizeHandbookState({...s,profile:profile(2025)}),null);assert.equal(sanitizeHandbookState({...s,profile:{...s.profile,academicYear:2027}}),null);assert.equal(sanitizeHandbookState({...s,planned:["unknown"]}),null);});
 test("graduation totals and original CAP wording remain edition-specific",()=>{for(const h of handbooks){assert.equal(Object.values(h.rules.category_minimum_credits).reduce((a,b)=>a+b,0),124);assert.equal(aggregateHandbook(h,[]).total,0);assert.equal(aggregateHandbook(h,[]).missingRequired.length,19);}assert.equal(getHandbook(2022)!.rules.registration_cap.threshold_operator,">");assert.equal(getHandbook(2023)!.rules.registration_cap.threshold_operator,">=");assert.equal(getHandbook(2026)!.rules.registration_cap.default_credits_per_semester,24);});
 
 test("replacement removes every overlapping quarter meeting and preserves unrelated plans",()=>{
@@ -105,7 +105,7 @@ test("information systems reuses only eligible matched openings and imports its 
  }
  const h=getHandbook(2025, INFORMATION_SYSTEMS)!;
  const own=h.courses.find(c=>c.catalogScope==="information_systems")!;
- const state:HandbookState={version:1,datasetId:"tcu-handbooks-v1",profile:informationSystemsProfile(2025),completed:[own.id],planned:[handbookOfferings(2025, INFORMATION_SYSTEMS)[0].id],campus:"all"};
+ const state:HandbookState={version:1,datasetId:handbookDatasetId(informationSystemsProfile(2025))!,profile:informationSystemsProfile(2025),completed:[own.id],planned:[handbookOfferings(2025, INFORMATION_SYSTEMS)[0].id],campus:"all"};
  assert.deepEqual(sanitizeHandbookState(state),state);
  const older=handbookOfferings(2024, INFORMATION_SYSTEMS)[0];
  assert.equal(sanitizeHandbookState({...state,planned:[older.id]}),null);
@@ -220,10 +220,60 @@ test("new faculty offerings require unique title and credit matches and isolate 
     assert.equal(o.catalogFaculty,faculty);
     assert.equal(o.catalogDepartment,department);
    }
-   const state:HandbookState={version:1,datasetId:"tcu-handbooks-v1",profile:{...profile(year),faculty,department},completed:[h.courses[0].id],planned:[rows[0].id],campus:"all"};
+   const entryProfile={...profile(year),faculty,department};
+   const state:HandbookState={version:1,datasetId:handbookDatasetId(entryProfile)!,profile:entryProfile,completed:[h.courses[0].id],planned:[rows[0].id],campus:"all"};
    assert.deepEqual(sanitizeHandbookState(state),state);
    assert.equal(sanitizeHandbookState({...state,profile:{...state.profile,faculty:MEDIA_FACULTY}}),null);
    assert.equal(sanitizeHandbookState({...state,planned:[handbookOfferings(2023,INFORMATION_SYSTEMS)[0].id]}),null);
   }
  }
+});
+
+test("handbook dataset IDs are stable and unique across all supported profiles", () => {
+ const ids = new Set<string>();
+ for (const faculty of HANDBOOK_FACULTIES) {
+  for (const department of handbookDepartments(faculty)) {
+   for (const admissionYear of SUPPORTED_YEARS) {
+    const entryProfile = {...profile(admissionYear), faculty, department};
+    const id = handbookDatasetId(entryProfile);
+    if (!supportsHandbookProfile(entryProfile)) {
+     assert.equal(id, null);
+     continue;
+    }
+    assert.ok(id);
+    assert.match(id, /^tcu-handbook-[0-9]{4}-[a-z]+-[a-z_]+-v1$/);
+    assert.notEqual(id, DATASET_ID);
+    assert.ok(!ids.has(id), id);
+    ids.add(id);
+    const otherTerm = {...entryProfile, term: "前期" as const, academicYear: 2027};
+    assert.equal(handbookDatasetId(otherTerm), id);
+   }
+  }
+ }
+ assert.equal(ids.size, 20);
+ assert.equal(handbookDatasetId(profile(2026)), "tcu-handbook-2026-media-social_media-v1");
+ assert.equal(handbookDatasetId({...profile(2026), faculty: ENVIRONMENT_FACULTY}), null);
+});
+
+test("legacy handbook files normalize to the profile dataset and retain their plan", () => {
+ const entryProfile = {...profile(2025), faculty: ENVIRONMENT_FACULTY, department: ENVIRONMENTAL_CREATION};
+ const datasetId = handbookDatasetId(entryProfile)!;
+ const offering = handbookOfferings(2025, entryProfile.department, entryProfile.faculty)[0];
+ const data = {version: 1, profile: entryProfile, completed: [], planned: [offering.id], campus: "all", halves: ["second"]};
+ const legacy = JSON.parse(JSON.stringify({...data, datasetId: "tcu-handbooks-v1"}));
+ const expected = {...data, datasetId};
+
+ assert.deepEqual(sanitizeHandbookState(legacy), expected);
+ assert.deepEqual(sanitizeHandbookState(JSON.parse(JSON.stringify(expected))), expected);
+
+ // Empty arrays isolate dataset/profile validation from course and offering checks.
+ const emptyPlan = {...expected, planned: []};
+ const wrongYear = {...entryProfile, admissionYear: 2024};
+ const wrongDepartment = {...entryProfile, department: ENVIRONMENTAL_MANAGEMENT};
+ const wrongFaculty = {...entryProfile, faculty: DESIGN_FACULTY, department: DESIGN_DATA_SCIENCE};
+ for (const otherProfile of [wrongYear, wrongDepartment, wrongFaculty]) {
+  assert.equal(sanitizeHandbookState({...emptyPlan, profile: otherProfile}), null);
+ }
+ assert.equal(sanitizeHandbookState({...emptyPlan, datasetId: DATASET_ID}), null);
+ assert.equal(sanitizeHandbookState({...legacy, profile: {...entryProfile, department: undefined}}), null);
 });

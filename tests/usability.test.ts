@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { DEFAULT_STATE, offeringById, offerings, type Profile } from "../src/lib/data";
 import {
-  addHandbookRequiredOfferings, getHandbook, handbookCandidates, handbookOfferingIssues,
+  addHandbookRequiredOfferings, getHandbook, handbookCandidates, handbookDatasetId, handbookOfferingIssues,
   handbookOfferings, sanitizeHandbookState,
 } from "../src/lib/handbooks";
 import { evaluate, inTarget, overlaps, sanitizeState } from "../src/lib/rules";
@@ -64,7 +64,7 @@ test("plan JSON round trips term halves in both modes and accepts older exports"
   state.preferences.halves = ["second"];
   assert.deepEqual(sanitizeState(JSON.parse(JSON.stringify(state)))?.preferences.halves, ["second"]);
   const olderPlan = { version: 1, datasetId: "tcu-handbooks-v1", profile, completed: [], planned: [], campus: "all" };
-  assert.deepEqual(sanitizeHandbookState(olderPlan), olderPlan);
+  assert.deepEqual(sanitizeHandbookState(olderPlan), {...olderPlan, datasetId: handbookDatasetId(profile)});
   const exported = JSON.stringify({ ...olderPlan, halves: ["second", "first", "second", "invalid"] });
   assert.deepEqual(sanitizeHandbookState(JSON.parse(exported))?.halves, ["first", "second"]);
 });

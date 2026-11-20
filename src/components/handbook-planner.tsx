@@ -1,10 +1,10 @@
 "use client";
 import {useEffect,useMemo,useRef,useState} from "react";
-import {ArrowDownToLine,ArrowRight,BookOpen,CalendarDays,Check,ChevronRight,GraduationCap,Info,Menu,Plus,Search,Settings2,SlidersHorizontal,Trash2,X} from "lucide-react";
+import {ArrowDownToLine,ArrowRight,BookOpen,CalendarDays,Check,ChevronRight,GraduationCap,Info,LogOut,Menu,Plus,Search,Settings2,SlidersHorizontal,Trash2,X} from "lucide-react";
 import {CATEGORIES,DAYS,Q_LABELS,officialUrl,type Profile} from "@/lib/data";
 import {CREDIT_TAGS,creditCategoryLabel,matchesCreditTags} from "@/lib/credit-tags";
 import {CAMPUS_CHOICES,type CampusChoice} from "@/lib/scheduling";
-import {DESIGN_FACULTY,ENVIRONMENT_FACULTY,MEDIA_FACULTY,INFORMATION_SYSTEMS,addHandbookRequiredOfferings,aggregateHandbook,getHandbook,handbookCandidates,handbookOfferings,handbookOfferingIssues,handbookReplacement,loadHandbookPlan,sanitizeHandbookState,type HandbookCourse,type HandbookOffering,type HandbookState} from "@/lib/handbooks";
+import {DESIGN_FACULTY,ENVIRONMENT_FACULTY,MEDIA_FACULTY,INFORMATION_SYSTEMS,addHandbookRequiredOfferings,aggregateHandbook,getHandbook,handbookCandidates,handbookDatasetId,handbookOfferings,handbookOfferingIssues,handbookReplacement,loadHandbookPlan,sanitizeHandbookState,type HandbookCourse,type HandbookOffering,type HandbookState} from "@/lib/handbooks";
 import {matchesTermHalves,targetQuarters,type TermHalf} from "@/lib/term-halves";
 import RequiredAddButton from "./required-add-button";
 import TermHalfFilter from "./term-half-filter";
@@ -12,12 +12,44 @@ import CreditTags from "./credit-tags";
 import CreditTagFilter from "./credit-tag-filter";
 import Dialog from "./dialog";
 import SiteFooter from "./site-footer";
+import type { SaveStatus } from "./experience";
 type View="plan"|"courses"|"completed"|"sources";
 type Slot={day:number;period:number;quarter:number};
-export default function HandbookPlanner({profile:initial,onExit}:{profile:Profile;onExit:()=>void}){
- const [profile,setProfile]=useState(initial),[completed,setCompleted]=useState<string[]>([]),[planned,setPlanned]=useState<string[]>([]),[campus,setCampus]=useState<CampusChoice>("yokohama-plus-ondemand"),[view,setView]=useState<View>("plan"),[query,setQuery]=useState(""),[tag,setTag]=useState("all"),[quarterChoice,setQuarter]=useState(0),[day,setDay]=useState(0),[menu,setMenu]=useState(false),[slot,setSlot]=useState<Slot|null>(null),[detail,setDetail]=useState<{courseId:string;offeringId?:string}|null>(null),[showBlocked,setShowBlocked]=useState(false),[notice,setNotice]=useState<{text:string;id:number}|null>(null),[undo,setUndo]=useState<string[]|null>(null),[confirmReplace,setConfirmReplace]=useState(false);
- const [creditTagIds,setCreditTagIds]=useState<string[]>([]);
- const [halves,setHalves]=useState<TermHalf[]>([]);
+type HandbookPlannerProps = {
+ profile: Profile;
+ initialState?: HandbookState;
+ onStateChange?: (state: HandbookState) => void;
+ saveStatus?: SaveStatus;
+ saveMessage?: string;
+ onExit: (profile: Profile) => void;
+ onSignOut?: () => void;
+};
+const saveLabels: Record<SaveStatus, string> = {
+ guest: "ゲスト・保存なし",
+ ready: "変更は自動で保存します",
+ saved: "アカウントに保存済み",
+ saving: "保存中…",
+ error: "保存を確認してください",
+};
+
+export default function HandbookPlanner({profile:initial,initialState,onStateChange,saveStatus="guest",saveMessage,onExit,onSignOut}:HandbookPlannerProps){
+ const [profile,setProfile]=useState(initialState?.profile??initial);
+ const [completed,setCompleted]=useState<string[]>(initialState?.completed??[]);
+ const [planned,setPlanned]=useState<string[]>(initialState?.planned??[]);
+ const [campus,setCampus]=useState<CampusChoice>(initialState?.campus??"yokohama-plus-ondemand");
+ const [creditTagIds,setCreditTagIds]=useState<string[]>(initialState?.creditTagIds??[]);
+ const [halves,setHalves]=useState<TermHalf[]>(initialState?.halves??[]);
+ const [view,setView]=useState<View>("plan"),[query,setQuery]=useState(""),[tag,setTag]=useState("all"),[quarterChoice,setQuarter]=useState(0),[day,setDay]=useState(0),[menu,setMenu]=useState(false),[slot,setSlot]=useState<Slot|null>(null),[detail,setDetail]=useState<{courseId:string;offeringId?:string}|null>(null),[showBlocked,setShowBlocked]=useState(false),[notice,setNotice]=useState<{text:string;id:number}|null>(null),[undo,setUndo]=useState<string[]|null>(null),[confirmReplace,setConfirmReplace]=useState(false);
+ const datasetId = handbookDatasetId(profile)!;
+ const state = useMemo<HandbookState>(() => ({
+  version: 1, datasetId, profile, completed, planned, campus, creditTagIds, halves,
+ }), [datasetId, profile, completed, planned, campus, creditTagIds, halves]);
+ const lastState = useRef(state);
+ useEffect(() => {
+  if (lastState.current === state) return;
+  lastState.current = state;
+  onStateChange?.(state);
+ }, [state, onStateChange]);
  const [draftPreferences,setDraftPreferences]=useState<{creditTagIds:string[];halves:TermHalf[]}|null>(null);
  function openPreferences(){setDraftPreferences({creditTagIds,halves});}
  function notify(text:string,previous:string[]|null=null){setNotice({text,id:Date.now()});setUndo(previous);}
@@ -45,7 +77,7 @@ export default function HandbookPlanner({profile:initial,onExit}:{profile:Profil
  const replacement=activeOffering?handbookReplacement(h,activeOffering,profile,completed,planned):null;
  const activeIssues=activeOffering?handbookOfferingIssues(h,activeOffering,profile,completed,planned):[];
  const allPlanned=openings.filter(o=>planned.includes(o.id));
- function chooseQuarter(q:number){setQuarter(q);setProfile(p=>({...p,term:q<=2?"前期":"後期"}));setSlot(null);setDetail(null);}
+ function chooseQuarter(q:number){const term=q<=2?"前期":"後期";setQuarter(q);setProfile(p=>p.term===term?p:{...p,term});setSlot(null);setDetail(null);}
  const filteredCourses=h.courses.filter(c=>(view==="completed"||matchesCreditTags(c,creditTagIds))&&(!query||(c.name+" "+c.code).toLowerCase().includes(query.toLowerCase()))&&(tag==="all"||c.creditTagIds.some(id=>id===tag)));
  function go(next:View){setView(next);setMenu(false);setQuery("");setTag("all");window.scrollTo({top:0});}
  function toggleCompleted(c:HandbookCourse){setNotice(null);setUndo(null);const adding=!completed.includes(c.id);setCompleted(ids=>adding?[...ids,c.id]:ids.filter(id=>id!==c.id));if(adding)setPlanned(ids=>ids.filter(id=>openings.find(o=>o.id===id)?.courseId!==c.id));}
@@ -60,15 +92,16 @@ export default function HandbookPlanner({profile:initial,onExit}:{profile:Profil
   setPlanned([...change.remaining,o.id]);notify(change.conflicts.map(x=>x.name).join("・")+"を"+o.name+"に入れ替えました",planned);setDetail(null);setConfirmReplace(false);
  }
  function openSlot(next:Slot){setConfirmReplace(false);setSlot(next);setDetail(null);setTag("all");setShowBlocked(false);}
- function exportState(){const state:HandbookState={version:1,datasetId:"tcu-handbooks-v1",profile,completed,planned,campus,creditTagIds,halves};const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="履修ノート_"+h.year+"入学_"+(!isMedia||isInformationSystems?h.department+"_":"")+profile.academicYear+"_"+profile.term+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify("プランのファイルを書き出しました。ダウンロード先を確認してください。");}
- async function importState(file?:File){if(!file)return;notify("プランを読み込んでいます…");try{if(file.size>1024*1024)throw Error();const s=sanitizeHandbookState(JSON.parse(await file.text()));if(!s||s.profile.admissionYear!==h.year||s.profile.department!==h.department||s.profile.faculty!==h.faculty)throw Error();setProfile(s.profile);setCompleted(s.completed);setPlanned(s.planned);setCampus(s.campus);setCreditTagIds(s.creditTagIds??[]);setHalves(s.halves??[]);setQuarter(targetQuarters(s.profile.term,s.halves)[0]);notify("この入学年度のプランを読み込みました（修得"+s.completed.length+"科目・仮置き"+s.planned.length+"クラス）");}catch{notify("読み込めませんでした。同じ入学年度・学部・学科で書き出したプランを選んでください。");}if(importRef.current)importRef.current.value="";}
+ function exportState(){const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="履修ノート_"+h.year+"入学_"+(!isMedia||isInformationSystems?h.department+"_":"")+profile.academicYear+"_"+profile.term+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify("プランのファイルを書き出しました。ダウンロード先を確認してください。");}
+ async function importState(file?:File){if(!file)return;notify("プランを読み込んでいます…");try{if(file.size>1024*1024)throw Error();const s=sanitizeHandbookState(JSON.parse(await file.text()));if(!s||s.datasetId!==datasetId)throw Error();setProfile(s.profile);setCompleted(s.completed);setPlanned(s.planned);setCampus(s.campus);setCreditTagIds(s.creditTagIds??[]);setHalves(s.halves??[]);setQuarter(targetQuarters(s.profile.term,s.halves)[0]);notify("この入学年度のプランを読み込みました（修得"+s.completed.length+"科目・仮置き"+s.planned.length+"クラス）");}catch{notify("読み込めませんでした。同じ入学年度・学部・学科で書き出したプランを選んでください。");}if(importRef.current)importRef.current.value="";}
  function tagSelect(){return <select aria-label="単位タグで絞り込み" value={tag} onChange={e=>setTag(e.target.value)}><option value="all">すべてのタグ</option>{Object.entries(CREDIT_TAGS).filter(([id])=>h.courses.some(c=>c.creditTagIds.some(t=>t===id))).map(([id,t])=><option value={id} key={id}>{t.label}</option>)}</select>;}
  function courseCard(c:HandbookCourse,o?:HandbookOffering){return <article className="slot-candidate" key={o?.id??c.id}><CreditTags course={c}/><button className="slot-candidate-name" onClick={()=>{setConfirmReplace(false);setDetail({courseId:c.id,offeringId:o?.id});}}>{c.name}<ArrowRight size={15}/></button><div className="slot-candidate-meta"><span>{c.credits}単位</span><span>{o?o.campus:h.year+"年度 教育課程表"}</span>{completed.includes(c.id)&&<b>修得済み</b>}</div>{o&&<p className="slot-all-meetings"><b>確保する全コマ</b>{[...new Set(o.slots.map(s=>DAYS[s.day]+s.period+"限（"+s.quarters.map(q=>Q_LABELS[q]).join("・")+"）"))].join("／")}</p>}<div className="slot-candidate-bottom"><small>{o?"講義コード "+o.lectureCode:"学修要覧 PDF "+c.source.pdf_page+"ページ"}</small><button className="text-button" onClick={()=>{setConfirmReplace(false);setDetail({courseId:c.id,offeringId:o?.id});}}>{o?(planned.includes(o.id)?"詳細・削除":"詳細を確認して選ぶ"):"科目と出典を見る"}<ChevronRight size={13}/></button></div></article>;}
  const nav=[{id:"plan" as const,label:"時間割をつくる",icon:CalendarDays},{id:"courses" as const,label:"科目・単位タグ",icon:Search},{id:"completed" as const,label:"修得科目",icon:BookOpen},{id:"sources" as const,label:"要件・資料",icon:GraduationCap}];
- return <div className="app-shell handbook-app"><a className="skip-link" href="#main">メインコンテンツへ</a>{menu&&<button className="sidebar-scrim" aria-label="メニューを閉じる" onClick={()=>setMenu(false)}/>}<aside className={"sidebar "+(menu?"is-open":"")}><button className="brand" onClick={()=>go("plan")}><span className="brand-mark"><BookOpen size={23}/></span><span>履修ノート<small>YOUR NEXT SEMESTER</small></span></button><div className="university-label">東京都市大学向け<span>非公式</span></div><p className="nav-caption">{h.year} / {isMedia?(isInformationSystems?"INFORMATION SYSTEMS":"SOCIAL MEDIA"):h.faculty}</p><nav aria-label="メインナビゲーション">{nav.map(n=><button key={n.id} className={"nav-item "+(view===n.id?"active":"")} aria-current={view===n.id?"page":undefined} onClick={()=>go(n.id)}><n.icon size={19}/><span>{n.label}</span></button>)}</nav><div className="sidebar-bottom"><div className="sidebar-note"><h3>あなたの入学年度で。</h3><p>{h.year}年度の教育課程表を使って、必要な単位を確認します。</p></div><button className="nav-item" onClick={onExit}><Settings2 size={17}/>所属を選び直す</button><div className="sidebar-profile"><div className="avatar">{isMedia?(isInformationSystems?"I":"S"):h.faculty[0]}</div><div><strong>{h.year}年度入学</strong><small>{h.department}</small></div></div></div></aside>
- <div className="main-shell"><header className="topbar"><div className="breadcrumb"><button className="icon-button mobile-menu" aria-label="メニューを開く" onClick={()=>setMenu(true)}><Menu size={20}/></button><span>{h.year}年度入学</span><ChevronRight size={13}/><strong>{nav.find(n=>n.id===view)?.label}</strong></div><span className="save-state"><Check size={14}/>ゲスト・保存なし</span></header>
+ return <div className="app-shell handbook-app"><a className="skip-link" href="#main">メインコンテンツへ</a>{menu&&<button className="sidebar-scrim" aria-label="メニューを閉じる" onClick={()=>setMenu(false)}/>}<aside className={"sidebar "+(menu?"is-open":"")}><button className="brand" onClick={()=>go("plan")}><span className="brand-mark"><BookOpen size={23}/></span><span>履修ノート<small>YOUR NEXT SEMESTER</small></span></button><div className="university-label">東京都市大学向け<span>非公式</span></div><p className="nav-caption">{h.year} / {isMedia?(isInformationSystems?"INFORMATION SYSTEMS":"SOCIAL MEDIA"):h.faculty}</p><nav aria-label="メインナビゲーション">{nav.map(n=><button key={n.id} className={"nav-item "+(view===n.id?"active":"")} aria-current={view===n.id?"page":undefined} onClick={()=>go(n.id)}><n.icon size={19}/><span>{n.label}</span></button>)}</nav><div className="sidebar-bottom"><div className="sidebar-note"><h3>あなたの入学年度で。</h3><p>{h.year}年度の教育課程表を使って、必要な単位を確認します。</p></div><button className="nav-item" onClick={()=>onExit(profile)}><Settings2 size={17}/>所属を選び直す</button>{onSignOut&&<button type="button" className="nav-item" onClick={onSignOut}><LogOut size={17}/>ログアウト</button>}<div className="sidebar-profile"><div className="avatar">{isMedia?(isInformationSystems?"I":"S"):h.faculty[0]}</div><div><strong>{h.year}年度入学</strong><small>{h.department}</small></div></div></div></aside>
+ <div className="main-shell"><header className="topbar"><div className="breadcrumb"><button className="icon-button mobile-menu" aria-label="メニューを開く" onClick={()=>setMenu(true)}><Menu size={20}/></button><span>{h.year}年度入学</span><ChevronRight size={13}/><strong>{nav.find(n=>n.id===view)?.label}</strong></div><span className={`save-state ${saveStatus==="error"?"save-error":""}`} role="status"><Check size={14}/>{saveLabels[saveStatus]}</span></header>
  <main id="main" className="main-content"><div className="page-heading"><div><div className="eyebrow">{h.year} ENTRY CURRICULUM · {profile.academicYear} ACADEMIC YEAR</div><h1>{view==="plan"?"空きコマから、時間割をつくろう。":view==="courses"?"科目の区分から、学びを選ぼう。":view==="completed"?"これまでの修得科目を、確認しよう。":"必要な単位と資料を確認しよう。"}</h1><p>{h.year}年度入学 · {h.faculty} {h.department}</p></div><label className="handbook-term">表示するクオーター<select value={quarter} onChange={e=>chooseQuarter(Number(e.target.value))}>{[1,2,3,4].map(q=><option key={q} value={q}>{Q_LABELS[q]}</option>)}</select></label></div>
  <div className="demo-notice"><span className="demo-tag">{h.year} {isMedia?"社メ":h.faculty}</span><span>学修要覧 {h.year}年度版を適用。時間割は収録する2026年度開講のうち、対象入学年度・科目名・単位数が一致するクラスを参考表示しています。</span></div>
+ {saveMessage&&<p className="warning-banner" role="status">{saveMessage}</p>}
  {notice&&<div className="handbook-message" role="status"><Info size={15}/><span>{notice.text}</span>{undo&&<button className="text-button" onClick={()=>{setPlanned(undo);notify("直前の変更を元に戻しました");}}>元に戻す</button>}<button className="icon-button" aria-label="通知を閉じる" onClick={()=>{setNotice(null);setUndo(null);}}><X size={14}/></button></div>}
  {view==="plan"&&<><section className="slot-planner"><div className="slot-heading"><div><span className="welcome-eyebrow">ONE SLOT, YOUR CHOICE</span><h2>空きコマから、授業を選ぼう。</h2><p>曜日・時限を押すと、候補と全コマの予定を確認できます。</p></div><button className="button secondary small-button" onClick={openPreferences}><SlidersHorizontal size={15}/>条件を調整</button></div><div className="handbook-plan-controls"><label>キャンパス・受講形式<select value={campus} onChange={e=>setCampus(e.target.value as CampusChoice)}>{CAMPUS_CHOICES.map(c=><option key={c.value} value={c.value}>{c.label}</option>)}</select></label><button className="text-button" onClick={()=>go("completed")}>修得科目を入力<ArrowRight size={14}/></button></div>
  <RequiredAddButton key={JSON.stringify([profile,campus,halves,completed])} planned={planned}
