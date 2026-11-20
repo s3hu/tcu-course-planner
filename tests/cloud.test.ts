@@ -22,7 +22,7 @@ test("cloud reads and writes target the selected dataset and preserve revision c
 
   const profile = { ...DEFAULT_STATE.profile, admissionYear: 2026 };
   const datasetId = handbookDatasetId(profile)!;
-  const handbook: HandbookState = { version: 1, datasetId, profile, completed: [], planned: [], campus: "all" };
+  const handbook: HandbookState = { version: 1, datasetId, profile, completed: [], planned: [], campus: "all", customCompleted: [{ name: "認定実習", credits: 0.5, category: "free_electives" }] };
   const userId = "account-id";
   const calls: { url: URL; method: string; body: unknown }[] = [];
   let reply: unknown;
