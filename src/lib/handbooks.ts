@@ -8,6 +8,7 @@ import {overlaps} from "./rules";
 import {planRequiredAdditions} from "./required-additions";
 import {matchesTermHalves,sanitizeTermHalves,type TermHalf} from "./term-halves";
 import {matchesCampus,type CampusChoice} from "./scheduling";
+import {customCreditCategories,customCreditKey,sanitizeCustomCredit,type CustomCompleted} from "./past-credits";
 const SOCIAL_MEDIA = "社会メディア学科";
 export const INFORMATION_SYSTEMS = "情報システム学科";
 export const MEDIA_FACULTY = "メディア情報学部";
@@ -145,11 +146,13 @@ export function handbookOfferings(year: number, department: string = SOCIAL_MEDI
  const handbook = getHandbook(year, department, faculty);
  return handbook ? mapped.get(handbook) ?? [] : [];
 }
-export function aggregateHandbook(h:Handbook,ids:string[]){
+export function aggregateHandbook(h:Handbook,ids:string[],customCompleted:readonly CustomCompleted[]=[]){
  const used=new Set(ids),chosen=h.courses.filter(c=>used.has(c.id)).sort((a,b)=>a.id.localeCompare(b.id));
  const counted=new Map<string,number>(),families=new Map<string,number>();let familyExcess=0;
  for(const c of chosen){if(c.creditStatus==="excluded")continue;const cap=c.creditFamily?h.rules.graduation_credit_family_caps[c.creditFamily]:undefined;const amount=cap===undefined?c.credits:Math.max(0,Math.min(c.credits,cap-(families.get(c.creditFamily!)??0)));if(c.creditFamily)families.set(c.creditFamily,(families.get(c.creditFamily)??0)+amount);counted.set(c.id,amount);familyExcess+=c.credits-amount;}
- const categoryRaw=(category:string)=>chosen.filter(c=>c.category===category).reduce((sum,c)=>sum+(counted.get(c.id)??0),0);
+ const customTotal=customCompleted.reduce((sum,c)=>sum+c.credits,0);
+ const categoryRaw=(category:string)=>chosen.filter(c=>c.category===category).reduce((sum,c)=>sum+(counted.get(c.id)??0),0)
+  +customCompleted.filter(c=>c.category===category).reduce((sum,c)=>sum+c.credits,0);
  const surplus=Object.entries(h.rules.category_minimum_credits).filter(([id])=>id!=="free_electives").reduce((sum,[id,min])=>sum+Math.max(0,categoryRaw(id)-min),0);
  const breakdown=Object.entries(h.rules.category_minimum_credits).map(([id,required])=>{const amount=categoryRaw(id)+(id==="free_electives"?surplus:0);return {id:id as Category,required,raw:amount,earned:Math.min(amount,required),remaining:Math.max(0,required-amount)};});
  const sum=(test:(c:HandbookCourse)=>boolean)=>chosen.filter(test).reduce((n,c)=>n+(counted.get(c.id)??0),0);
@@ -173,10 +176,10 @@ export function aggregateHandbook(h:Handbook,ids:string[]){
   checks.push({label:"基礎体育",earned:chosen.filter(c=>sports(c)&&(counted.get(c.id)??0)>0).length,required:2,unit:"科目"});
   checks.push({label:"基礎体育の単位",earned:sum(sports),required:1,unit:"単位"});
  }
- return {total:[...counted.values()].reduce((a,b)=>a+b,0),raw:chosen.reduce((n,c)=>n+c.credits,0),breakdown,checks,familyExcess,surplus,missingRequired:h.courses.filter(c=>c.requiredType==="required"&&!used.has(c.id))};
+ return {total:[...counted.values()].reduce((a,b)=>a+b,customTotal),raw:chosen.reduce((n,c)=>n+c.credits,customTotal),breakdown,checks,familyExcess,surplus,missingRequired:h.courses.filter(c=>c.requiredType==="required"&&!used.has(c.id))};
 }
 export function loadHandbookPlan(year:number,ids:string[],term:Profile["term"],department:string=SOCIAL_MEDIA,faculty:string=MEDIA_FACULTY){return handbookOfferings(year,department,faculty).filter(o=>ids.includes(o.id)&&o.quarters.some(q=>(term==="前期"?[1,2]:[3,4]).includes(q))).reduce((sum,o)=>sum+o.credits*(o.quarters.some(q=>q<3)&&o.quarters.some(q=>q>2)?.5:1),0);}
-export function handbookOfferingIssues(h:Handbook,o:HandbookOffering,profile:Profile,completed:string[],planned:string[]){
+export function handbookOfferingIssues(h:Handbook,o:HandbookOffering,profile:Profile,completed:string[],planned:string[],customCompleted:readonly CustomCompleted[]=[]){
  const issues:string[]=[],c=h.courses.find(c=>c.id===o.courseId);
  if(!c)return ["科目情報がありません"];
  if(o.catalogYear!==h.year||profile.admissionYear!==h.year)issues.push("入学年度が一致しません");
@@ -196,31 +199,31 @@ export function handbookOfferingIssues(h:Handbook,o:HandbookOffering,profile:Pro
  const requirements=c.name==="事例研究(2)"?h.rules.progression.case_research_2_prerequisites:c.name===researchTitle?h.rules.progression.graduation_research_1_prerequisites:c.name==="卒業研究(2)"?h.rules.progression.graduation_research_2_prerequisites:[];
  for(const name of requirements)if(!completedNames.has(name))issues.push("前提科目が未修得："+name);
  const minimum=c.name===(h.rules.progression.case_research_1_title??"事例研究(1)")?h.rules.progression.year_3_minimum_countable_credits:c.name===researchTitle?h.rules.progression.graduation_research_1_minimum_countable_credits:0;
- if(minimum&&aggregateHandbook(h,completed).total<minimum)issues.push("着手条件の"+minimum+"単位に未達です");
+ if(minimum&&aggregateHandbook(h,completed,customCompleted).total<minimum)issues.push("着手条件の"+minimum+"単位に未達です");
  return [...new Set(issues)];
 }
-export function handbookReplacement(h:Handbook,o:HandbookOffering,profile:Profile,completed:string[],planned:string[]){
+export function handbookReplacement(h:Handbook,o:HandbookOffering,profile:Profile,completed:string[],planned:string[],customCompleted:readonly CustomCompleted[]=[]){
  const conflicts=handbookOfferings(h.year,h.department,h.faculty).filter(x=>planned.includes(x.id)&&x.id!==o.id&&(x.courseId===o.courseId||overlaps(x,o)));
  const remaining=planned.filter(id=>!conflicts.some(x=>x.id===id));
- const issues=handbookOfferingIssues(h,o,profile,completed,remaining);
+ const issues=handbookOfferingIssues(h,o,profile,completed,remaining,customCompleted);
  return {conflicts,remaining,issues,canReplace:conflicts.length>0&&issues.length===0&&!planned.includes(o.id)};
 }
-export function addHandbookRequiredOfferings(h: Handbook, profile: Profile, completed: string[], planned: string[], campus: CampusChoice, halves: TermHalf[]) {
+export function addHandbookRequiredOfferings(h: Handbook, profile: Profile, completed: string[], planned: string[], campus: CampusChoice, halves: TermHalf[], customCompleted: readonly CustomCompleted[] = []) {
   return planRequiredAdditions({
     required: aggregateHandbook(h, completed).missingRequired,
     offerings: handbookOfferings(h.year, h.department, h.faculty),
     profile, completed, planned, halves,
     issuesFor: (o, ids) => [
-      ...handbookOfferingIssues(h, o, profile, completed, ids),
+      ...handbookOfferingIssues(h, o, profile, completed, ids, customCompleted),
       ...(matchesCampus(o, campus) ? [] : ["キャンパス・受講形式の条件に合いません"]),
     ],
   });
 }
-export function handbookCandidates(h:Handbook,profile:Profile,quarter:number,day:number,period:number,completed:string[],planned:string[],campus:CampusChoice="yokohama-plus-ondemand",halves:TermHalf[]=[]){
+export function handbookCandidates(h:Handbook,profile:Profile,quarter:number,day:number,period:number,completed:string[],planned:string[],campus:CampusChoice="yokohama-plus-ondemand",halves:TermHalf[]=[],customCompleted:readonly CustomCompleted[]=[]){
  if(!(profile.term==="前期"?[1,2]:[3,4]).includes(quarter))return [];
- return handbookOfferings(h.year,h.department,h.faculty).filter(o=>o.academicYear===profile.academicYear&&o.slots.some(s=>s.day===day&&s.period===period&&s.quarters.includes(quarter))&&(planned.includes(o.id)||(matchesTermHalves(o,profile.term,halves)&&matchesCampus(o,campus)))).map(o=>({offering:o,course:h.courses.find(c=>c.id===o.courseId)!,selected:planned.includes(o.id),issues:handbookOfferingIssues(h,o,profile,completed,planned)})).sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(a.issues.length>0)-Number(b.issues.length>0)||Number(b.course.requiredType==="required")-Number(a.course.requiredType==="required")||a.course.name.localeCompare(b.course.name,"ja"));
+ return handbookOfferings(h.year,h.department,h.faculty).filter(o=>o.academicYear===profile.academicYear&&o.slots.some(s=>s.day===day&&s.period===period&&s.quarters.includes(quarter))&&(planned.includes(o.id)||(matchesTermHalves(o,profile.term,halves)&&matchesCampus(o,campus)))).map(o=>({offering:o,course:h.courses.find(c=>c.id===o.courseId)!,selected:planned.includes(o.id),issues:handbookOfferingIssues(h,o,profile,completed,planned,customCompleted)})).sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(a.issues.length>0)-Number(b.issues.length>0)||Number(b.course.requiredType==="required")-Number(a.course.requiredType==="required")||a.course.name.localeCompare(b.course.name,"ja"));
 }
-export type HandbookState={version:1;datasetId:HandbookDatasetId;profile:Profile;completed:string[];planned:string[];campus:CampusChoice;creditTagIds?:string[];halves?:TermHalf[]};
+export type HandbookState={version:1;datasetId:HandbookDatasetId;profile:Profile;completed:string[];planned:string[];campus:CampusChoice;customCompleted?:CustomCompleted[];creditTagIds?:string[];halves?:TermHalf[]};
 export function sanitizeHandbookState(value:unknown):HandbookState|null{
  if(!value||typeof value!=="object")return null;const s=value as Partial<Omit<HandbookState, "datasetId">> & {datasetId?: unknown};
  if(s.version!==1||!s.profile||s.profile.academicYear!==2026||!["前期","後期"].includes(s.profile.term)||!Array.isArray(s.completed)||!Array.isArray(s.planned)||!s.completed.every(x=>typeof x==="string")||!s.planned.every(x=>typeof x==="string")||!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(s.campus??""))return null;
@@ -229,7 +232,22 @@ export function sanitizeHandbookState(value:unknown):HandbookState|null{
  const h=getHandbook(s.profile.admissionYear,s.profile.department,s.profile.faculty)!;const courseIds=new Set(h.courses.map(c=>c.id)),offeringIds=new Set(handbookOfferings(h.year,h.department,h.faculty).map(o=>o.id));
  // Reject cross-curriculum data, rather than silently counting a different year's records.
  if(s.completed.some(id=>!courseIds.has(id))||s.planned.some(id=>!offeringIds.has(id)))return null;
+ const customCompleted: CustomCompleted[] = [];
+ if (s.customCompleted !== undefined) {
+  if (!Array.isArray(s.customCompleted)) return null;
+  const categories = customCreditCategories(h.rules.category_minimum_credits);
+  const seen = new Set<string>();
+  for (const value of s.customCompleted) {
+   const course = sanitizeCustomCredit(value, categories);
+   if (!course) return null;
+   const key = customCreditKey(course);
+   if (seen.has(key)) continue;
+   seen.add(key);
+   customCompleted.push(course);
+  }
+ }
  return {version:1,datasetId,profile:s.profile,completed:[...new Set(s.completed)],planned:[...new Set(s.planned)],campus:s.campus!,
+  ...(s.customCompleted===undefined?{}:{customCompleted}),
   ...(s.halves===undefined?{}:{halves:sanitizeTermHalves(s.halves)}),
   ...(s.creditTagIds===undefined?{}:{creditTagIds:sanitizeCreditFilterIds(s.creditTagIds,h.courses)})};
 }
