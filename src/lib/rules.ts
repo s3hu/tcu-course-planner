@@ -1,5 +1,6 @@
 import { CATEGORIES, DATASET_ID, courses, courseById, offeringById, requirement, rules, type Category, type Course, type Offering, type PlannerState, type Profile } from "./data";
 
+import { sanitizeTermHalves } from "./term-halves";
 import { sanitizeCreditFilterIds } from "./credit-tags";
 
 export function applicable(p: Profile) { return p.admissionYear === requirement.admissionYear && p.department === requirement.department && p.faculty === requirement.faculty; }
@@ -121,5 +122,5 @@ export function sanitizeState(value:unknown):PlannerState|null {
   if(!["strict","soft"].includes(f.dayMode)||!["any","report","exam"].includes(f.assessment)||!Array.isArray(f.avoidDays)||!f.avoidDays.every(d=>Number.isInteger(d)&&d>=0&&d<6)||!Array.isArray(f.avoidPeriods)||!f.avoidPeriods.every(p=>Number.isInteger(p)&&p>=1&&p<=5)||!Array.isArray(f.interests)||!f.interests.every(t=>typeof t==="string"&&t.length<100))return null;
   if(f.campus!==undefined&&!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(f.campus))return null;
   if(f.reportOnly!==undefined&&typeof f.reportOnly!=="boolean")return null;
-  return {version:2,datasetId:DATASET_ID,profile:p,preferences:{...f,creditTagIds:sanitizeCreditFilterIds(f.creditTagIds,applicable(p)?courses:[]),campus:f.campus??"yokohama-plus-ondemand",reportOnly:f.reportOnly??false},completed:[...new Set(s.completed)].filter(id=>courseById.has(id)),planned:[...new Set(s.planned)].filter(id=>offeringById.has(id))};
+  return {version:2,datasetId:DATASET_ID,profile:p,preferences:{...f,halves:sanitizeTermHalves(f.halves),creditTagIds:sanitizeCreditFilterIds(f.creditTagIds,applicable(p)?courses:[]),campus:f.campus??"yokohama-plus-ondemand",reportOnly:f.reportOnly??false},completed:[...new Set(s.completed)].filter(id=>courseById.has(id)),planned:[...new Set(s.planned)].filter(id=>offeringById.has(id))};
 }
