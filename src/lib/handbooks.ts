@@ -5,6 +5,8 @@ import designDataScienceRaw from "@/data/design-data-science-catalog.json";
 import {CATEGORIES,courseById,offerings,type Category,type Course,type Offering,type Profile} from "./data";
 import {deriveCreditTags,sanitizeCreditFilterIds} from "./credit-tags";
 import {overlaps} from "./rules";
+import {planRequiredAdditions} from "./required-additions";
+import {matchesTermHalves,sanitizeTermHalves,type TermHalf} from "./term-halves";
 import {matchesCampus,type CampusChoice} from "./scheduling";
 const SOCIAL_MEDIA = "社会メディア学科";
 export const INFORMATION_SYSTEMS = "情報システム学科";
@@ -190,11 +192,22 @@ export function handbookReplacement(h:Handbook,o:HandbookOffering,profile:Profil
  const issues=handbookOfferingIssues(h,o,profile,completed,remaining);
  return {conflicts,remaining,issues,canReplace:conflicts.length>0&&issues.length===0&&!planned.includes(o.id)};
 }
-export function handbookCandidates(h:Handbook,profile:Profile,quarter:number,day:number,period:number,completed:string[],planned:string[],campus:CampusChoice="yokohama-plus-ondemand"){
- if(!(profile.term==="前期"?[1,2]:[3,4]).includes(quarter))return [];
- return handbookOfferings(h.year,h.department,h.faculty).filter(o=>o.academicYear===profile.academicYear&&o.slots.some(s=>s.day===day&&s.period===period&&s.quarters.includes(quarter))&&(planned.includes(o.id)||matchesCampus(o,campus))).map(o=>({offering:o,course:h.courses.find(c=>c.id===o.courseId)!,selected:planned.includes(o.id),issues:handbookOfferingIssues(h,o,profile,completed,planned)})).sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(a.issues.length>0)-Number(b.issues.length>0)||Number(b.course.requiredType==="required")-Number(a.course.requiredType==="required")||a.course.name.localeCompare(b.course.name,"ja"));
+export function addHandbookRequiredOfferings(h: Handbook, profile: Profile, completed: string[], planned: string[], campus: CampusChoice, halves: TermHalf[]) {
+  return planRequiredAdditions({
+    required: aggregateHandbook(h, completed).missingRequired,
+    offerings: handbookOfferings(h.year, h.department, h.faculty),
+    profile, completed, planned, halves,
+    issuesFor: (o, ids) => [
+      ...handbookOfferingIssues(h, o, profile, completed, ids),
+      ...(matchesCampus(o, campus) ? [] : ["キャンパス・受講形式の条件に合いません"]),
+    ],
+  });
 }
-export type HandbookState={version:1;datasetId:"tcu-handbooks-v1";profile:Profile;completed:string[];planned:string[];campus:CampusChoice;creditTagIds?:string[]};
+export function handbookCandidates(h:Handbook,profile:Profile,quarter:number,day:number,period:number,completed:string[],planned:string[],campus:CampusChoice="yokohama-plus-ondemand",halves:TermHalf[]=[]){
+ if(!(profile.term==="前期"?[1,2]:[3,4]).includes(quarter))return [];
+ return handbookOfferings(h.year,h.department,h.faculty).filter(o=>o.academicYear===profile.academicYear&&o.slots.some(s=>s.day===day&&s.period===period&&s.quarters.includes(quarter))&&(planned.includes(o.id)||(matchesTermHalves(o,profile.term,halves)&&matchesCampus(o,campus)))).map(o=>({offering:o,course:h.courses.find(c=>c.id===o.courseId)!,selected:planned.includes(o.id),issues:handbookOfferingIssues(h,o,profile,completed,planned)})).sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(a.issues.length>0)-Number(b.issues.length>0)||Number(b.course.requiredType==="required")-Number(a.course.requiredType==="required")||a.course.name.localeCompare(b.course.name,"ja"));
+}
+export type HandbookState={version:1;datasetId:"tcu-handbooks-v1";profile:Profile;completed:string[];planned:string[];campus:CampusChoice;creditTagIds?:string[];halves?:TermHalf[]};
 export function sanitizeHandbookState(value:unknown):HandbookState|null{
  if(!value||typeof value!=="object")return null;const s=value as Partial<HandbookState>;
  if(s.version!==1||s.datasetId!=="tcu-handbooks-v1"||!s.profile||!supportsHandbookProfile(s.profile)||s.profile.academicYear!==2026||!["前期","後期"].includes(s.profile.term)||!Array.isArray(s.completed)||!Array.isArray(s.planned)||!s.completed.every(x=>typeof x==="string")||!s.planned.every(x=>typeof x==="string")||!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(s.campus??""))return null;
@@ -202,5 +215,6 @@ export function sanitizeHandbookState(value:unknown):HandbookState|null{
  // Reject cross-curriculum data, rather than silently counting a different year's records.
  if(s.completed.some(id=>!courseIds.has(id))||s.planned.some(id=>!offeringIds.has(id)))return null;
  return {version:1,datasetId:"tcu-handbooks-v1",profile:s.profile,completed:[...new Set(s.completed)],planned:[...new Set(s.planned)],campus:s.campus!,
+  ...(s.halves===undefined?{}:{halves:sanitizeTermHalves(s.halves)}),
   ...(s.creditTagIds===undefined?{}:{creditTagIds:sanitizeCreditFilterIds(s.creditTagIds,h.courses)})};
 }

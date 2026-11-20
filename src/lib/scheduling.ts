@@ -3,6 +3,8 @@ import { CATEGORIES, courseById, offerings, offeringById, requirement, DAYS, rul
 import { aggregate, applicable, evaluate, inTarget, overlaps, registrationLoad, currentAcademicYear, isCurrentRequired, priorityFor, goalMeasures } from "./rules";
 
 import { matchesCreditTags } from "./credit-tags";
+import {planRequiredAdditions} from "./required-additions";
+import {matchesTermHalves} from "./term-halves";
 import {selectRequiredSeeds,type RequiredGroup} from "./required-solver";
 
 export type CampusChoice = "yokohama-plus-ondemand" | "yokohama" | "setagaya-ondemand" | "setagaya" | "all";
@@ -30,7 +32,8 @@ export function matchesCampus(o: Offering, choice: CampusChoice = "yokohama-plus
   return yokohama || (setagaya && delivery(o) === "on-demand");
 }
 export function matchesPreferences(o: Offering, state: PlannerState) {
-  return matchesCampus(o, state.preferences.campus) &&
+  return matchesTermHalves(o, state.profile.term, state.preferences.halves) &&
+    matchesCampus(o, state.preferences.campus) &&
     (!state.preferences.reportOnly || requiredIds.has(o.courseId) || reportOnly(o)) &&
     matchesCreditTags(courseById.get(o.courseId)!, state.preferences.creditTagIds);
 }
@@ -55,6 +58,17 @@ function autoExclusions(o:Offering,state:PlannerState){
  if(clashes.length)reasons.push("時間が重なる科目："+[...new Set(clashes.map(x=>x.name))].join("・"));
  return [...new Set(reasons)];
 }
+export function addRequiredOfferings(state: PlannerState) {
+  return planRequiredAdditions({
+    required: applicable(state.profile) ? requirement.mandatoryIds.map(id => courseById.get(id)!) : [],
+    offerings,
+    profile: state.profile,
+    completed: state.completed,
+    planned: state.planned,
+    halves: state.preferences.halves,
+    issuesFor: (o, planned) => autoExclusions(o, { ...state, planned }),
+  });
+}
 export function auditRequired(state:PlannerState,planned=state.planned,target?:number):RequiredAudit[]{
  const selected={...state,planned},year=currentAcademicYear(state.profile);
  return requirement.mandatoryIds.map(courseId=>{
@@ -70,7 +84,9 @@ export function auditRequired(state:PlannerState,planned=state.planned,target?:n
    }
    const chosen=options.find(o=>planned.includes(o.id));
    if(chosen){const exclusions=autoExclusions(chosen,selected);return {...common,status:exclusions.length?"blocked" as const:"scheduled" as const,reasons:exclusions.length?exclusions:["仮時間割に含まれています"]};}
-   const alternatives=options.map(o=>({o,reasons:autoExclusions(o,selected)}));
+   const scoped = options.filter(o => matchesTermHalves(o, state.profile.term, state.preferences.halves));
+   if (!scoped.length) return {...common,current:false,status:"other_term" as const,reasons:["対象タームの条件に合うクラスがありません"]};
+   const alternatives=scoped.map(o=>({o,reasons:autoExclusions(o,selected)}));
    const usable=alternatives.filter(x=>!x.reasons.length);
    if(usable.length&&target!==undefined&&usable.every(x=>registrationLoad({...selected,planned:[...planned,x.o.id]})>target))return {...common,status:"blocked" as const,reasons:["目標"+target+"単位の上限に収まりません"]};
    if(usable.length)return {...common,status:"ready" as const,reasons:[current?"今期の必修として先に確保します":"未修得の必修として選択科目より先に検討します"]};
@@ -98,7 +114,7 @@ export function generateSchedules(state:PlannerState,options:DraftOptions):Sched
  const blockedCore=audit.filter(a=>a.current&&!["completed","scheduled","ready"].includes(a.status));
  if(blockedCore.length)return fail(["今期・当該年次の必修を含む案が作れません。必修を外した案は作成していません。",...blockedCore.map(a=>a.name+"："+a.reasons.join("／"))],audit);
  const lockedCourses=new Set(lockedOfferings.map(o=>o.courseId));
- const groups:RequiredGroup[]=audit.filter(a=>["ready","blocked"].includes(a.status)&&!lockedCourses.has(a.courseId)).map(a=>({courseId:a.courseId,current:a.current,choices:offerings.filter(o=>o.courseId===a.courseId&&inTarget(o,state.profile)&&!autoExclusions(o,fixedState).length).map(offering=>({offering,load:load(offering)}))}));
+ const groups:RequiredGroup[]=audit.filter(a=>["ready","blocked"].includes(a.status)&&!lockedCourses.has(a.courseId)).map(a=>({courseId:a.courseId,current:a.current,choices:offerings.filter(o=>o.courseId===a.courseId&&inTarget(o,state.profile)&&matchesTermHalves(o,state.profile.term,state.preferences.halves)&&!autoExclusions(o,fixedState).length).map(offering=>({offering,load:load(offering)}))}));
  const minimumCore=groups.filter(g=>g.current).reduce((sum,g)=>sum+Math.min(...g.choices.map(x=>x.load)),lockedLoad);
  if(minimumCore>target)return fail(["今期必修と固定済みの予定だけで最低"+minimumCore+"単位です。目標"+target+"単位には収まりません。目標を増やすか、固定を見直してください。"],audit);
  const mandatory=selectRequiredSeeds(groups,lockedOfferings,lockedLoad,target);
@@ -108,7 +124,7 @@ export function generateSchedules(state:PlannerState,options:DraftOptions):Sched
  }
  // Optional courses are filled only after complete current-year mandatory seeds have been found.
  const initial=offerings.filter(o=>!requiredIds.has(o.courseId)&&!lockedCourses.has(o.courseId)&&inTarget(o,state.profile)
-   &&matchesCreditTags(courseById.get(o.courseId)!,state.preferences.creditTagIds)&&!autoExclusions(o,fixedState).length);
+   &&matchesTermHalves(o,state.profile.term,state.preferences.halves)&&matchesCreditTags(courseById.get(o.courseId)!,state.preferences.creditTagIds)&&!autoExclusions(o,fixedState).length);
  const cache=new Map<string,ReturnType<typeof aggregate>>();
  const summaryFor=(ids:string[])=>{
    const selectedIds=[...new Set([...state.completed,...ids.map(id=>offeringById.get(id)!.courseId)])].sort(),key=selectedIds.join("|");
