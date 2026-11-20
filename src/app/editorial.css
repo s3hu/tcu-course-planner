@@ -90,3 +90,22 @@ button{transition:background .22s,color .22s,border-color .22s,box-shadow .22s,t
 .entry-description p + p {
   margin-top: 6px;
 }
+
+.past-credit-stack{display:grid;gap:14px}
+.past-credit-stack+.panel,.past-credit-stack.panel{margin-bottom:18px}
+.past-credit-stack p,.past-credit-row{line-height:1.65}
+.past-credit-actions{display:flex;flex-wrap:wrap;gap:10px}
+.past-credit-choice,.past-credit-fields label{display:grid;gap:6px;min-width:0}
+.past-credit-choice textarea,.past-credit-choice select,.past-credit-fields input,.past-credit-fields select{box-sizing:border-box;width:100%;min-width:0;padding:9px 11px;border:1px solid #c9cec2;border-radius:6px;background:#fff;color:inherit;font:inherit}
+.past-credit-choice textarea{resize:vertical}
+.past-credit-choice input[type=file]{width:100%;font:inherit}
+.past-credit-image{border-top:1px solid var(--line);padding-top:14px}
+.past-credit-image progress{width:100%;accent-color:#45633e}
+.past-credit-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+.dialog-content .past-credit-review{margin:0}
+.past-credit-review legend{font-size:14px}
+.past-credit-row{padding:10px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.past-credit-row small{display:block;margin-top:4px;white-space:pre-wrap}
+.past-credit-row .past-credit-fields{margin-top:9px}
+.past-credit-check{display:flex;align-items:baseline;gap:8px}
+@media(max-width:620px){.past-credit-fields{grid-template-columns:1fr}}
