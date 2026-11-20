@@ -115,7 +115,11 @@ export default function Planner({initialState,usageMode,onStateChange,saveStatus
     <DemoNotice />
     {view==="dashboard"&&<RegistrationGuide/>}
     {saveMessage&&<p className="warning-banner" role="status">{saveMessage}</p>}
-    {view==="dashboard"&&<SlotPlanner key={targetQuarters(state.profile.term,state.preferences.halves).join(",")} state={state} onSlot={slot=>setModal({slot})} onPreferences={()=>setModal("preferences")}/>}
+    {view==="dashboard"&&<>
+      <RequiredAddButton key={JSON.stringify([state.profile,state.preferences,state.completed])} planned={state.planned}
+        addRequired={()=>addRequiredOfferings(state)} onPlanChange={planned=>setState(s=>({...s,planned}))}/>
+      <SlotPlanner key={targetQuarters(state.profile.term,state.preferences.halves).join(",")} state={state} onSlot={slot=>setModal({slot})} onPreferences={()=>setModal("preferences")}/>
+    </>}
     {view==="dashboard"&&<details className="auto-builder-disclosure"><summary><Sparkles size={16}/>自動で時間割の案をつくる</summary><ScheduleBuilder state={state} onPreferences={preferences=>setState(s=>({...s,preferences}))} onApply={planned=>{setState(s=>({...s,planned}));setToast("時間割の候補を仮置きしました。各授業の履修条件を確認してください。");}} onCompleted={()=>go("completed")} onDetail={detail}/></details>}
     {(view === "dashboard" || view === "completed") && <div className="completed-overview"><Progress state={state} onEdit={() => go("completed")} /></div>}
 
