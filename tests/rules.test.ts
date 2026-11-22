@@ -6,9 +6,9 @@ const fresh = () => structuredClone(DEFAULT_STATE);
 const synthetic = (id:string, category:Course["category"], credits:number, family:string|null=null):Course => ({...courses[0],id,name:id,credits,category,creditFamily:family,creditStatus:"countable"});
 const fall = offerings.find(o=>inTarget(o,DEFAULT_STATE.profile)&&evaluate(o,DEFAULT_STATE).status!=="blocked")!;
 
-test("catalog keeps 303 identities, 266 offerings and their explicit IDs",()=>{
-  assert.equal(courses.length,303);assert.equal(offerings.length,266);
-  assert.equal(new Set(courses.map(c=>c.id)).size,303);
+test("catalog keeps 312 identities, 567 offerings and their explicit IDs",()=>{
+  assert.equal(courses.length,312);assert.equal(offerings.length,567);
+  assert.equal(new Set(courses.map(c=>c.id)).size,312);
   assert.ok(offerings.every(o=>courseById.has(o.courseId)));
   assert.ok(!courses.some(c=>c.code.startsWith("DEMO")));
 });
