@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, Check, Cloud, LockKeyhole } from "lucide-react";
+import { CreditRecordingAccess } from "./credit-recording";
 import Planner from "./planner";
 import HandbookPlanner from "./handbook-planner";
 import { HANDBOOK_FACULTIES, handbookDatasetId, handbookDepartments, sanitizeHandbookState, SUPPORTED_YEARS, supportsHandbookProfile, type HandbookState } from "@/lib/handbooks";
@@ -161,6 +162,14 @@ export default function Experience() {
     }
   }
 
+  function loginFromPlanner(profile: Profile) {
+    setAdmission(String(profile.admissionYear));
+    setFaculty(profile.faculty);
+    setDepartment(profile.department);
+    setTerm(profile.term);
+    void chooseAccount();
+  }
+
   async function submitAuth(event: FormEvent) {
     event.preventDefault();
     if (!cloudConfigured || !startAction()) return;
@@ -200,10 +209,10 @@ export default function Experience() {
       : datasetId && { version: 1, datasetId, profile, completed: [], planned: [], campus: "yokohama-plus-ondemand" };
     if (!state) return;
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
-    const pastCredits = state.version === 1 && submitter?.getAttribute("value") === "past-credits";
+    const pastCredits = mode === "account" && submitter?.getAttribute("value") === "past-credits";
     setMessage("");
     if (mode === "guest") {
-      setStartWithPastCredits(pastCredits);
+      setStartWithPastCredits(false);
       setInitial(state);
       setStatus("guest");
       setStep("planner");
@@ -298,11 +307,13 @@ export default function Experience() {
   if (step === "planner" && initial) {
     return <div inert={busy}>
       {initial.version === 1
-        ? <HandbookPlanner key={initial.datasetId} profile={initial.profile} initialState={initial} startWithPastCredits={startWithPastCredits}
+        ? <HandbookPlanner key={initial.datasetId} profile={initial.profile} initialState={initial} usageMode={mode} startWithPastCredits={startWithPastCredits}
             onStateChange={mode === "account" ? changed : undefined} saveStatus={status} saveMessage={message}
+            onLogin={() => loginFromPlanner(initial.profile)}
             onExit={profile => void leavePlanner("profile", profile)}
             onSignOut={mode === "account" ? () => void leavePlanner("signOut") : undefined} />
-        : <Planner initialState={initial} usageMode={mode} onStateChange={changed} saveStatus={status}
+        : <Planner initialState={initial} usageMode={mode} startWithPastCredits={startWithPastCredits}
+            onLogin={() => loginFromPlanner(initial.profile)} onStateChange={changed} saveStatus={status}
             saveMessage={message} accountEmail={email} onExit={() => void leavePlanner("welcome")}
             onChooseHandbookProfile={profile => void leavePlanner("profile", profile)}
             onSignOut={() => void leavePlanner("signOut")} />}
@@ -334,6 +345,6 @@ export default function Experience() {
       </>}
       {message&&<p role="status" className="auth-message">{message}</p>}
     </section>}
-    {step==="profile"&&<section className="onboarding-panel"><span className="step-number">STEP 01 · ABOUT YOU</span><h1>まず、あなたの所属を教えてください。</h1><p className="muted">適用する履修要件を、入学年度と学部・学科から確認します。</p><form onSubmit={e=>void begin(e)}><label className="form-field">入学年度<select required value={admission} onChange={e=>setAdmission(e.target.value)}><option value="">選択してください</option>{[2026,2025,2024,2023,2022,2021,2020].map(y=><option key={y} value={y}>{y}年度入学{yearSupported(y)?"（要覧データあり）":"（データ未対応）"}</option>)}</select></label><label className="form-field">学部<select required value={faculty} onChange={e=>{setFaculty(e.target.value);setDepartment("");}}><option value="">選択してください</option>{HANDBOOK_FACULTIES.map(name=><option key={name}>{name}</option>)}</select></label><label className="form-field">学科<select required disabled={!faculty} value={department} onChange={e=>setDepartment(e.target.value)}><option value="">選択してください</option>{departments.map(name=><option key={name}>{name}</option>)}</select></label><label className="form-field">計画する学期<select value={term} onChange={e=>setTerm(e.target.value as "前期"|"後期")}><option value="後期">2026年度 後期</option><option value="前期">2026年度 前期</option></select></label>{admission&&yearSupported(Number(admission))&&<p className="cohort-preview"><strong>{admission}年度入学の学修要覧を使います</strong><br/>入学年度ごとに科目・区分・要件を分けて集計します。時間割は2026年度開講の収録分から参照します。</p>}<p className="scope-note">社会メディア学科は2022〜2026年度、情報システム学科・環境学部・デザイン・データ科学部は2023〜2026年度入学に対応します。学修要覧モードの時間割には照合できた収録クラスが表示されます。</p>{admission&&!yearSupported(Number(admission))&&<p className="auth-message" role="status">この入学年度・学部・学科の組み合わせはデータ未対応です。</p>}<button className="button primary full-width" disabled={!supported||busy}><Check size={16}/>{busy?"プランを読み込み中…":"この条件で時間割を考える"}<ArrowRight size={15}/></button>{supported&&!applicable(selectedProfile)&&<button className="button secondary full-width" type="submit" value="past-credits" disabled={busy}>修得科目をまとめて記録する</button>}</form>{busy&&<p role="status" className="muted">保存済みのプランを確認しています。</p>}{message&&<p role="status" className="auth-message">{message}</p>}{applicable(selectedProfile)&&<RegistrationGuide/>}<p className="privacy-line">{mode==="guest"?"ゲスト利用：この入力を端末やサーバーに保存しません。":(!applicable(selectedProfile)&&supportsHandbookProfile(selectedProfile))?"アカウント利用：学修要覧モードのプランを自分のアカウントに保存します。":"アカウント利用：修得科目と計画を自分のアカウントに保存します。"}</p>{mode==="account"&&<button type="button" className="text-button" disabled={busy} onClick={()=>void leavePlanner("signOut")}>ログアウト</button>}</section>}
+    {step==="profile"&&<section className="onboarding-panel"><span className="step-number">STEP 01 · ABOUT YOU</span><h1>まず、あなたの所属を教えてください。</h1><p className="muted">適用する履修要件を、入学年度と学部・学科から確認します。</p><form onSubmit={e=>void begin(e)}><label className="form-field">入学年度<select required value={admission} onChange={e=>setAdmission(e.target.value)}><option value="">選択してください</option>{[2026,2025,2024,2023,2022,2021,2020].map(y=><option key={y} value={y}>{y}年度入学{yearSupported(y)?"（要覧データあり）":"（データ未対応）"}</option>)}</select></label><label className="form-field">学部<select required value={faculty} onChange={e=>{setFaculty(e.target.value);setDepartment("");}}><option value="">選択してください</option>{HANDBOOK_FACULTIES.map(name=><option key={name}>{name}</option>)}</select></label><label className="form-field">学科<select required disabled={!faculty} value={department} onChange={e=>setDepartment(e.target.value)}><option value="">選択してください</option>{departments.map(name=><option key={name}>{name}</option>)}</select></label><label className="form-field">計画する学期<select value={term} onChange={e=>setTerm(e.target.value as "前期"|"後期")}><option value="後期">2026年度 後期</option><option value="前期">2026年度 前期</option></select></label>{admission&&yearSupported(Number(admission))&&<p className="cohort-preview"><strong>{admission}年度入学の学修要覧を使います</strong><br/>入学年度ごとに科目・区分・要件を分けて集計します。時間割は2026年度開講の収録分から参照します。</p>}<p className="scope-note">社会メディア学科は2022〜2026年度、情報システム学科・環境学部・デザイン・データ科学部は2023〜2026年度入学に対応します。学修要覧モードの時間割には照合できた収録クラスが表示されます。</p>{admission&&!yearSupported(Number(admission))&&<p className="auth-message" role="status">この入学年度・学部・学科の組み合わせはデータ未対応です。</p>}<button className="button primary full-width" disabled={!supported||busy}><Check size={16}/>{busy?"プランを読み込み中…":"この条件で時間割を考える"}<ArrowRight size={15}/></button>{supported&&<CreditRecordingAccess mode={mode} onLogin={()=>void chooseAccount()}><button className="button secondary full-width" type="submit" value="past-credits" disabled={busy}>修得科目をまとめて記録する</button></CreditRecordingAccess>}</form>{busy&&<p role="status" className="muted">保存済みのプランを確認しています。</p>}{message&&<p role="status" className="auth-message">{message}</p>}{applicable(selectedProfile)&&<RegistrationGuide/>}<p className="privacy-line">{mode==="guest"?"ゲスト利用：この入力を端末やサーバーに保存しません。":(!applicable(selectedProfile)&&supportsHandbookProfile(selectedProfile))?"アカウント利用：学修要覧モードのプランを自分のアカウントに保存します。":"アカウント利用：修得科目と計画を自分のアカウントに保存します。"}</p>{mode==="account"&&<button type="button" className="text-button" disabled={busy} onClick={()=>void leavePlanner("signOut")}>ログアウト</button>}</section>}
     </main>{step==="welcome"?<SiteFooter startHref="#entry-choices"/>:<p className="welcome-footer">履修ノート · 東京都市大学向けの非公式サービス。正式登録は大学のシステムで行ってください。</p>}</div>;
 }

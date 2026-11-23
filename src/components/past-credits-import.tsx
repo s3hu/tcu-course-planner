@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { CATEGORIES, type Category } from "@/lib/data";
-import type { HandbookCourse } from "@/lib/handbooks";
+import { CATEGORIES, type Category, type Course } from "@/lib/data";
 import { MAX_CUSTOM_NAME, matchPastCredits, sanitizeCustomCredit, type CreditMatch, type CustomCompleted } from "@/lib/past-credits";
 import Dialog from "./dialog";
 
@@ -52,14 +51,16 @@ export function CustomCreditDialog({ categories, onAdd, onClose }: {
   </Dialog>;
 }
 
-type ReviewRow = { match: CreditMatch<HandbookCourse>; choice: string; draft: CustomDraft; index: number };
+type ImportCourse = Pick<Course, "id" | "name" | "code" | "category"> & { credits: number | null };
+
+type ReviewRow = { match: CreditMatch<ImportCourse>; choice: string; draft: CustomDraft; index: number };
 type OcrMessage =
   | { type: "progress"; status: string; progress: number }
   | { type: "result"; text: string }
   | { type: "error" };
 
 export default function PastCreditsImport({ courses, categories, completed, onApply, onClose }: {
-  courses: readonly HandbookCourse[];
+  courses: readonly ImportCourse[];
   categories: readonly Category[];
   completed: readonly string[];
   onApply: (ids: string[], custom: CustomCompleted[], pending: number, excluded: number) => void;
@@ -177,13 +178,13 @@ export default function PastCreditsImport({ courses, categories, completed, onAp
           {group.map(({ match, choice, draft, index }) => <div className="past-credit-row" key={index}>
             {match.status === "matched" ? <label className="past-credit-check">
               <input type="checkbox" checked={choice === match.course.id} onChange={e => updateRow(index, { choice: e.target.checked ? match.course.id : "exclude" })}/>
-              {match.course.name}（{match.course.credits}単位）{completed.includes(match.course.id) && "・記録済み"}
+              {match.course.name}（{match.course.credits === null ? "単位数未確認" : match.course.credits + "単位"}）{completed.includes(match.course.id) && "・記録済み"}
             </label> : <label className="past-credit-choice">
               {match.name}
               <select value={choice} onChange={e => updateRow(index, { choice: e.target.value })}>
                 <option value="">未処理</option>
                 {match.status === "review" && match.candidates.map(({ course }) =>
-                  <option key={course.id} value={course.id}>{course.name}（{course.credits}単位・{CATEGORIES[course.category].label}・{course.code}）</option>)}
+                  <option key={course.id} value={course.id}>{course.name}（{course.credits === null ? "単位数未確認" : course.credits + "単位"}・{CATEGORIES[course.category].label}・{course.code}）</option>)}
                 <option value="custom">自由入力として追加</option>
                 <option value="exclude">除外</option>
               </select>
