@@ -3,7 +3,7 @@
 import { ExternalLink, Info, Plus, Trash2, TriangleAlert } from "lucide-react";
 import { CATEGORIES, DAYS, Q_LABELS, courses, courseById, dataIssues, offerings, officialUrl, requirement, rules, source, sourceLabel, sources, type Offering, type PlannerState } from "@/lib/data";
 import CreditTags,{CreditCategoryNote} from "./credit-tags";
-import { aggregate, evaluate, priorityFor } from "@/lib/rules";
+import { completedSummary, evaluate, priorityFor } from "@/lib/rules";
 
 export function DataNotice({ compact = false }: { compact?: boolean }) {
   return <div className={`demo-notice ${compact ? "compact" : ""}`}><span className="demo-tag">2025 社メ</span><span>{compact ? "提供JSONの資料ベースデータ・個別条件は要確認" : "2025年度入学・社会メディア学科／2026年度開講の提供JSONを使用。履修許可・最新訂正・卒業可否は確定しません。"}</span></div>;
@@ -43,7 +43,7 @@ export function CourseDetail({ o, state, onAdd }: { o: Offering; state: PlannerS
 
 const ISSUE_LABELS: Record<string, string> = { handbook_subtotal_typo: "専門基礎の小計の記載差", not_a_complete_eligibility_engine: "全例外・卒業可否の判定は未対応", credit_conflict: "「未来を拓くイノベーション」の単位数が不一致", individual_course_permission_not_verified: "個別の履修許可は未確認", activity_recognition_guides_not_verified: "活動認定の別ガイドは未確認", current_timetable_all_corrections_not_audited: "時間表の訂正を全件反映していません", teaching_license_complete_validator_not_implemented: "教員免許の全要件判定は未対応", TAP_personal_recognition_not_verified: "TAP等の個人の認定結果は未確認" };
 export function DataSources({ state }: { state: PlannerState }) {
-  const a = aggregate(state.completed);
+  const a = completedSummary(state);
   return <><DataNotice compact /><p className="detail-description">提供JSON v2.0.0の科目表271件と補助科目32件、2026年度開講266件を取り込みました。未照合の時間表候補229行は、確認済みの開講科目として追加していません。</p><dl className="detail-grid"><div><dt>対象入学年度・所属</dt><dd>{requirement.title}</dd></div><div><dt>収録開講年度</dt><dd>2026年度</dd></div><div><dt>提供データ生成日</dt><dd>{source.updatedAt}</dd></div><div><dt>確認状態</dt><dd>資料ベースの草案・全件の再監査は未実施</dd></div></dl>
     <h3 className="detail-subtitle">参照資料</h3><ul className="source-list">{sources.map(s => { const item = s as { source_id: string; title?: string; filename?: string; url?: string; official_url?: string; sha256?: string }; const url = officialUrl(item.url || item.official_url); return <li key={item.source_id}>{url ? <a href={url} target="_blank" rel="noreferrer">{item.title || item.filename || item.source_id}<ExternalLink size={12} /></a> : <span>{item.title || item.filename || item.source_id}（JSON内の出典情報）</span>}</li>; })}</ul>
     <h3 className="detail-subtitle">要件の参考チェック</h3><p className="fine-print">DS・MS、選択必修、外国語などは全体の124単位に内包され、重ねて加算しません。</p><div className="requirement-checks">{a.checks.map(check => <div key={check.label}><span>{check.label}</span><strong>{check.earned} / {check.required} {check.unit}</strong></div>)}</div>

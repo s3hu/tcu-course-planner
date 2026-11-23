@@ -109,3 +109,10 @@ button{transition:background .22s,color .22s,border-color .22s,box-shadow .22s,t
 .past-credit-row .past-credit-fields{margin-top:9px}
 .past-credit-check{display:flex;align-items:baseline;gap:8px}
 @media(max-width:620px){.past-credit-fields{grid-template-columns:1fr}}
+
+.credit-recording-panel, .requirements-panel { padding: clamp(16px, 3vw, 24px); }
+.requirements-table { overflow-x: auto; }
+.requirements-table table { width: 100%; border-collapse: collapse; text-align: left; }
+.requirements-table th, .requirements-table td { padding: .6rem; border-bottom: 1px solid var(--line, #dce2e7); }
+.requirements-missing { margin: 0; padding-inline-start: 1.25rem; }
+.requirement-condition { border-bottom: 1px solid var(--line, #dce2e7); padding-bottom: .6rem; }

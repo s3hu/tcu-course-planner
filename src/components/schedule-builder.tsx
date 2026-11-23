@@ -2,7 +2,7 @@
 import {useState} from "react";
 import {ArrowRight,CalendarDays,Check,MapPin,Settings2,Sparkles} from "lucide-react";
 import {CATEGORIES,DAYS,Q_LABELS,courseById,offeringById,type PlannerState,type Preferences} from "@/lib/data";
-import {aggregate,currentAcademicYear} from "@/lib/rules";
+import {completedSummary,currentAcademicYear} from "@/lib/rules";
 import {targetQuarters} from "@/lib/term-halves";
 import RequiredCheck from "./required-check";
 import {CAMPUS_CHOICES,auditRequired,generateSchedules,type CampusChoice,type ScheduleDraft} from "@/lib/scheduling";
@@ -12,7 +12,7 @@ export default function ScheduleBuilder({state,onPreferences,onApply,onCompleted
  const [previewQuarter,setPreviewQuarter]=useState(0);const quarters=state.profile.term==="前期"?[1,2]:[3,4];const quarter=quarters.includes(previewQuarter)?previewQuarter:targetQuarters(state.profile.term,state.preferences.halves)[0];
  const signature=JSON.stringify([state,target,fixed]),stale=generated!==signature;
  const requiredFocus=auditRequired(state,fixed?state.planned:[]).filter(a=>a.current&&a.status!=="completed");
- const shortages=aggregate(state.completed).breakdown.filter(b=>b.remaining>0);
+ const shortages=completedSummary(state).breakdown.filter(b=>b.remaining>0);
  function generate(){if(!historyReady)return;const result=generateSchedules(state,{targetCredits:target,preserveExisting:fixed});setDrafts(result.drafts);setMessages(result.messages);setGenerated(signature);setApplied("");}
  return <section className="schedule-builder"><div className="builder-heading"><div><span className="welcome-eyebrow">BUILD YOUR SEMESTER</span><h2><Sparkles size={23}/>時間割を、まとめて提案。</h2><p>必要な単位区分と通う場所から、授業の組み合わせをつくります。</p></div><button className="text-button" onClick={onCompleted}>修得科目を入力<ArrowRight size={14}/></button></div>
  {!state.completed.length&&<section className="history-check"><strong>最初に、修得状況を確認しましょう</strong><p>修得科目が0件です。{currentAcademicYear(state.profile)>1?"未入力のまま作ると、過年度の必修も再履修候補に入ります。":"修得済みの科目がなければ、そのまま進めます。"}</p><button className="text-button" onClick={onCompleted}>修得済み科目を選ぶ<ArrowRight size={14}/></button><label><input type="checkbox" checked={historyConfirmed===historyKey} onChange={e=>setHistoryConfirmed(e.target.checked?historyKey:"")}/>修得なしとして候補を試す</label></section>}

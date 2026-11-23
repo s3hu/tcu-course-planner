@@ -92,3 +92,15 @@ export function matchPastCredits<T extends CatalogCourse>(text: string, courses:
 export function customCreditKey(credit: CustomCompleted): string {
   return JSON.stringify([credit.name.normalize("NFKC"), credit.credits, credit.category]);
 }
+
+export function sanitizeCustomCredits(value: unknown, categories: readonly Category[]): CustomCompleted[] | null {
+  if (!Array.isArray(value)) return null;
+  const unique = new Map<string, CustomCompleted>();
+  for (const entry of value) {
+    const credit = sanitizeCustomCredit(entry, categories);
+    if (!credit) return null;
+    const key = customCreditKey(credit);
+    if (!unique.has(key)) unique.set(key, credit);
+  }
+  return [...unique.values()];
+}

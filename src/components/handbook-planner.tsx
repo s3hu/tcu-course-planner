@@ -11,6 +11,8 @@ import TermHalfFilter from "./term-half-filter";
 import CreditTags from "./credit-tags";
 import CreditTagFilter from "./credit-tag-filter";
 import Dialog from "./dialog";
+import { CreditRecordingAccess, CreditRecordingActions, CustomCompletedList } from "./credit-recording";
+import type { UsageMode } from "./experience";
 import PastCreditsImport, {CustomCreditDialog} from "./past-credits-import";
 import {customCreditCategories,customCreditKey,type CustomCompleted} from "@/lib/past-credits";
 import SiteFooter from "./site-footer";
@@ -20,6 +22,8 @@ type Slot={day:number;period:number;quarter:number};
 type HandbookPlannerProps = {
  profile: Profile;
  initialState?: HandbookState;
+ usageMode: UsageMode;
+ onLogin: () => void;
  startWithPastCredits?: boolean;
  onStateChange?: (state: HandbookState) => void;
  saveStatus?: SaveStatus;
@@ -35,16 +39,18 @@ const saveLabels: Record<SaveStatus, string> = {
  error: "保存を確認してください",
 };
 
-export default function HandbookPlanner({profile:initial,initialState,startWithPastCredits=false,onStateChange,saveStatus="guest",saveMessage,onExit,onSignOut}:HandbookPlannerProps){
+export default function HandbookPlanner({profile:initial,initialState,usageMode,onLogin,startWithPastCredits=false,onStateChange,saveStatus="guest",saveMessage,onExit,onSignOut}:HandbookPlannerProps){
  const [profile,setProfile]=useState(initialState?.profile??initial);
+ const canManageCredits = usageMode === "account";
+ const startImport = canManageCredits && startWithPastCredits;
  const [completed,setCompleted]=useState<string[]>(initialState?.completed??[]);
  const [customCompleted,setCustomCompleted]=useState<CustomCompleted[]>(initialState?.customCompleted??[]);
- const [creditDialog,setCreditDialog]=useState<"import"|"custom"|null>(startWithPastCredits?"import":null);
+ const [creditDialog,setCreditDialog]=useState<"import"|"custom"|null>(startImport?"import":null);
  const [planned,setPlanned]=useState<string[]>(initialState?.planned??[]);
  const [campus,setCampus]=useState<CampusChoice>(initialState?.campus??"yokohama-plus-ondemand");
  const [creditTagIds,setCreditTagIds]=useState<string[]>(initialState?.creditTagIds??[]);
  const [halves,setHalves]=useState<TermHalf[]>(initialState?.halves??[]);
- const [view,setView]=useState<View>(startWithPastCredits?"completed":"plan"),[query,setQuery]=useState(""),[tag,setTag]=useState("all"),[quarterChoice,setQuarter]=useState(0),[day,setDay]=useState(0),[menu,setMenu]=useState(false),[slot,setSlot]=useState<Slot|null>(null),[detail,setDetail]=useState<{courseId:string;offeringId?:string}|null>(null),[showBlocked,setShowBlocked]=useState(false),[notice,setNotice]=useState<{text:string;id:number}|null>(null),[undo,setUndo]=useState<string[]|null>(null),[confirmReplace,setConfirmReplace]=useState(false);
+ const [view,setView]=useState<View>(startImport?"completed":"plan"),[query,setQuery]=useState(""),[tag,setTag]=useState("all"),[quarterChoice,setQuarter]=useState(0),[day,setDay]=useState(0),[menu,setMenu]=useState(false),[slot,setSlot]=useState<Slot|null>(null),[detail,setDetail]=useState<{courseId:string;offeringId?:string}|null>(null),[showBlocked,setShowBlocked]=useState(false),[notice,setNotice]=useState<{text:string;id:number}|null>(null),[undo,setUndo]=useState<string[]|null>(null),[confirmReplace,setConfirmReplace]=useState(false);
  const datasetId = handbookDatasetId(profile)!;
  const state = useMemo<HandbookState>(() => ({
   version: 1, datasetId, profile, completed, customCompleted, planned, campus, creditTagIds, halves,
@@ -88,10 +94,12 @@ export default function HandbookPlanner({profile:initial,initialState,startWithP
  function toggleCompleted(c:HandbookCourse){setNotice(null);setUndo(null);const adding=!completed.includes(c.id);setCompleted(ids=>adding?[...ids,c.id]:ids.filter(id=>id!==c.id));if(adding)setPlanned(ids=>ids.filter(id=>openings.find(o=>o.id===id)?.courseId!==c.id));}
  const customCategories = customCreditCategories(h.rules.category_minimum_credits);
  function openPastCredits() {
+  if (!canManageCredits) return;
   if (view !== "completed") go("completed");
   setCreditDialog("import");
  }
  function applyPastCredits(ids: string[], custom: CustomCompleted[], pending: number, excluded: number) {
+  if (!canManageCredits) return;
   const currentIds = new Set(completed);
   const newIds = [...new Set(ids)].filter(id => !currentIds.has(id));
   const currentCustom = new Set(customCompleted.map(customCreditKey));
@@ -125,7 +133,7 @@ export default function HandbookPlanner({profile:initial,initialState,startWithP
  }
  function openSlot(next:Slot){setConfirmReplace(false);setSlot(next);setDetail(null);setTag("all");setShowBlocked(false);}
  function exportState(){const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="履修ノート_"+h.year+"入学_"+(!isMedia||isInformationSystems?h.department+"_":"")+profile.academicYear+"_"+profile.term+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify("プランのファイルを書き出しました。ダウンロード先を確認してください。");}
- async function importState(file?:File){if(!file)return;notify("プランを読み込んでいます…");try{if(file.size>1024*1024)throw Error();const s=sanitizeHandbookState(JSON.parse(await file.text()));if(!s||s.datasetId!==datasetId)throw Error();setProfile(s.profile);setCompleted(s.completed);setCustomCompleted(s.customCompleted??[]);setPlanned(s.planned);setCampus(s.campus);setCreditTagIds(s.creditTagIds??[]);setHalves(s.halves??[]);setQuarter(targetQuarters(s.profile.term,s.halves)[0]);notify("この入学年度のプランを読み込みました（修得"+(s.completed.length+(s.customCompleted?.length??0))+"科目・仮置き"+s.planned.length+"クラス）");}catch{notify("読み込めませんでした。同じ入学年度・学部・学科で書き出したプランを選んでください。");}if(importRef.current)importRef.current.value="";}
+ async function importState(file?:File){if(!file)return;notify("プランを読み込んでいます…");try{if(file.size>1024*1024)throw Error();const s=sanitizeHandbookState(JSON.parse(await file.text()));if(!s||s.datasetId!==datasetId)throw Error();setProfile(s.profile);setCompleted(s.completed);setCustomCompleted(canManageCredits ? s.customCompleted ?? [] : []);setPlanned(s.planned);setCampus(s.campus);setCreditTagIds(s.creditTagIds??[]);setHalves(s.halves??[]);setQuarter(targetQuarters(s.profile.term,s.halves)[0]);notify("この入学年度のプランを読み込みました（修得"+(s.completed.length+(canManageCredits ? s.customCompleted?.length ?? 0 : 0))+"科目・仮置き"+s.planned.length+"クラス）"+(!canManageCredits && s.customCompleted?.length ? "。自由入力科目の読み込みはログイン後に使えます。" : ""));}catch{notify("読み込めませんでした。同じ入学年度・学部・学科で書き出したプランを選んでください。");}if(importRef.current)importRef.current.value="";}
  function tagSelect(){return <select aria-label="単位タグで絞り込み" value={tag} onChange={e=>setTag(e.target.value)}><option value="all">すべてのタグ</option>{Object.entries(CREDIT_TAGS).filter(([id])=>h.courses.some(c=>c.creditTagIds.some(t=>t===id))).map(([id,t])=><option value={id} key={id}>{t.label}</option>)}</select>;}
  function courseCard(c:HandbookCourse,o?:HandbookOffering){return <article className="slot-candidate" key={o?.id??c.id}><CreditTags course={c}/><button className="slot-candidate-name" onClick={()=>{setConfirmReplace(false);setDetail({courseId:c.id,offeringId:o?.id});}}>{c.name}<ArrowRight size={15}/></button><div className="slot-candidate-meta"><span>{c.credits}単位</span><span>{o?o.campus:h.year+"年度 教育課程表"}</span>{completed.includes(c.id)&&<b>修得済み</b>}</div>{o&&<p className="slot-all-meetings"><b>確保する全コマ</b>{[...new Set(o.slots.map(s=>DAYS[s.day]+s.period+"限（"+s.quarters.map(q=>Q_LABELS[q]).join("・")+"）"))].join("／")}</p>}<div className="slot-candidate-bottom"><small>{o?"講義コード "+o.lectureCode:"学修要覧 PDF "+c.source.pdf_page+"ページ"}</small><button className="text-button" onClick={()=>{setConfirmReplace(false);setDetail({courseId:c.id,offeringId:o?.id});}}>{o?(planned.includes(o.id)?"詳細・削除":"詳細を確認して選ぶ"):"科目と出典を見る"}<ChevronRight size={13}/></button></div></article>;}
  const nav=[{id:"plan" as const,label:"時間割をつくる",icon:CalendarDays},{id:"courses" as const,label:"科目・単位タグ",icon:Search},{id:"completed" as const,label:"修得科目",icon:BookOpen},{id:"sources" as const,label:"要件・資料",icon:GraduationCap},{id:"profile" as const,label:"プロフィール",icon:Settings2}];
@@ -143,27 +151,22 @@ export default function HandbookPlanner({profile:initial,initialState,startWithP
  {view==="profile"&&<section className="panel past-credit-stack">
   <h2>修得科目の記録</h2>
   <div className="past-credit-actions">
-   <button className="button primary" onClick={openPastCredits}>まとめて記録する</button>
+   <CreditRecordingAccess mode={usageMode} onLogin={onLogin}>
+    <CreditRecordingActions onImport={openPastCredits}/>
+   </CreditRecordingAccess>
    <button className="button secondary" onClick={()=>go("completed")}>修得科目を編集</button>
    <button className="button secondary" onClick={()=>onExit(profile)}>所属を選び直す</button>
   </div>
  </section>}
  {view==="completed"&&<section className="panel past-credit-stack">
   <h2>過去の修得科目を記録</h2>
-  <div className="past-credit-actions">
-   <button className="button primary" onClick={openPastCredits}>まとめて記録する</button>
-   <button className="button secondary" onClick={()=>setCreditDialog("custom")}>カタログ外の科目を入力</button>
-  </div>
-  {customCompleted.length>0&&<div className="handbook-plan-list">
-   <h3>自由入力の科目（{customCompleted.length}件）</h3>
-   {customCompleted.map((credit,index)=><div key={index}>
-    <div><strong>{credit.name}</strong><p>{CATEGORIES[credit.category].label} · {credit.credits}単位</p></div>
-    <button className="icon-button" aria-label={credit.name+"を削除"} onClick={()=>{
-     setCustomCompleted(current=>current.filter((_,i)=>i!==index));
-     notify(credit.name+"を削除しました");
-    }}><Trash2 size={16}/></button>
-   </div>)}
-  </div>}
+  <CreditRecordingAccess mode={usageMode} onLogin={onLogin}>
+   <CreditRecordingActions onImport={openPastCredits} onCustom={()=>setCreditDialog("custom")}/>
+   <CustomCompletedList credits={customCompleted} onRemove={credit=>{
+    setCustomCompleted(current=>current.filter(item=>customCreditKey(item)!==customCreditKey(credit)));
+    notify(credit.name+"を削除しました");
+   }}/>
+  </CreditRecordingAccess>
  </section>}
  {(view==="courses"||view==="completed")&&<section className="panel handbook-catalog"><div className="section-heading"><h2>{view==="completed"?"修得済みの科目を選択":"教育課程表の科目"}</h2><span className="soft-badge" role="status">{h.courses.length}科目中 {filteredCourses.length}件</span></div><div className="handbook-search"><label className="search-input"><Search size={15}/><input aria-label="科目名・番号で検索" placeholder="科目名・番号で検索" value={query} onChange={e=>setQuery(e.target.value)}/></label>{tagSelect()}{view==="courses"&&<button className="button secondary small-button" onClick={openPreferences}><SlidersHorizontal size={15}/>条件を調整</button>}</div>{view==="completed"?<><p className="fine-print">選択済み{completed.length}科目。同じ科目は1回だけ集計します。</p><div>{filteredCourses.map(c=><label className={"completed-row "+(completed.includes(c.id)?"checked":"")} key={c.id}><input type="checkbox" checked={completed.includes(c.id)} onChange={()=>toggleCompleted(c)}/><span><strong>{c.name}</strong><CreditTags course={c}/></span><b>{c.credits}<small>単位</small></b></label>)}</div></>:<div className="slot-candidate-list">{filteredCourses.map(c=>courseCard(c))}</div>}{!filteredCourses.length&&<p className="empty-state">この条件の科目はありません。</p>}</section>}
  {(view==="sources"||view==="completed"||view==="plan")&&<section className="panel handbook-summary"><div className="section-heading"><h2><GraduationCap size={19}/>単位の進み具合</h2><button className="text-button" onClick={()=>go("completed")}>修得科目を編集<ChevronRight size={14}/></button></div><div className="handbook-total"><strong>修得 {summary.total}<small> ＋ 今期の仮置き {Math.max(0,projected.total-summary.total)} 単位</small></strong><span>卒業算入の見込み：{projected.total} / {h.rules.minimum_total_credits} 単位（未修得の仮置きを含む）</span></div>{summary.breakdown.map(b=><div className="credit-row" key={b.id}><div className="credit-label"><span>{CATEGORIES[b.id]?.label??b.id}</span><span>修得 {b.earned} ＋ 仮置き {Math.max(0,(projected.breakdown.find(x=>x.id===b.id)?.earned??b.earned)-b.earned)} / {b.required}</span></div><div className="bar-track handbook-credit-bar"><div style={{width:Math.min(100,b.earned/b.required*100)+"%",background:CATEGORIES[b.id]?.color}}/><div className="projected-credit" style={{width:Math.max(0,Math.min(100,(projected.breakdown.find(x=>x.id===b.id)?.earned??0)/b.required*100)-Math.min(100,b.earned/b.required*100))+"%",background:CATEGORIES[b.id]?.color}}/></div></div>)}<p className="fine-print">卒業までの必要単位です。今期だけの目標ではありません。区分超過分を自由選択へ一度だけ振り替え、科目群の上限も適用します。卒業可否の確定判定ではありません。</p><details className="mandatory-note"><summary>未修得の必修 {summary.missingRequired.length}科目（全学年）</summary><ul>{summary.missingRequired.map(c=><li key={c.id}><button className="text-button" onClick={()=>setDetail({courseId:c.id})}>{c.name}</button></li>)}</ul></details><details className="mandatory-note"><summary>{isDesign?"選択必修・DS/MS・英語の内訳":"選択必修・DS/MS・外国語・体育の内訳"}</summary><div className="requirement-checks">{summary.checks.map(x=><div key={x.label}><span>{x.label}</span><strong>{x.earned}/{x.required} {x.unit}</strong></div>)}</div></details>{summary.familyExcess>0&&<p className="fine-print">科目群の上限超過により{summary.familyExcess}単位を卒業算入から除外しています。</p>}</section>}
@@ -175,9 +178,9 @@ export default function HandbookPlanner({profile:initial,initialState,startWithP
  </ul><p className="fine-print">PDF {progression.sources.map(source=>source.pdf_page).join("・")}ページ。在学期間から休学期間を除きます。個別の在学期間と例外は大学で確認してください。</p></>}
  {studyAbroad&&<><h3>留学・単位認定</h3><p>{studyAbroad.description}</p><p className="fine-print">PDF {studyAbroad.sources.map(source=>source.pdf_page).join("・")}ページ。</p></>}<div className="requirement-checks">{Object.entries(h.rules.graduation_credit_family_caps).map(([name,credits])=><div key={name}><span>{name}の算入上限</span><strong>{credits}単位</strong></div>)}</div><p className="fine-print">時間表との対応は、対象入学年度・科目名・単位数が一致した収録クラスのみです。収録シラバスは2025年度入学・社会メディア学科の参考資料であり、この入学年度の全シラバスを取得したものではありません。英語の指定クラス・最新訂正・履修許可・留学等の個人認定は大学で確認してください。</p></section>}
  <details className="panel handbook-glossary"><summary>用語の説明：仮置き・単位区分・{!isMedia||isInformationSystems?"△":"△1/△2"}・DS/MS</summary><dl><dt>仮置き</dt><dd>候補の授業をこのサイトの時間割に追加する操作です。大学への正式な履修登録や単位修得にはなりません。</dd><dt>修得と仮置きの単位</dt><dd>修得は単位取得済みとして入力した科目、仮置きはこれから履修する予定の科目です。見込みでは、入学年度ごとの算入上限・区分超過の扱いを適用します。</dd><dt>選択必修 {!isMedia||isInformationSystems?"△":"△1／△2"}</dt><dd>{isInformationSystems?"専門科目のプログラミング演習A・Bのうち、2単位の修得が必要です。":!isMedia?"学修要覧の指定区分ごとに必要な単位を修得します。「要件・資料」で進み具合を確認できます。":"学修要覧で指定された別々の科目群です。それぞれの群から必要単位を修得する条件があり、「要件・資料」で群ごとの進み具合を確認できます。"}</dd><dt>DS／MS対象</dt><dd>学修要覧にDS／MSの対象として示された科目のタグです。対象科目の履修だけでプログラム修了が確定する意味ではありません。必要単位と組合せは「要件・資料」と大学の案内を確認してください。</dd><dt>開講情報未収録</dt><dd>提供された資料から、この時間の開講を確認できていない状態です。休講・空き時間が確定している意味ではありません。</dd></dl></details><SiteFooter compact/></main></div>
- {creditDialog==="import"&&<PastCreditsImport courses={h.courses} categories={customCategories} completed={completed}
+ {canManageCredits&&creditDialog==="import"&&<PastCreditsImport courses={h.courses} categories={customCategories} completed={completed}
   onApply={applyPastCredits} onClose={()=>setCreditDialog(null)}/>}
- {creditDialog==="custom"&&<CustomCreditDialog categories={customCategories}
+ {canManageCredits&&creditDialog==="custom"&&<CustomCreditDialog categories={customCategories}
   onAdd={credit=>applyPastCredits([], [credit], 0, 0)} onClose={()=>setCreditDialog(null)}/>}
  {draftPreferences&&<Dialog title="あなたの希望条件" onClose={()=>setDraftPreferences(null)}>
   <TermHalfFilter term={profile.term} selected={draftPreferences.halves} onChange={halves=>setDraftPreferences({...draftPreferences,halves})}/>
