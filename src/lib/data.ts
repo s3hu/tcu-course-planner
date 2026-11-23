@@ -1,3 +1,4 @@
+import type { CustomCompleted } from "./past-credits";
 import type {TermHalf} from "./term-halves";
 import catalog from "@/data/catalog.json";
 import {deriveCreditTags,type CreditTagId} from "./credit-tags";
@@ -14,7 +15,7 @@ export type Course = { id: string; code: string; name: string; credits: number; 
 export type Offering = { id: string; courseId: string; lectureCode: string; name: string; academicYear: number; credits: number; term: "前期" | "後期"; termLabel: string; quarters: number[]; slots: Slot[]; meetings: Meeting[]; campus: string; room: string; teacher: string; assessment: null; assessmentText: string; sourceId: string; syllabus: Syllabus; route: CreditRoute; registrationNote: string | null; creditProcedure: unknown };
 export type Profile = { admissionYear: number; faculty: string; department: string; academicYear: number; term: "前期" | "後期" };
 export type Preferences = { halves?: TermHalf[]; avoidDays: number[]; dayMode: "strict" | "soft"; assessment: "any" | "report" | "exam"; interests: string[]; avoidPeriods: number[]; creditTagIds: string[]; campus?: import("./scheduling").CampusChoice; reportOnly?: boolean };
-export type PlannerState = { version: 2; datasetId: string; profile: Profile; completed: string[]; planned: string[]; preferences: Preferences };
+export type PlannerState = { version: 2; datasetId: string; profile: Profile; completed: string[]; customCompleted?: CustomCompleted[]; planned: string[]; preferences: Preferences };
 export const DATASET_ID = "tcu-sm-2025-v2";
 export const DAYS = ["月", "火", "水", "木", "金", "土"];
 export const TIMES = ["", "", "", "", ""];

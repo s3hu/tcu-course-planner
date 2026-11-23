@@ -129,7 +129,7 @@ export function generateSchedules(state:PlannerState,options:DraftOptions):Sched
  const summaryFor=(ids:string[])=>{
    const selectedIds=[...new Set([...state.completed,...ids.map(id=>offeringById.get(id)!.courseId)])].sort(),key=selectedIds.join("|");
    let result=cache.get(key);
-   if(!result){result=aggregate(selectedIds,selectedIds.map(id=>courseById.get(id)).filter((c):c is NonNullable<typeof c>=>!!c));cache.set(key,result);}
+   if(!result){result=aggregate(selectedIds,selectedIds.map(id=>courseById.get(id)).filter((c):c is NonNullable<typeof c>=>!!c),state.customCompleted);cache.set(key,result);}
    return result;
  };
  const nodeFor=(ids:string[],nodeLoad:number,styleScore=0):Node=>({ids,load:nodeLoad,styleScore,metrics:goalMeasures(summaryFor(ids))});

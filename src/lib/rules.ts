@@ -1,24 +1,41 @@
 import { CATEGORIES, DATASET_ID, courses, courseById, offeringById, requirement, rules, type Category, type Course, type Offering, type PlannerState, type Profile } from "./data";
 
+import { customCreditCategories, sanitizeCustomCredits, type CustomCompleted } from "./past-credits";
 import { sanitizeTermHalves } from "./term-halves";
 import { sanitizeCreditFilterIds } from "./credit-tags";
 
 export function applicable(p: Profile) { return p.admissionYear === requirement.admissionYear && p.department === requirement.department && p.faculty === requirement.faculty; }
 export function inTarget(o: Offering, p: Profile) { return o.academicYear === p.academicYear && o.quarters.some(q => (p.term === "前期" ? [1, 2] : [3, 4]).includes(q)); }
-export function aggregate(ids: string[], catalog: Course[] = courses) {
+export const plannerCustomCategories = customCreditCategories(rules.category_minimum_credits);
+
+export function aggregate(ids: string[], catalog: Course[] = courses, custom: readonly CustomCompleted[] = []) {
   const unique = new Set(ids);
   const chosen = catalog.filter(c => unique.has(c.id)).sort((a,b) => a.id.localeCompare(b.id));
   const counted = new Map<string, number>();
   const familyUsed = new Map<string, number>();
-  let familyExcess = 0;
+  const familyExcluded = new Map<string, number>();
   for (const c of chosen) {
     if (c.creditStatus !== "countable") continue;
     const cap = rules.credit_caps_for_graduation.find(r => r.credit_family === c.creditFamily)?.max_credits;
     const credits = cap === undefined ? c.credits : Math.max(0, Math.min(c.credits, cap - (familyUsed.get(c.creditFamily!) ?? 0)));
     if (c.creditFamily) familyUsed.set(c.creditFamily, (familyUsed.get(c.creditFamily) ?? 0) + credits);
-    familyExcess += c.credits - credits; counted.set(c.id, credits);
+    if (c.creditFamily) familyExcluded.set(c.creditFamily, (familyExcluded.get(c.creditFamily) ?? 0) + c.credits - credits);
+    counted.set(c.id, credits);
   }
-  const categoryRaw = (id: Category) => chosen.filter(c => c.category === id).reduce((sum,c) => sum + (counted.get(c.id) ?? 0),0);
+  const customByCategory = new Map<Category, number>();
+  let customTotal = 0;
+  for (const credit of custom) {
+    customByCategory.set(credit.category, (customByCategory.get(credit.category) ?? 0) + credit.credits);
+    customTotal += credit.credits;
+  }
+  const categoryRaw = (id: Category) => chosen.filter(c => c.category === id)
+    .reduce((sum,c) => sum + (counted.get(c.id) ?? 0), customByCategory.get(id) ?? 0);
+  const caps = rules.credit_caps_for_graduation.map(cap => ({
+    label: cap.title_family, maximum: cap.max_credits,
+    counted: familyUsed.get(cap.credit_family) ?? 0,
+    excess: familyExcluded.get(cap.credit_family) ?? 0,
+  }));
+  const familyExcess = caps.reduce((sum, cap) => sum + cap.excess, 0);
   const surplus = requirement.categories.filter(r => r.id !== "free_electives").reduce((sum,r) => sum + Math.max(0,categoryRaw(r.id)-r.required),0);
   const breakdown = requirement.categories.map(r => { const raw = categoryRaw(r.id) + (r.id === "free_electives" ? surplus : 0); const earned = Math.min(raw,r.required); return { ...r,raw,earned,remaining:Math.max(0,r.required-earned),excluded:0 }; });
   const sumIds = (list: string[]) => list.reduce((sum,id) => sum + (counted.get(id) ?? 0),0);
@@ -33,7 +50,7 @@ export function aggregate(ids: string[], catalog: Course[] = courses) {
     { label:"基礎体育",earned:pe.course_ids.filter(id => counted.has(id)).length,required:pe.minimum_number_of_basic_PE_courses,unit:"科目" },
     { label:"基礎体育の単位",earned:sumIds(pe.course_ids),required:pe.minimum_credits_from_elective_required_courses,unit:"単位" },
   ];
-  return { breakdown,total:[...counted.values()].reduce((a,b)=>a+b,0),raw:chosen.reduce((sum,c)=>sum+c.credits,0),missingRequired:requirement.mandatoryIds.filter(id=>!counted.has(id)),pending:chosen.filter(c=>c.creditStatus==="conditional"||c.creditStatus==="conflict"),excluded:chosen.filter(c=>c.creditStatus==="excluded"),familyExcess,surplus,checks };
+  return { breakdown,total:[...counted.values()].reduce((a,b)=>a+b,customTotal),raw:chosen.reduce((sum,c)=>sum+c.credits,customTotal),missingRequired:requirement.mandatoryIds.filter(id=>!counted.has(id)),pending:chosen.filter(c=>c.creditStatus==="conditional"||c.creditStatus==="conflict"),excluded:chosen.filter(c=>c.creditStatus==="excluded"),familyExcess,surplus,checks,caps };
 }
 export function overlaps(a: Offering,b: Offering) { return a.academicYear===b.academicYear && a.slots.some(s=>b.slots.some(t=>s.day===t.day&&s.period===t.period&&s.quarters.some(q=>t.quarters.includes(q)))); }
 export function evaluate(o: Offering,state: PlannerState): {status:"eligible"|"blocked"|"unknown";reasons:string[]} {
@@ -47,7 +64,7 @@ export function evaluate(o: Offering,state: PlannerState): {status:"eligible"|"b
   if(o.meetings.some(m=>m.eligible_enrollment_years&&(state.profile.admissionYear<m.eligible_enrollment_years.from||state.profile.admissionYear>m.eligible_enrollment_years.through)))blocked.push("入学年度の対象範囲に合わない時間表の行があります");
   if(c.prerequisiteIds.some(id=>!state.completed.includes(id)))blocked.push("前提科目が未修得："+c.prerequisiteIds.filter(id=>!state.completed.includes(id)).map(id=>courseById.get(id)?.name??id).join("・"));
   const progression=(rules.progression as Record<string,{minimum_graduation_countable_credits?:number;requires_year_3_progression?:boolean;minimum_enrolled_months_excluding_leave?:number}>)[c.id];
-  if(progression?.minimum_graduation_countable_credits&&aggregate(state.completed).total<progression.minimum_graduation_countable_credits)blocked.push("着手条件の"+progression.minimum_graduation_countable_credits+"単位に未達です");
+  if(progression?.minimum_graduation_countable_credits&&completedSummary(state).total<progression.minimum_graduation_countable_credits)blocked.push("着手条件の"+progression.minimum_graduation_countable_credits+"単位に未達です");
   if(progression?.requires_year_3_progression||progression?.minimum_enrolled_months_excluding_leave)unknown.push("進級・在学期間の確認が必要です");
   if(state.preferences.dayMode==="strict"&&o.slots.some(s=>state.preferences.avoidDays.includes(s.day)))blocked.push("必ず空ける曜日と重なります");
   if(o.slots.some(s=>state.preferences.avoidPeriods.includes(s.period)))blocked.push("履修しない時限と重なります");
@@ -73,8 +90,30 @@ export function isCurrentRequired(course:Course,profile:Profile) {
   if(course.allocationSlots?.length)return course.allocationSlots.some(s=>s.year===year&&s.term===profile.term&&s.primary);
   return course.year===year;
 }
+export function recordPastCredits(state: PlannerState, ids: readonly string[], custom: readonly CustomCompleted[]) {
+  if (ids.some(id => !courseById.has(id))) return null;
+  const existingIds = new Set(state.completed);
+  const addedIds = [...new Set(ids)].filter(id => !existingIds.has(id));
+  const addedIdSet = new Set(addedIds);
+  const previousCustom = state.customCompleted ?? [];
+  const customCompleted = sanitizeCustomCredits([...previousCustom, ...custom], plannerCustomCategories);
+  if (!customCompleted) return null;
+
+  const added = addedIds.length + customCompleted.length - previousCustom.length;
+  const next = added ? {
+    ...state,
+    completed: [...state.completed, ...addedIds],
+    planned: state.planned.filter(id => !addedIdSet.has(offeringById.get(id)?.courseId ?? "")),
+    ...(custom.length ? { customCompleted } : {}),
+  } : state;
+  return { state: next, added, duplicates: ids.length + custom.length - added };
+}
+
+export function completedSummary(state: PlannerState) {
+  return aggregate(state.completed, courses, state.customCompleted);
+}
 export function projectedSummary(state:PlannerState) {
-  return aggregate([...state.completed,...state.planned.map(id=>offeringById.get(id)).filter((o):o is Offering=>!!o&&inTarget(o,state.profile)).map(o=>o.courseId)]);
+  return aggregate([...state.completed,...state.planned.map(id=>offeringById.get(id)).filter((o):o is Offering=>!!o&&inTarget(o,state.profile)).map(o=>o.courseId)], courses, state.customCompleted);
 }
 export function goalMeasures(summary:CreditSummary) {
   return {
@@ -87,7 +126,7 @@ export type CoursePriority = {tier:number;label:string;score:number;goalGain:num
 export function priorityFor(o:Offering,state:PlannerState,summary=projectedSummary(state),nextSummary?:CreditSummary):CoursePriority {
   const c=courseById.get(o.courseId)!;
   if(!applicable(state.profile))return {tier:7,label:"要件未対応",score:0,goalGain:0,categoryGain:0,countedGain:0,preferenceScore:0,reasons:["この入学年度・所属の要件は未対応です"]};
-  const next=nextSummary??aggregate([...state.completed,...state.planned.map(id=>offeringById.get(id)).filter((x):x is Offering=>!!x&&inTarget(x,state.profile)).map(x=>x.courseId),c.id]);
+  const next=nextSummary??aggregate([...state.completed,...state.planned.map(id=>offeringById.get(id)).filter((x):x is Offering=>!!x&&inTarget(x,state.profile)).map(x=>x.courseId),c.id], courses, state.customCompleted);
   const before=goalMeasures(summary),after=goalMeasures(next);
   const goalGain=Math.max(0,after.checks-before.checks),categoryGain=Math.max(0,after.categories-before.categories),countedGain=Math.max(0,after.total-before.total);
   const improved=summary.checks.filter((x,i)=>Math.min(next.checks[i].earned,x.required)>Math.min(x.earned,x.required));
@@ -122,5 +161,7 @@ export function sanitizeState(value:unknown):PlannerState|null {
   if(!["strict","soft"].includes(f.dayMode)||!["any","report","exam"].includes(f.assessment)||!Array.isArray(f.avoidDays)||!f.avoidDays.every(d=>Number.isInteger(d)&&d>=0&&d<6)||!Array.isArray(f.avoidPeriods)||!f.avoidPeriods.every(p=>Number.isInteger(p)&&p>=1&&p<=5)||!Array.isArray(f.interests)||!f.interests.every(t=>typeof t==="string"&&t.length<100))return null;
   if(f.campus!==undefined&&!["yokohama-plus-ondemand","yokohama","setagaya-ondemand","setagaya","all"].includes(f.campus))return null;
   if(f.reportOnly!==undefined&&typeof f.reportOnly!=="boolean")return null;
-  return {version:2,datasetId:DATASET_ID,profile:p,preferences:{...f,halves:sanitizeTermHalves(f.halves),creditTagIds:sanitizeCreditFilterIds(f.creditTagIds,applicable(p)?courses:[]),campus:f.campus??"yokohama-plus-ondemand",reportOnly:f.reportOnly??false},completed:[...new Set(s.completed)].filter(id=>courseById.has(id)),planned:[...new Set(s.planned)].filter(id=>offeringById.has(id))};
+  const customCompleted = s.customCompleted === undefined ? undefined : sanitizeCustomCredits(s.customCompleted, plannerCustomCategories);
+  if (customCompleted === null) return null;
+  return {version:2,...(customCompleted === undefined ? {} : {customCompleted}),datasetId:DATASET_ID,profile:p,preferences:{...f,halves:sanitizeTermHalves(f.halves),creditTagIds:sanitizeCreditFilterIds(f.creditTagIds,applicable(p)?courses:[]),campus:f.campus??"yokohama-plus-ondemand",reportOnly:f.reportOnly??false},completed:[...new Set(s.completed)].filter(id=>courseById.has(id)),planned:[...new Set(s.planned)].filter(id=>offeringById.has(id))};
 }

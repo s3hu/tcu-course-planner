@@ -8,7 +8,7 @@ import {overlaps} from "./rules";
 import {planRequiredAdditions} from "./required-additions";
 import {matchesTermHalves,sanitizeTermHalves,type TermHalf} from "./term-halves";
 import {matchesCampus,type CampusChoice} from "./scheduling";
-import {customCreditCategories,customCreditKey,sanitizeCustomCredit,type CustomCompleted} from "./past-credits";
+import {customCreditCategories,sanitizeCustomCredits,type CustomCompleted} from "./past-credits";
 const SOCIAL_MEDIA = "社会メディア学科";
 export const INFORMATION_SYSTEMS = "情報システム学科";
 export const MEDIA_FACULTY = "メディア情報学部";
@@ -232,20 +232,9 @@ export function sanitizeHandbookState(value:unknown):HandbookState|null{
  const h=getHandbook(s.profile.admissionYear,s.profile.department,s.profile.faculty)!;const courseIds=new Set(h.courses.map(c=>c.id)),offeringIds=new Set(handbookOfferings(h.year,h.department,h.faculty).map(o=>o.id));
  // Reject cross-curriculum data, rather than silently counting a different year's records.
  if(s.completed.some(id=>!courseIds.has(id))||s.planned.some(id=>!offeringIds.has(id)))return null;
- const customCompleted: CustomCompleted[] = [];
- if (s.customCompleted !== undefined) {
-  if (!Array.isArray(s.customCompleted)) return null;
-  const categories = customCreditCategories(h.rules.category_minimum_credits);
-  const seen = new Set<string>();
-  for (const value of s.customCompleted) {
-   const course = sanitizeCustomCredit(value, categories);
-   if (!course) return null;
-   const key = customCreditKey(course);
-   if (seen.has(key)) continue;
-   seen.add(key);
-   customCompleted.push(course);
-  }
- }
+ const customCompleted = s.customCompleted === undefined ? undefined
+  : sanitizeCustomCredits(s.customCompleted, customCreditCategories(h.rules.category_minimum_credits));
+ if (customCompleted === null) return null;
  return {version:1,datasetId,profile:s.profile,completed:[...new Set(s.completed)],planned:[...new Set(s.planned)],campus:s.campus!,
   ...(s.customCompleted===undefined?{}:{customCompleted}),
   ...(s.halves===undefined?{}:{halves:sanitizeTermHalves(s.halves)}),
