@@ -2,9 +2,11 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { runInNewContext } from "node:vm";
-import { DEFAULT_STATE } from "../src/lib/data";
+import { courseById, courses, DEFAULT_STATE, offeringById, offerings, requirement, rules } from "../src/lib/data";
 import { aggregateHandbook, getHandbook, handbookDatasetId, sanitizeHandbookState, type HandbookState } from "../src/lib/handbooks";
 import { customCreditCategories, matchPastCredits, normalizeCourseName, type CustomCompleted } from "../src/lib/past-credits";
+
+import { aggregate, completedSummary, recordPastCredits, sanitizeState } from "../src/lib/rules";
 
 const profile = { ...DEFAULT_STATE.profile, admissionYear: 2024 };
 const handbook = getHandbook(profile.admissionYear)!;
@@ -149,4 +151,69 @@ test("the OCR worker loads its assets on request and gives the selected file to 
   assert.match(imports[0], /tesseract\.js@6\.0\.1\/dist\/tesseract\.min\.js$/u);
   assert.deepEqual(messages.map(message => [message.type, message.text]), [["progress", undefined], ["result", "SD PBL(1)"]]);
   assert.ok(terminated);
+});
+
+test("standard matching covers every 2025 offering title and keeps same-name candidates for review", () => {
+  const historical = offerings.filter(o => o.academicYear === 2025);
+  assert.equal(historical.length, 301);
+  for (const opening of historical) {
+    const [match] = matchPastCredits(opening.name, courses);
+    assert.ok(match.status === "matched", opening.name);
+    assert.equal(match.course.id, opening.courseId, opening.name);
+  }
+  const [variant] = matchPastCredits("基礎 体育（１ａ）", courses);
+  assert.ok(variant.status === "matched");
+  assert.equal(variant.course.name, "基礎体育(1a)");
+  const alternative = { ...variant.course, id: "another-course", code: "ALT01" };
+  const [ambiguous] = matchPastCredits(variant.name, [...courses, alternative]);
+  assert.ok(ambiguous.status === "review");
+  assert.deepEqual(ambiguous.candidates.map(({ course }) => course.id), [variant.course.id, alternative.id]);
+});
+
+test("standard custom credits count toward totals and categories without satisfying designated course checks", () => {
+  const baseline = aggregate([]);
+  const required = courseById.get(requirement.mandatoryIds[0])!;
+  const ds = courseById.get(rules.data_science_requirement.DS_course_ids[0])!;
+  const physical = courseById.get(rules.physical_education_rule.course_ids[0])!;
+  const custom = [required, ds, physical].map(({ name, category }) => ({ name, category, credits: 2 }));
+  const summary = completedSummary({ ...DEFAULT_STATE, customCompleted: custom });
+  assert.equal(summary.raw, 6);
+  assert.equal(summary.total, 6);
+  assert.deepEqual(summary.missingRequired, baseline.missingRequired);
+  for (const { category } of custom) {
+    assert.ok(summary.breakdown.find(row => row.id === category)!.raw >= 2);
+  }
+  for (const check of summary.checks.filter(row => row.label !== "その他の外国語")) {
+    assert.equal(check.earned, 0, check.label);
+  }
+});
+
+test("standard plan JSON validates and deduplicates custom credits while accepting legacy version 2", () => {
+  assert.deepEqual(sanitizeState(JSON.parse(JSON.stringify(DEFAULT_STATE))), DEFAULT_STATE);
+  const custom = { name: "Ａ認定実習", credits: 0.5, category: "free_electives" };
+  const exported = JSON.stringify({
+    ...DEFAULT_STATE, _notice: "export", customCompleted: [
+      { ...custom, name: " Ａ認定実習 " }, { ...custom, name: "A認定実習" },
+    ],
+  });
+  assert.deepEqual(sanitizeState(JSON.parse(exported))?.customCompleted, [custom]);
+  for (const invalid of [{ ...custom, category: "not_counted" }, { ...custom, credits: 0 }, { ...custom, name: "  " }]) {
+    assert.equal(sanitizeState({ ...DEFAULT_STATE, customCompleted: [invalid] }), null);
+  }
+  assert.equal(sanitizeState({ ...DEFAULT_STATE, customCompleted: {} }), null);
+});
+
+test("standard confirmation deduplicates both record types and removes all offerings for a newly completed course", () => {
+  const lecture = offeringById.get("2025:yaa705101")!;
+  const sameCourse = offerings.filter(o => o.courseId === lecture.courseId).map(o => o.id);
+  const otherCourse = offerings.find(o => o.courseId !== lecture.courseId)!;
+  const custom: CustomCompleted = { name: "Ａ認定実習", credits: 1, category: "free_electives" };
+  const state = { ...DEFAULT_STATE, planned: [...sameCourse, otherCourse.id] };
+  const result = recordPastCredits(state, [lecture.courseId, lecture.courseId], [custom, { ...custom, name: "A認定実習" }])!;
+  assert.deepEqual(result.state.completed, [lecture.courseId]);
+  assert.deepEqual(result.state.planned, [otherCourse.id]);
+  assert.deepEqual(result.state.customCompleted, [custom]);
+  assert.equal(result.added, 2);
+  assert.equal(result.duplicates, 2);
+  assert.equal(recordPastCredits(result.state, [lecture.courseId], [custom])?.state, result.state);
 });

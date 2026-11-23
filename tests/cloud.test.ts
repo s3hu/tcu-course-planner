@@ -58,8 +58,11 @@ test("cloud reads and writes target the selected dataset and preserve revision c
   await assert.rejects(readCloudPlan(userId, anotherDataset, sanitizeHandbookState), /保存したプランの形式が異なります/);
   await assert.rejects(writeCloudPlan(userId, anotherDataset, sanitizeHandbookState, handbook, null), /保存するプランの形式/);
 
+  const standardWithCustom = { ...savedStandard!.state, customCompleted: handbook.customCompleted };
   reply = [{ revision: 6 }];
-  assert.equal(await writeCloudPlan(userId, DATASET_ID, sanitizeState, savedStandard!.state, 5), 6);
+  assert.equal(await writeCloudPlan(userId, DATASET_ID, sanitizeState, standardWithCustom, 5), 6);
+  reply = [{ state: standardWithCustom, revision: 6 }];
+  assert.deepEqual(await readCloudPlan(userId, DATASET_ID, sanitizeState), { state: standardWithCustom, revision: 6 });
 
   assert.deepEqual(calls.map(({ url, method, body }) => ({
     method, body, user: url.searchParams.get("user_id"), dataset: url.searchParams.get("dataset_id"),
@@ -72,7 +75,8 @@ test("cloud reads and writes target the selected dataset and preserve revision c
     { method: "PATCH", body: { state: edited, revision: 2 }, user: "eq.account-id", dataset: "eq." + datasetId, revision: "eq.1" },
     { method: "PATCH", body: { state: edited, revision: 2 }, user: "eq.account-id", dataset: "eq." + datasetId, revision: "eq.1" },
     { method: "GET", body: null, user: "eq.account-id", dataset: "eq." + anotherDataset, revision: null },
-    { method: "PATCH", body: { state: DEFAULT_STATE, revision: 6 }, user: "eq.account-id", dataset: "eq." + DATASET_ID, revision: "eq.5" },
+    { method: "PATCH", body: { state: standardWithCustom, revision: 6 }, user: "eq.account-id", dataset: "eq." + DATASET_ID, revision: "eq.5" },
+    { method: "GET", body: null, user: "eq.account-id", dataset: "eq." + DATASET_ID, revision: null },
   ]);
   const count = fetch.mock.callCount();
   const client = await getCloudClient();
