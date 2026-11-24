@@ -14,7 +14,7 @@ import Dialog from "./dialog";
 import { CreditRecordingAccess, CreditRecordingActions, CustomCompletedList } from "./credit-recording";
 import type { UsageMode } from "./experience";
 import PastCreditsImport, {CustomCreditDialog} from "./past-credits-import";
-import {customCreditCategories,customCreditKey,type CustomCompleted} from "@/lib/past-credits";
+import {customCreditCategories,customCreditKey,recognitionByCourse,replaceCustomCredit,sanitizeCustomCredits,type CustomCompleted} from "@/lib/past-credits";
 import SiteFooter from "./site-footer";
 import type { SaveStatus } from "./experience";
 type View="plan"|"courses"|"completed"|"sources"|"profile";
@@ -45,7 +45,7 @@ export default function HandbookPlanner({profile:initial,initialState,usageMode,
  const startImport = canManageCredits && startWithPastCredits;
  const [completed,setCompleted]=useState<string[]>(initialState?.completed??[]);
  const [customCompleted,setCustomCompleted]=useState<CustomCompleted[]>(initialState?.customCompleted??[]);
- const [creditDialog,setCreditDialog]=useState<"import"|"custom"|null>(startImport?"import":null);
+ const [creditDialog,setCreditDialog]=useState<"import"|"custom"|CustomCompleted|null>(startImport?"import":null);
  const [planned,setPlanned]=useState<string[]>(initialState?.planned??[]);
  const [campus,setCampus]=useState<CampusChoice>(initialState?.campus??"yokohama-plus-ondemand");
  const [creditTagIds,setCreditTagIds]=useState<string[]>(initialState?.creditTagIds??[]);
@@ -102,24 +102,33 @@ export default function HandbookPlanner({profile:initial,initialState,usageMode,
   if (!canManageCredits) return;
   const currentIds = new Set(completed);
   const newIds = [...new Set(ids)].filter(id => !currentIds.has(id));
-  const currentCustom = new Set(customCompleted.map(customCreditKey));
-  const newCustom = custom.filter(credit => {
-   const key = customCreditKey(credit);
-   if (currentCustom.has(key)) return false;
-   currentCustom.add(key);
-   return true;
-  });
-  if (newIds.length) {
-   setCompleted([...completed, ...newIds]);
-   const newIdSet = new Set(newIds);
-   const completedOpenings = new Set(openings.filter(o => newIdSet.has(o.courseId)).map(o => o.id));
-   setPlanned(current => current.filter(id => !completedOpenings.has(id)));
+  const nextCustom = sanitizeCustomCredits([...customCompleted, ...custom], customCategories, new Set(h.courses.map(c => c.id)));
+  if (!nextCustom) {
+   notify("取り込む科目の内容を確認してください。");
+   return;
   }
-  if (newCustom.length) setCustomCompleted([...customCompleted, ...newCustom]);
-  const added = newIds.length + newCustom.length;
+  if (newIds.length) setCompleted([...completed, ...newIds]);
+  if (custom.length) setCustomCompleted(nextCustom);
+  const settled = new Set([...newIds, ...recognitionByCourse(nextCustom).keys()]);
+  setPlanned(current => current.filter(id => !settled.has(openings.find(o => o.id === id)?.courseId ?? "")));
+  const added = newIds.length + nextCustom.length - customCompleted.length;
   const duplicates = ids.length + custom.length - added;
   setCreditDialog(null);
   notify(`追加 ${added}件・未処理 ${pending}件${excluded ? `・除外 ${excluded}件` : ""}${duplicates ? `・重複 ${duplicates}件` : ""}`);
+ }
+ function saveCustomCredit(credit: CustomCompleted) {
+  if (!canManageCredits) return;
+  if (typeof creditDialog !== "object" || creditDialog === null) {
+   applyPastCredits([], [credit], 0, 0);
+   return;
+  }
+  const nextCustom = replaceCustomCredit(customCompleted, creditDialog, credit, customCategories, new Set(h.courses.map(c => c.id)));
+  if (!nextCustom) return false;
+  const recognized = recognitionByCourse(nextCustom);
+  setCustomCompleted(nextCustom);
+  setPlanned(current => current.filter(id => !recognized.has(openings.find(o => o.id === id)?.courseId ?? "")));
+  setCreditDialog(null);
+  notify("自由入力科目を更新しました");
  }
  function toggleOffering(o:HandbookOffering){
   if(planned.includes(o.id)){setPlanned(ids=>ids.filter(id=>id!==o.id));notify(o.name+"を仮時間割から削除しました",planned);setDetail(null);return;}
@@ -162,14 +171,14 @@ export default function HandbookPlanner({profile:initial,initialState,usageMode,
   <h2>過去の修得科目を記録</h2>
   <CreditRecordingAccess mode={usageMode} onLogin={onLogin}>
    <CreditRecordingActions onImport={openPastCredits} onCustom={()=>setCreditDialog("custom")}/>
-   <CustomCompletedList credits={customCompleted} onRemove={credit=>{
+   <CustomCompletedList credits={customCompleted} onEdit={setCreditDialog} onRemove={credit=>{
     setCustomCompleted(current=>current.filter(item=>customCreditKey(item)!==customCreditKey(credit)));
     notify(credit.name+"を削除しました");
    }}/>
   </CreditRecordingAccess>
  </section>}
  {(view==="courses"||view==="completed")&&<section className="panel handbook-catalog"><div className="section-heading"><h2>{view==="completed"?"修得済みの科目を選択":"教育課程表の科目"}</h2><span className="soft-badge" role="status">{h.courses.length}科目中 {filteredCourses.length}件</span></div><div className="handbook-search"><label className="search-input"><Search size={15}/><input aria-label="科目名・番号で検索" placeholder="科目名・番号で検索" value={query} onChange={e=>setQuery(e.target.value)}/></label>{tagSelect()}{view==="courses"&&<button className="button secondary small-button" onClick={openPreferences}><SlidersHorizontal size={15}/>条件を調整</button>}</div>{view==="completed"?<><p className="fine-print">選択済み{completed.length}科目。同じ科目は1回だけ集計します。</p><div>{filteredCourses.map(c=><label className={"completed-row "+(completed.includes(c.id)?"checked":"")} key={c.id}><input type="checkbox" checked={completed.includes(c.id)} onChange={()=>toggleCompleted(c)}/><span><strong>{c.name}</strong><CreditTags course={c}/></span><b>{c.credits}<small>単位</small></b></label>)}</div></>:<div className="slot-candidate-list">{filteredCourses.map(c=>courseCard(c))}</div>}{!filteredCourses.length&&<p className="empty-state">この条件の科目はありません。</p>}</section>}
- {(view==="sources"||view==="completed"||view==="plan")&&<section className="panel handbook-summary"><div className="section-heading"><h2><GraduationCap size={19}/>単位の進み具合</h2><button className="text-button" onClick={()=>go("completed")}>修得科目を編集<ChevronRight size={14}/></button></div><div className="handbook-total"><strong>修得 {summary.total}<small> ＋ 今期の仮置き {Math.max(0,projected.total-summary.total)} 単位</small></strong><span>卒業算入の見込み：{projected.total} / {h.rules.minimum_total_credits} 単位（未修得の仮置きを含む）</span></div>{summary.breakdown.map(b=><div className="credit-row" key={b.id}><div className="credit-label"><span>{CATEGORIES[b.id]?.label??b.id}</span><span>修得 {b.earned} ＋ 仮置き {Math.max(0,(projected.breakdown.find(x=>x.id===b.id)?.earned??b.earned)-b.earned)} / {b.required}</span></div><div className="bar-track handbook-credit-bar"><div style={{width:Math.min(100,b.earned/b.required*100)+"%",background:CATEGORIES[b.id]?.color}}/><div className="projected-credit" style={{width:Math.max(0,Math.min(100,(projected.breakdown.find(x=>x.id===b.id)?.earned??0)/b.required*100)-Math.min(100,b.earned/b.required*100))+"%",background:CATEGORIES[b.id]?.color}}/></div></div>)}<p className="fine-print">卒業までの必要単位です。今期だけの目標ではありません。区分超過分を自由選択へ一度だけ振り替え、科目群の上限も適用します。卒業可否の確定判定ではありません。</p><details className="mandatory-note"><summary>未修得の必修 {summary.missingRequired.length}科目（全学年）</summary><ul>{summary.missingRequired.map(c=><li key={c.id}><button className="text-button" onClick={()=>setDetail({courseId:c.id})}>{c.name}</button></li>)}</ul></details><details className="mandatory-note"><summary>{isDesign?"選択必修・DS/MS・英語の内訳":"選択必修・DS/MS・外国語・体育の内訳"}</summary><div className="requirement-checks">{summary.checks.map(x=><div key={x.label}><span>{x.label}</span><strong>{x.earned}/{x.required} {x.unit}</strong></div>)}</div></details>{summary.familyExcess>0&&<p className="fine-print">科目群の上限超過により{summary.familyExcess}単位を卒業算入から除外しています。</p>}</section>}
+ {(view==="sources"||view==="completed"||view==="plan")&&<section className="panel handbook-summary"><div className="section-heading"><h2><GraduationCap size={19}/>単位の進み具合</h2><button className="text-button" onClick={()=>go("completed")}>修得科目を編集<ChevronRight size={14}/></button></div><div className="handbook-total"><strong>修得 {summary.total}<small> ＋ 今期の仮置き {Math.max(0,projected.total-summary.total)} 単位</small></strong><span>卒業算入の見込み：{projected.total} / {h.rules.minimum_total_credits} 単位（未修得の仮置きを含む）</span></div>{summary.breakdown.map(b=><div className="credit-row" key={b.id}><div className="credit-label"><span>{CATEGORIES[b.id]?.label??b.id}</span><span>修得 {b.earned} ＋ 仮置き {Math.max(0,(projected.breakdown.find(x=>x.id===b.id)?.earned??b.earned)-b.earned)} / {b.required}</span></div><div className="bar-track handbook-credit-bar"><div style={{width:Math.min(100,b.earned/b.required*100)+"%",background:CATEGORIES[b.id]?.color}}/><div className="projected-credit" style={{width:Math.max(0,Math.min(100,(projected.breakdown.find(x=>x.id===b.id)?.earned??0)/b.required*100)-Math.min(100,b.earned/b.required*100))+"%",background:CATEGORIES[b.id]?.color}}/></div></div>)}<p className="fine-print">卒業までの必要単位です。今期だけの目標ではありません。区分超過分を自由選択へ一度だけ振り替え、科目群の上限も適用します。卒業可否の確定判定ではありません。</p><details className="mandatory-note"><summary>未修得の必修 {summary.missingRequired.length}科目（全学年）</summary><ul>{summary.missingRequired.map(c=><li key={c.id}><button className="text-button" onClick={()=>setDetail({courseId:c.id})}>{c.name}</button></li>)}</ul></details>{!!summary.recognizedCourses.length&&<details className="mandatory-note"><summary>認定で充足 {summary.recognizedCourses.length}科目</summary><ul>{summary.recognizedCourses.map(c=><li key={c.id}>{c.name}</li>)}</ul></details>}<details className="mandatory-note"><summary>{isDesign?"選択必修・DS/MS・英語の内訳":"選択必修・DS/MS・外国語・体育の内訳"}</summary><div className="requirement-checks">{summary.checks.map(x=><div key={x.label}><span>{x.label}</span><strong>{x.earned}/{x.required} {x.unit}</strong></div>)}</div></details>{summary.familyExcess>0&&<p className="fine-print">科目群の上限超過により{summary.familyExcess}単位を卒業算入から除外しています。</p>}</section>}
  {view==="sources"&&<section className="panel"><h2>適用している資料</h2><p>{h.year}年度 {h.faculty} 学修要覧 · {h.department}</p><p className="fine-print">卒業要件：PDF {h.rules.source.pdf_page}・{h.rules.degree_detail_source.pdf_page}ページ。原本{h.source.page_count}ページ。{h.source.filename_year_mismatch?"ファイル名にかかわらず本文の2023年度で登録しています。":""}</p>{(isInformationSystems||!isMedia)&&<><h3>{isDesign?"進級・キャップストーンプロジェクト":isInformationSystems?"進級・研究の着手条件":"研究の着手条件"}</h3><ul>
   <li>{yearThreeLabel}：卒業算入{progression.year_3_minimum_countable_credits}単位以上、在学{progression.year_3_minimum_enrolled_months_excluding_leave}か月以上。</li>
   {progression.case_research_2_prerequisites.length>0&&<li>事例研究(2)：{progression.case_research_2_prerequisites.join("・")}を修得し、別の学期に履修。</li>}
@@ -180,8 +189,8 @@ export default function HandbookPlanner({profile:initial,initialState,usageMode,
  <details className="panel handbook-glossary"><summary>用語の説明：仮置き・単位区分・{!isMedia||isInformationSystems?"△":"△1/△2"}・DS/MS</summary><dl><dt>仮置き</dt><dd>候補の授業をこのサイトの時間割に追加する操作です。大学への正式な履修登録や単位修得にはなりません。</dd><dt>修得と仮置きの単位</dt><dd>修得は単位取得済みとして入力した科目、仮置きはこれから履修する予定の科目です。見込みでは、入学年度ごとの算入上限・区分超過の扱いを適用します。</dd><dt>選択必修 {!isMedia||isInformationSystems?"△":"△1／△2"}</dt><dd>{isInformationSystems?"専門科目のプログラミング演習A・Bのうち、2単位の修得が必要です。":!isMedia?"学修要覧の指定区分ごとに必要な単位を修得します。「要件・資料」で進み具合を確認できます。":"学修要覧で指定された別々の科目群です。それぞれの群から必要単位を修得する条件があり、「要件・資料」で群ごとの進み具合を確認できます。"}</dd><dt>DS／MS対象</dt><dd>学修要覧にDS／MSの対象として示された科目のタグです。対象科目の履修だけでプログラム修了が確定する意味ではありません。必要単位と組合せは「要件・資料」と大学の案内を確認してください。</dd><dt>開講情報未収録</dt><dd>提供された資料から、この時間の開講を確認できていない状態です。休講・空き時間が確定している意味ではありません。</dd></dl></details><SiteFooter compact/></main></div>
  {canManageCredits&&creditDialog==="import"&&<PastCreditsImport courses={h.courses} categories={customCategories} completed={completed}
   onApply={applyPastCredits} onClose={()=>setCreditDialog(null)}/>}
- {canManageCredits&&creditDialog==="custom"&&<CustomCreditDialog categories={customCategories}
-  onAdd={credit=>applyPastCredits([], [credit], 0, 0)} onClose={()=>setCreditDialog(null)}/>}
+ {canManageCredits&&creditDialog&&creditDialog!=="import"&&<CustomCreditDialog categories={customCategories} courses={h.courses}
+  existing={customCompleted} initial={creditDialog==="custom"?undefined:creditDialog} onSave={saveCustomCredit} onClose={()=>setCreditDialog(null)}/>}
  {draftPreferences&&<Dialog title="あなたの希望条件" onClose={()=>setDraftPreferences(null)}>
   <TermHalfFilter term={profile.term} selected={draftPreferences.halves} onChange={halves=>setDraftPreferences({...draftPreferences,halves})}/>
   <CreditTagFilter courses={h.courses} selectedIds={draftPreferences.creditTagIds} onChange={creditTagIds=>setDraftPreferences({...draftPreferences,creditTagIds})}/>

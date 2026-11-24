@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { CATEGORIES } from "@/lib/data";
 import { customCreditKey, type CustomCompleted } from "@/lib/past-credits";
@@ -26,18 +26,25 @@ export function CreditRecordingActions({ onImport, onCustom }: {
   </div>;
 }
 
-export function CustomCompletedList({ credits, onRemove }: {
+export function CustomCompletedList({ credits, onEdit, onRemove }: {
   credits: readonly CustomCompleted[];
+  onEdit?: (credit: CustomCompleted) => void;
   onRemove: (credit: CustomCompleted) => void;
 }) {
   if (!credits.length) return null;
   return <div className="handbook-plan-list">
     <h3>自由入力の科目（{credits.length}件）</h3>
     {credits.map(credit => <div key={customCreditKey(credit)}>
-      <div><strong>{credit.name}</strong><p>{CATEGORIES[credit.category].label} · {credit.credits}単位</p></div>
-      <button type="button" className="icon-button" aria-label={credit.name + "を削除"} onClick={() => onRemove(credit)}>
-        <Trash2 size={16}/>
-      </button>
+      <div><strong>{credit.name}</strong><p>{CATEGORIES[credit.category].label} · {credit.credits}単位
+        {!!credit.satisfiesCourseIds?.length && ` · 認定・免除 ${credit.satisfiesCourseIds.length}科目`}</p></div>
+      <div className="past-credit-actions">
+        {onEdit && <button type="button" className="icon-button" aria-label={credit.name + "を編集"} onClick={() => onEdit(credit)}>
+          <Pencil size={16}/>
+        </button>}
+        <button type="button" className="icon-button" aria-label={credit.name + "を削除"} onClick={() => onRemove(credit)}>
+          <Trash2 size={16}/>
+        </button>
+      </div>
     </div>)}
   </div>;
 }

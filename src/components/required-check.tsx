@@ -1,6 +1,6 @@
 import {Check,TriangleAlert} from "lucide-react";
 import type {RequiredAudit} from "@/lib/scheduling";
-const labels:Record<RequiredAudit["status"],string>={completed:"修得済み",future:"将来年次",other_term:"別学期・開講情報なし",unavailable:"開講データ未確認",scheduled:"この案に含む",ready:"未採用",blocked:"条件の確認が必要"};
+const labels:Record<RequiredAudit["status"],string>={completed:"充足済み",future:"将来年次",other_term:"別学期・開講情報なし",unavailable:"開講データ未確認",scheduled:"この案に含む",ready:"未採用",blocked:"条件の確認が必要"};
 export default function RequiredCheck({items}:{items:RequiredAudit[]}){
  const current=items.filter(a=>a.current&&a.status!=="completed"),included=current.filter(a=>a.status==="scheduled");
  const missing=items.filter(a=>!["completed","scheduled","future","other_term"].includes(a.status));

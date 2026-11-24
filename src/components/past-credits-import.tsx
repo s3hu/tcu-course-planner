@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CATEGORIES, type Category, type Course } from "@/lib/data";
-import { MAX_CUSTOM_NAME, matchPastCredits, sanitizeCustomCredit, type CreditMatch, type CustomCompleted } from "@/lib/past-credits";
+import { MAX_CUSTOM_NAME, matchPastCredits, recognitionByCourse, sanitizeCustomCredit, type CreditMatch, type CustomCompleted } from "@/lib/past-credits";
 import Dialog from "./dialog";
 
-type CustomDraft = { name: string; credits: string; category: string };
-const emptyDraft: CustomDraft = { name: "", credits: "", category: "" };
+type CustomDraft = { name: string; credits: string; category: string; satisfiesCourseIds: string[] };
+const emptyDraft: CustomDraft = { name: "", credits: "", category: "", satisfiesCourseIds: [] };
 const MAX_TEXT = 50_000;
 const MAX_LINES = 500;
 
@@ -25,28 +25,62 @@ function CustomFields({ draft, categories, onChange }: {
   </div>;
 }
 
-function readDraft(draft: CustomDraft, categories: readonly Category[]) {
-  return sanitizeCustomCredit({ ...draft, credits: Number(draft.credits) }, categories);
+function readDraft(draft: CustomDraft, categories: readonly Category[], courseIds?: ReadonlySet<string>) {
+  return sanitizeCustomCredit({ ...draft, credits: Number(draft.credits) }, categories, courseIds);
 }
 
-export function CustomCreditDialog({ categories, onAdd, onClose }: {
+export function CustomCreditDialog({ categories, courses, existing, initial, onSave, onClose }: {
   categories: readonly Category[];
-  onAdd: (credit: CustomCompleted) => void;
+  courses: readonly Pick<Course, "id" | "name" | "code" | "requiredType">[];
+  existing: readonly CustomCompleted[];
+  initial?: CustomCompleted;
+  onSave: (credit: CustomCompleted) => boolean | void;
   onClose: () => void;
 }) {
-  const [draft, setDraft] = useState(emptyDraft);
+  const [draft, setDraft] = useState<CustomDraft>(() => initial
+    ? { ...initial, credits: String(initial.credits), satisfiesCourseIds: initial.satisfiesCourseIds ?? [] }
+    : emptyDraft);
+  const [query, setQuery] = useState("");
   const [error, setError] = useState("");
-  return <Dialog title="カタログ外の科目を記録" onClose={onClose}>
+  const term = query.trim().normalize("NFKC").toLowerCase();
+  const selectedIds = new Set(draft.satisfiesCourseIds);
+  const claimed = recognitionByCourse(existing.filter(credit => credit !== initial));
+  const available = courses.filter(course => !claimed.has(course.id));
+  const shown = available.filter(course => selectedIds.has(course.id) || (term
+    ? (course.name + " " + course.code).normalize("NFKC").toLowerCase().includes(term)
+    : course.requiredType === "required"));
+  return <Dialog title={initial ? "自由入力科目を編集" : "カタログ外の科目を記録"} onClose={onClose}>
     <form className="past-credit-stack" onSubmit={e => {
       e.preventDefault();
-      const credit = readDraft(draft, categories);
-      if (credit) onAdd(credit);
-      else setError("科目名・正の単位数・単位区分を確認してください。");
+      const credit = readDraft(draft, categories, new Set(available.map(course => course.id)));
+      if (!credit) setError("科目名・正の単位数・単位区分を確認してください。");
+      else if (onSave(credit) === false) setError("同じ科目名・単位数・区分の自由入力科目が既にあります。");
     }}>
-      <p>入力した区分と卒業算入の合計に加えます。個別の必修判定には科目表の登録を使います。</p>
+      <p>入力した単位を区分別・卒業算入の合計に加えます。認定・免除の対象科目を選ぶと、必修や内訳の充足にも反映します。</p>
       <CustomFields draft={draft} categories={categories} onChange={setDraft}/>
+      <details className="advanced-preferences">
+        <summary>認定・免除する科目（任意・{selectedIds.size}科目選択中）</summary>
+        <label className="past-credit-choice">対象科目を検索
+          <input type="search" value={query} placeholder="科目名・科目コード" onChange={e => setQuery(e.target.value)}/>
+        </label>
+        <p className="fine-print">初期表示は必修科目です。選択必修など、ほかの対象科目は検索できます。</p>
+        <div className="past-credit-review">
+          {shown.map(course => <label className="past-credit-check" key={course.id}>
+            <input type="checkbox" checked={selectedIds.has(course.id)} onChange={e => {
+              const checked = e.target.checked;
+              setDraft(current => ({
+                ...current,
+                satisfiesCourseIds: checked ? [...current.satisfiesCourseIds, course.id]
+                  : current.satisfiesCourseIds.filter(id => id !== course.id),
+              }));
+            }}/>
+            {course.name}（{course.code}）
+          </label>)}
+          {!shown.length && <p>選べる科目がありません。</p>}
+        </div>
+      </details>
       {error && <p role="alert">{error}</p>}
-      <button className="button primary" type="submit">自由入力科目を追加</button>
+      <button className="button primary" type="submit">{initial ? "変更を保存" : "自由入力科目を追加"}</button>
     </form>
   </Dialog>;
 }

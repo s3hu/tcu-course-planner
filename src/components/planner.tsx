@@ -3,8 +3,8 @@
 import { HANDBOOK_FACULTIES, handbookDepartments } from "@/lib/handbooks";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { ArrowDownToLine, ArrowRight, ArrowUpRight, BookOpen, Bookmark, CalendarDays, Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, ExternalLink, FileText, GraduationCap, Info, LayoutDashboard, Leaf, MapPin, Menu, Plus, Search, Settings2, ShieldCheck, SlidersHorizontal, Sparkles, Trash2, TriangleAlert, X, type LucideIcon } from "lucide-react";
-import { CATEGORIES, DAYS, Q_LABELS, DEFAULT_STATE, courses, offerings, requirement, source, type Category, type Offering, type PlannerState, type Preferences } from "@/lib/data";
-import { applicable, completedSummary, plannerCustomCategories, projectedSummary, recordPastCredits, evaluate, inTarget, planIssues, rank, registrationLoad, sanitizeState } from "@/lib/rules";
+import { CATEGORIES, DAYS, Q_LABELS, DEFAULT_STATE, courseById, offeringById, courses, offerings, requirement, source, type Category, type Offering, type PlannerState, type Preferences } from "@/lib/data";
+import { applicable, compareCoursePriority, completedSummary, missingTapCredits, plannerCustomCategories, projectedSummary, recordPastCredits, evaluate, inTarget, planIssues, rank, registrationLoad, sanitizeState } from "@/lib/rules";
 
 import RequiredAddButton from "./required-add-button";
 import TermHalfFilter from "./term-half-filter";
@@ -25,7 +25,7 @@ import { DataNotice, CourseDetail, DataSources, Help } from "./catalog-details";
 import PastCreditsImport, { CustomCreditDialog } from "./past-credits-import";
 import { CreditRecordingAccess, CreditRecordingActions, CustomCompletedList } from "./credit-recording";
 import RequirementsView from "./requirements-view";
-import { customCreditKey, type CustomCompleted } from "@/lib/past-credits";
+import { customCreditKey, recognitionByCourse, replaceCustomCredit, type CustomCompleted } from "@/lib/past-credits";
 
 type View = "dashboard" | "courses" | "completed" | "timetable" | "profile" | "requirements";
 type Modal = null | "preferences" | "help" | "compare" | "reset" | "sources" | { offering: string } | {slot:SlotKey;offering?:string};
@@ -69,7 +69,7 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
   const [state,setState]=useState<PlannerState>(()=>structuredClone(initialState));
   const startImport = usageMode === "account" && applicable(initialState.profile) && startWithPastCredits;
   const [view, setView] = useState<View>(startImport ? "completed" : "dashboard");
-  const [creditDialog, setCreditDialog] = useState<"import" | "custom" | null>(startImport ? "import" : null);
+  const [creditDialog, setCreditDialog] = useState<"import" | "custom" | CustomCompleted | null>(startImport ? "import" : null);
   const canManageCredits = usageMode === "account" && applicable(state.profile);
   const [modal, setModal] = useState<Modal>(null);
   const [menu, setMenu] = useState(false);
@@ -92,12 +92,15 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
   const plannedCredits = registrationLoad(state);
   const earned = completedSummary(state);
   const issues = planIssues(state);
-  const candidates = view === "dashboard" || view === "courses" ? offerings.map(o => ({ o, c: courseFor(o), r: rank(o, state, earned) })).filter(({ o, c, r }) => {
+  const rankingSummary = view === "dashboard" || view === "courses" ? projectedSummary(state) : undefined;
+  const candidates = rankingSummary ? offerings.map(o => ({ o, c: courseFor(o) })).filter(({ o, c }) => {
     if (state.planned.includes(o.id) || !inTarget(o,state.profile) || !matchesPreferences(o,state)) return false;
     if (query && !`${o.name} ${c.code} ${o.lectureCode} ${c.topics.join(" ")} ${o.teacher}`.toLowerCase().includes(query.toLowerCase())) return false;
     if (category !== "all" && c.category !== category) return false;
-    return status === "all" || (status === "candidate" ? r.status !== "blocked" : r.status === status);
-  }).sort((a, b) => b.r.score - a.r.score || a.c.code.localeCompare(b.c.code)) : [];
+    return true;
+  }).map(row => ({ ...row, r: rank(row.o, state, rankingSummary) }))
+    .filter(({ r }) => status === "all" || (status === "candidate" ? r.status !== "blocked" : r.status === status))
+    .sort((a, b) => compareCoursePriority(a.r, b.r) || b.r.preferenceScore - a.r.preferenceScore || a.c.code.localeCompare(b.c.code)) : [];
   const add = (o: Offering) => {
     if (state.planned.includes(o.id)) { setState(s => ({ ...s, planned: s.planned.filter(id => id !== o.id) })); setToast("仮時間割から削除しました"); return; }
     const result = evaluate(o, state);
@@ -126,6 +129,22 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
     setCreditDialog(null);
     setToast(`追加 ${added}件・未処理 ${pending}件${excluded ? `・除外 ${excluded}件` : ""}${duplicates ? `・重複 ${duplicates}件` : ""}`);
   }
+  function saveCustomCredit(credit: CustomCompleted) {
+    if (!canManageCredits) return;
+    if (typeof creditDialog !== "object" || creditDialog === null) {
+      applyPastCredits([], [credit], 0, 0);
+      return;
+    }
+    const customCompleted = replaceCustomCredit(state.customCompleted ?? [], creditDialog, credit, plannerCustomCategories, new Set(courseById.keys()));
+    if (!customCompleted) return false;
+    const recognized = recognitionByCourse(customCompleted);
+    setState({
+      ...state, customCompleted,
+      planned: state.planned.filter(id => !recognized.has(offeringById.get(id)?.courseId ?? "")),
+    });
+    setCreditDialog(null);
+    setToast("自由入力科目を更新しました");
+  }
   function removeCustomCredit(credit: CustomCompleted) {
     if (!canManageCredits) return;
     setState(current => ({
@@ -134,6 +153,7 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
     }));
     setToast(credit.name + "を削除しました");
   }
+  const tap = missingTapCredits(state);
   const recordingActions = <CreditRecordingAccess mode={usageMode} onLogin={onLogin}>
     <CreditRecordingActions onImport={() => openCreditDialog("import")} onCustom={() => openCreditDialog("custom")}/>
   </CreditRecordingAccess>;
@@ -172,7 +192,13 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
     {view === "completed" && applicable(state.profile) && <section className="panel credit-recording-panel past-credit-stack">
       <h2>過去の修得科目を記録</h2>
       {recordingActions}
-      {canManageCredits && <CustomCompletedList credits={state.customCompleted ?? []} onRemove={removeCustomCredit}/>}
+      {canManageCredits && <>
+        <div className="past-credit-actions">
+          <button type="button" className="button secondary" disabled={!tap.length}
+            onClick={() => applyPastCredits([], tap, 0, 0)}>{tap.length ? "TAP認定を追加（英語4・教養8単位）" : "TAP認定を追加済み"}</button>
+        </div>
+        <CustomCompletedList credits={state.customCompleted ?? []} onEdit={setCreditDialog} onRemove={removeCustomCredit}/>
+      </>}
     </section>}
     {view === "requirements" && canManageCredits && <RequirementsView state={state} earned={earned} projected={projectedSummary(state)}/>}
 
@@ -197,8 +223,9 @@ export default function Planner({initialState,usageMode,startWithPastCredits=fal
     {toast && <div role="status" className="toast"><Info size={17} /><span>{toast}</span><button onClick={() => setToast("")} aria-label="通知を閉じる"><X size={15} /></button></div>}
     {canManageCredits && creditDialog === "import" && <PastCreditsImport courses={courses} categories={plannerCustomCategories}
       completed={state.completed} onApply={applyPastCredits} onClose={() => setCreditDialog(null)}/>}
-    {canManageCredits && creditDialog === "custom" && <CustomCreditDialog categories={plannerCustomCategories}
-      onAdd={credit => applyPastCredits([], [credit], 0, 0)} onClose={() => setCreditDialog(null)}/>}
+    {canManageCredits && creditDialog && creditDialog !== "import" &&
+      <CustomCreditDialog categories={plannerCustomCategories} courses={courses} existing={state.customCompleted ?? []}
+        initial={creditDialog === "custom" ? undefined : creditDialog} onSave={saveCustomCredit} onClose={() => setCreditDialog(null)}/>}
 
     {modal === "preferences" && <Dialog title="あなたの希望条件" onClose={() => setModal(null)}><PreferenceEditor initial={state.preferences} profile={state.profile} onSave={preferences => { setState(s => ({ ...s, preferences })); setModal(null); setToast("希望条件を保存しました。既存の予定に影響がある場合は、仮時間割で確認できます。"); }} /></Dialog>}
     {(activeSlot||activeOffering)&&<Dialog key={activeOffering?.id??"slot"} title={activeOffering?.name??(Q_LABELS[activeSlot!.quarter]+" · "+DAYS[activeSlot!.day]+"曜 "+activeSlot!.period+"限の授業候補")} onClose={()=>setModal(null)} wide={!activeOffering}>{activeOffering?<>{activeSlot&&<button className="text-button slot-back" onClick={()=>setModal({slot:activeSlot})}>← この時間の候補に戻る</button>}<CourseDetail o={activeOffering} state={state} onAdd={o=>{add(o);if(activeSlot)setModal({slot:activeSlot});}}/></>:<SlotCandidates key={JSON.stringify(activeSlot)} slot={activeSlot!} state={state} onChoose={offering=>setModal({slot:activeSlot!,offering})}/>}</Dialog>}

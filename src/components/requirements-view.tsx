@@ -12,6 +12,7 @@ export default function RequirementsView({ state, earned, projected }: {
   state: PlannerState; earned: CreditSummary; projected: CreditSummary;
 }) {
   const { months, limits, midyearProgressionAllowed, checks } = progressionSummary(state, new Date(), earned);
+  const recognizedRequired = requirement.mandatoryIds.filter(id => earned.recognizedCourseIds.includes(id));
   const creditRows = [
     { label: "卒業算入の総単位", earned: earned.total, projected: projected.total, required: requirement.total, unit: "単位" },
     ...earned.breakdown.map((row, index) => ({
@@ -38,7 +39,11 @@ export default function RequirementsView({ state, earned, projected }: {
       </div>
       <p className="fine-print">区分最低を超えた算入単位は自由選択へ一度だけ振り替えます。</p>
       <h3>必修科目</h3>
-      <p>修得 {requirement.mandatoryIds.length - earned.missingRequired.length} / {requirement.mandatoryIds.length} 科目 · 仮置き込みで残り {projected.missingRequired.length} 科目</p>
+      <p>修得・認定 {requirement.mandatoryIds.length - earned.missingRequired.length} / {requirement.mandatoryIds.length} 科目 · 仮置き込みで残り {projected.missingRequired.length} 科目</p>
+      {recognizedRequired.length > 0 && <details className="mandatory-note">
+        <summary>認定で充足 {recognizedRequired.length}科目</summary>
+        <ul>{recognizedRequired.map(id => <li key={id}>{courseById.get(id)?.name ?? id}</li>)}</ul>
+      </details>}
       {earned.missingRequired.length > 0 && <ul className="requirements-missing">{earned.missingRequired.map(id =>
         <li key={id}>{courseById.get(id)?.name ?? id}（{projected.missingRequired.includes(id) ? "未修得" : "仮置き済み"}）</li>
       )}</ul>}
@@ -63,7 +68,7 @@ export default function RequirementsView({ state, earned, projected }: {
         <h3>{check.label} · {check.met ? "条件充足の目安" : "未充足の目安"}</h3>
         <p>卒業算入 {minimum(earned.total, check.creditsRequired, "単位")} · 在学 {minimum(months, check.monthsRequired, "か月")}</p>
         {check.prerequisites.length > 0 &&
-          <p>前提科目 {check.prerequisites.map(id => `${courseById.get(id)?.name ?? id}（${check.missing.includes(id) ? "未修得" : "修得済み"}）`).join("・")}</p>}
+          <p>前提科目 {check.prerequisites.map(id => `${courseById.get(id)?.name ?? id}（${check.missing.includes(id) ? "未修得" : earned.recognizedCourseIds.includes(id) ? "認定で充足" : "修得済み"}）`).join("・")}</p>}
       </div>)}
       <p className="fine-print">{!midyearProgressionAllowed && "年度途中の3年次進級はありません。"}在学期間は入学年度の4月から現在の月（日本時間）までの概算です。休学がある場合は実際の在学期間とずれます。</p>
       <h3>在学期間の基準（参考）</h3>
