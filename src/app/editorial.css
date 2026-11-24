@@ -96,7 +96,7 @@ button{transition:background .22s,color .22s,border-color .22s,box-shadow .22s,t
 .past-credit-stack p,.past-credit-row{line-height:1.65}
 .past-credit-actions{display:flex;flex-wrap:wrap;gap:10px}
 .past-credit-choice,.past-credit-fields label{display:grid;gap:6px;min-width:0}
-.past-credit-choice textarea,.past-credit-choice select,.past-credit-fields input,.past-credit-fields select{box-sizing:border-box;width:100%;min-width:0;padding:9px 11px;border:1px solid #c9cec2;border-radius:6px;background:#fff;color:inherit;font:inherit}
+.past-credit-choice textarea,.past-credit-choice select,.past-credit-choice input[type=search],.past-credit-fields input,.past-credit-fields select{box-sizing:border-box;width:100%;min-width:0;padding:9px 11px;border:1px solid #c9cec2;border-radius:6px;background:#fff;color:inherit;font:inherit}
 .past-credit-choice textarea{resize:vertical}
 .past-credit-choice input[type=file]{width:100%;font:inherit}
 .past-credit-image{border-top:1px solid var(--line);padding-top:14px}
